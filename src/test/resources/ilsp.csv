@@ -1,0 +1,128 @@
+LAPPS,Type,Description,ILSP,Type,Description
+"Comments: 
+- ...",,,,,
+ABSTRACT TYPES,,,,,
+Thing,<none>,The most generic specification,uima.tcas.Annotation,TOP,UIMA Annotation Type
+Thing.propertiers.alternateName,String,An alias for the item,<no equivalent>,,
+,,,,,
+Annotation,Thing,"Linguistic information added to a word, phrase, clause, sentence, text, or a relation among them",gr.ilsp.types.Annotation,uima.tcas.Annotation,ILSP Annotation Type
+Annotation.metadata.producer,URI[],The software that produced the annotations.,Annotation.componentId,String,
+Annotation.metadata.rules,URI[],The documentation (if any) for the rules that were used to identify the annotations.,<no equivalent>,,
+Annotation.properties.id,String,A unique identifier associated with the annotation.,Annotation.id,String,
+,,,,,
+Span,Annotation,An annotation over a span of text. ASpanmay be defined bystartandendoffsets or by linking to one or moreTokenannotations with thetargetsproperty.,gr.ilsp.types.Annotation,uima.tcas.Annotation,ILSP Annotation Type
+Span.properties.targets,ID[],"IDs of a sequence of annotations covering the span of text referred to by this annotation. Used as an alternative tostartandendto point to component annotations (e.g., a token sequence) rather than directly into primary data, or to link two or more annotations (e.g., in a coreference annotation).",<no equivalent>,,
+Span.properties.start,Integer,The starting offset (0-based) in the primary data.,Annotation.begin,Integer,
+Span.properties.end,Integer,The ending offset (0-based) in the primary data.,Annotation.end,Integer,
+<no equivalent>,,,Annotation.confidence,long,
+"Comments: 
+- ...",,,,,
+DOCUMENT/META-DATA LAYER,,,,,
+Document,Thing,,DocumentAnnotation,gr.ilsp.types.Annotation,
+Document.properties.id,String,A unique identifier associated with the document.,DocumentAnnotation.docId,String,Can be set by the process creating the header
+Document.properties.source,String or URI,The source of the document.,DocumentAnnotation.uri,String,The URI from which this document was created
+Document.properties.sourceType,String or URI,"Source types include creator, distributor, contributor, publisher, etc.",<no equivalent>,,
+Document.properties.encoding,String or URI,"The physical or digital manifestation of the resource. Encoding may be used to determine the software, hardware or other equipment needed to display or operate the resource. Recommended best practice is to select a value from the list of Internet Media Types [http://www.iana.org/ assignments/media-types/] defining computer media formats).
+                
+See also http://dublincore.org/documents/2001/04/12/usageguide/sectd.shtml#format",<no equivalent>,,"Encoding is only relevant when ingesting and writing data. For reading/writing data, ILSP defaults to UTF-8 on all platforms, but this can be overwritten per component."
+Document.properties.language,String or URI,"A language of the intellectual content of the resource. Recommended best practice for the values of the Language element is defined by  RFC 3066 [RFC 3066, http://www.ietf.org/rfc/ rfc3066.txt] which, in conjunction with ISO 639 [ISO 639, http://www.oasis- open.org/cover/iso639a.html]), defines two- and three-letter  primary language tags with optional sub-tags. Examples include ""en"" or ""eng"" for English,  ""akk"" for Akkadian, and ""en-GB"" for English used in the United Kingdom.
+
+See also http://dublincore.org/documents/2001/04/12/usageguide/sectd.shtml#language",DocumentAnnotation.language,String,Expected to be a 2 or 3-letter code.
+<no equivalent>,,,DocumentAnnotation.title,String,The title of the document.
+<no equivalent>,,,DocumentAnnotaton.offsetInSource,Integer,Byte offset of the start of document content within original source file or other input source. Only used if the CAS document was retrieved from an source where one physical source file contained several conceptual documents. Zero otherwise.
+<no equivalent>,,,Date,"a gr.ilsp.types.Annotation (with features for year, month, day)",The date of the document
+<no equivalent>,,,Author,a gr.ilsp.types.Annotation (with features for surname etc.),Used for authors of the document
+,,,,,
+TextDocument,Document,<no equivalent>,,,
+,,,,,
+AudioDocument,Document,<no equivalent>,,,
+"Comments:
+- ...",,,,,
+SEGMENTATION LAYER,,,,,
+Token,Span,,Token,gr.ilsp.types.Annotation,
+Token.metadata.posTagSet,String or URI,,,,
+Token.properties.pos,String or URI,,Token.POSTag.value,String,
+Token.properties.lemma,String or URI,,Token.lemma.value,String,
+Token.properties.tokenType,String or URI,"Sub-type such as word, punctuation, abbreviation, number, symbol, etc. Ideally a URI referencing a pre-defined descriptor.",Token.tokenType,String,
+Token.properties.orth,String or URI,"Orthographic properties of the token such as LowerCase, UpperCase, UpperInitial, etc. Ideally a URI referencing a pre-defined descriptor.",Token.orthogr.value,String,
+Token.properties.length,Integer,,<similar> Token.getCoveredText().length(),Integer,Method to get the length of the covered text (end - begin basically)
+<similar> Constituent.parent,,,Token.parent,Annotation,"By convention, the parent is a Constituent. For purely technical reasons, it is an Annotation."
+<no equivalent>,,,Token.stemmedForm.value,String,Stem produced by a stemmer.
+<no equivalent>,,,Token.feats,gr.ilsp.types.GrammaticalFeats,Morphological features of a word category
+<no equivalent>,,,Token.sentOrd,Integer,Order of token in the sentence
+<no equivalent>,,,Token.depRel,gr.ilsp.types.DependencyRelation,Dependency relation. See below.
+,,,,,
+Sentence,Span,"A sequence of words capable of standing alone to make an assertion, ask a question, or give a command, usually consisting of a subject and a predicate containing a finite verb.",Sentence,gr.ilsp.types.Annotation,
+Sentence.properties.sentenceType,String or URI,"Values such as declarative, interrogative, exclamatory, question, fragment. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+<no equivalent>,,,Sentence.orthogr.value,String,"Values are uppercase (THIS IS A SENTENCE), lowercase (this is a sentence), and capitalized (This Is A Sentence)"
+<no equivalent>,,,Paragraph,gr.ilsp.types.Annotation,Identified automatically based on document markup
+"Comments: 
+- ...",,,,,
+CHUNKING LAYER,,,,,
+<no equivalent>,,,Chunk,gr.ilsp.types.Annotation,
+,,,Chunk.label,String,Several values specific to the ILSP chunker
+<no equivalent>,,,Clause,gr.ilsp.types.Annotation,
+,,,Clause.label,String,Several values specific to the ILSP clause segmenter
+NounChunk,Span,"The initial portion of a non-recursive noun phrase up to the head, including determiners but not including postmodifying prepositional phrases or clauses.",<no equivalent>,,
+,,,,,
+VerbChunk,Span,"Non-recursive verb groups, which include modals, auxiliary verbs, and medial adverbs, and end at the head verb or predicate adjective.",<no equivalent>,,
+VerbChunk.vcType,String or URI,"Values such as finite, non-finite, participle, modal, special (e.g., 'is going to investigate').",<no equivalent>,,
+VerbChunk.tense,String or URI,"Provides tense information for the verb. Example values include BeVBG, BeVBN, FutCon, HaveVBN, Pas, PasCon, PasPer, PasPerCon, Per, Pre, PreCon, PrePer, PrePerCon, SimFut, SimPas, SimPre, none",<no equivalent>,,
+VerbChunk.voice,String or URI,"Indicates if the verb group is active or passive. Possible values include ACTIVE, PASSIVE, or NONE",<no equivalent>,,
+VerbChunk.neg,String or URI,"Indicates whether or not the verb is negated. Values include YES, NO.",<no equivalent>,,
+"Comments: 
+- ...",,,,,
+NAMED ENTITY LAYER,,,,,
+<no equivalent>,,,ConceptMention,gr.ilsp.types.Annotation,
+,,,specificType,String,
+NamedEntity,Span,,EntityMention,ConceptMention,
+,,,,,
+Date,NamedEntity,,Timex2Mention,ConceptMention,
+Date.properties.dateType,String or URI,"Sub-type information such as date, datetime, time, etc. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+,,,,,
+Location,NamedEntity,,LOC,EntityMention,
+Location.properties.locType,String or URI,"Location type: country, city, GPE, sea, lake, etc. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+,,,,,
+Organization,NamedEntity,,ORG,EntityMention,
+Organization.properties.orgType,String or URI,"Sub-type information (e.g., government, educational, religious, political, museum, hotel, medical, etc.). Ideally a URL referencing a pre-defined descriptor.",<no equivalent>,,
+,,,,,
+Person,NamedEntity,,"PER
+",EntityMention,
+Person.properties.gender,String or URI,"A value such as male, female, unknown. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+"Comments: 
+- ...",,,,,
+COREFERENCE LAYER,,,,,
+Coreference,Annotation,Used to mark references to other mentions of the same entity or instance.,<no equivalent>,,
+Coreference.properties.mentions,ID[],"A list of identifiers. Each identifier points to an object of type Annotation, or a subtype thereof.",<no equivalent>,,
+Coreference.properties.representative,ID,An identifier that points to the representative item in the coreference chain.,<no equivalent>,,
+,,,,,
+Markable,Span,Annotation type used if the coreferenced item is not already wrapped in a suitable annotation type that can be referenced.,<no equivalent>,,
+"Comments: 
+- ...",,,,,
+CONSTITUENCY LAYER,,,,,
+PhraseStructure,Annotation,A container for phrase structure information.,<no equivalent>,,
+PhraseStructure.metadata.categorySet,String or URI,The URI for the category set.,<no equivalent>,,
+PhraseStructure.properties.constituents,ID[] (Set),The set of IDs for the top-level Constituents in the paarse tree. (cf. https://github.com/lapps/vocabulary-pages/issues/15),<no equivalent>,,
+,,,,,
+Constituent,Span,,<no equivalent>,,
+Constituent.properties.label,String or URI,,<no equivalent>,,
+Constituent.properties.parent,ID,,<no equivalent>,,
+Constituent.properties.children,ID[],,<no equivalent>,,
+"Comments: 
+- ...",,,,,
+DEPENDENCY LAYER,,,,,
+DependencyStructure,Annotation,,<no equivalent>,,
+DependencyStructure.metadata.dependencySet,String or URI,,<no equivalent>,,
+DependencyStructure.properties.dependencyType,String of URI,,<no equivalent>,,
+DependencyStructure.properties.dependencies,ID[] (Set),,<no equivalent>,,
+,,,,,
+Dependency,Annotation,,DependencyRelation,gr.ilsp.types.Annotation,
+Dependency.properties.governor,ID,,head,Token,
+Dependency.properties.dependent,ID,,<no equivalent>,,A token can have a dependency relation to a head. See token
+Dependency.properties.label,String or URI,,label,String,
+,,,,,
+<no equivalent>,,,projective,boolean,
+,,,,,
+,,,,,
+"Comments:
+- ...",,,,,

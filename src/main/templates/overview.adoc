@@ -1,0 +1,15 @@
+.Typesystems (${typeSystems.size()})
+[options="header"]
+|====
+|Typesystem|Size
+
+<% 
+typeSystems.sort{ it.key }.each { tsName, types ->
+%>
+| ${tsName}
+| ${types.size()}
+
+<% 
+} 
+%>
+|====

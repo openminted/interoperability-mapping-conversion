@@ -1,0 +1,35 @@
+<%
+def tsNames = typeSystems.keySet().sort();
+tsNames -= "LAPPS";
+tsNames.add(0, "LAPPS")
+%>
+
+.LAPPS type alignments
+[options="header"]
+|====
+<%
+tsNames.each { tsName -> 
+    print "|${tsName}";
+}
+%>
+
+<%
+types
+    .grep { it.system == "LAPPS" }
+    .each { type ->
+        def equivTypes = typeMapping
+            .grep { it.first == type }
+            .collect { it.second }
+            .groupBy { it.system };
+        tsNames.each { tsName ->
+            if (equivTypes[tsName]) {
+                println "| <<type-${equivTypes[tsName][0].system}-${equivTypes[tsName][0].name},${equivTypes[tsName][0].name}>>";
+            }
+            else {
+                println "| --";
+            }
+        }
+        println "";
+    }
+%>
+|====

@@ -1,0 +1,41 @@
+<%
+def tsNames = typeSystems.keySet().sort();
+tsNames -= "LAPPS";
+tsNames.add(0, "LAPPS")
+
+types
+    .grep { it.system == "LAPPS" }
+    .each { type ->
+%>
+.LAPPS type ${type.name} feature alignment
+[options="header"]
+|====
+<%
+        tsNames.each { tsName -> 
+            print "|${tsName}";
+        }
+%>
+
+<%
+        type.features.values()
+            .sort { it.name }
+            .each { feature ->
+                def equivFeats = featureMapping
+                    .grep { it.first == feature }
+                    .collect { it.second }
+                    .groupBy { it.owner.system };
+                tsNames.each { tsName ->
+                    if (equivFeats[tsName]) {
+                        println "| ${equivFeats[tsName][0].name}";
+                    }
+                    else {
+                        println "| --";
+                    }
+                }
+                println "";
+            }
+%>
+|====
+<%
+    }
+%>

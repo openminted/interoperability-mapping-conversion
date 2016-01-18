@@ -1,0 +1,40 @@
+<%
+types
+    .groupBy { it.system }
+    .each { tsName, tsTypes ->
+%>
+=== ${tsName}
+<%
+        tsTypes.each { type ->
+%>
+
+[[type-${type.system}-${type.name}]]
+==== ${type.name}
+
+[small]#*_Supertype:_* __${type.supertype}__# +
+
+${type.description}
+
+.Features of type ${type.name}
+[options="header",cols="1,1,3"]
+|====
+|Feature|Type|Description
+
+<%
+            type.features.values()
+                .sort { it.name }
+                .each { feature ->
+%>
+| ${feature.name}
+| ${feature.type}
+| ${feature.description}
+<%                    
+                }
+%>
+
+|====
+<%
+            
+        }
+    }
+%>

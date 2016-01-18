@@ -1,0 +1,13 @@
+= Type alignments
+
+== Overview
+include::{generated-dir}overview.adoc[]
+
+== Type alignments
+include::{generated-dir}typeAlignment.adoc[]
+
+== Feature alignments
+include::{generated-dir}featureAlignment.adoc[]
+
+== Typesystems
+include::{generated-dir}typeSystems.adoc[]

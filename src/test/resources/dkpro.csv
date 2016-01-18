@@ -1,0 +1,166 @@
+LAPPS,Type,Description,DKPro Core,Type,Description
+"Comments: 
+- The LAPPS types and properties listed here are complete as per commit f80137d0b909f3da742aaedafa7f7b036910f67 on https://github.com/lapps/vocabulary-pages/blob/master/lapps.vocab
+- DKPro Core contains additional types not listed here as there are no equivalents in LAPPS",,,,,
+ABSTRACT TYPES,,,,,
+Thing,<none>,The most generic specification,TOP,<none>,UIMA Top type
+Thing.propertiers.alternateName,String,An alias for the item,<no equivalent>,,
+,,,,,
+Annotation,Thing,"Linguistic information added to a word, phrase, clause, sentence, text, or a relation among them",AnnotationBase,TOP,Abstract UIMA Annotation Type
+Annotation.metadata.producer,URI[],The software that produced the annotations.,<no equivalent>,,
+Annotation.metadata.rules,URI[],The documentation (if any) for the rules that were used to identify the annotations.,<no equivalent>,,
+Annotation.properties.id,String,A unique identifier associated with the annotation.,<no equivalent>,,
+<no equivalent>,,,AnnotationBase.sofaFS,SofaFS,
+<no equivalent>,,,AnnotationBase.view,CAS,
+,,,,,
+Span,Annotation,An annotation over a span of text. A Span may be defined by start and end offsets or by linking to one or more Token annotations with the targets property.,Annotation,AnnotationBase,UIMA Annotation Type
+Span.properties.targets,ID[],"IDs of a sequence of annotations covering the span of text referred to by this annotation. Used as an alternative to start and end to point to component annotations (e.g., a token sequence) rather than directly into primary data, or to link two or more annotations (e.g., in a coreference annotation).",<no equivalent>,,
+Span.properties.start,Integer,The starting offset (0-based) in the primary data.,Annotation.begin,Integer,
+Span.properties.end,Integer,The ending offset (0-based) in the primary data.,Annotation.end,Integer,
+"Comments: 
+- Having ""producer"" and ""rules"" at the level of Annotation appears terribly redundant in LAPPS. 
+- For DKPro Core, we are considering to add an ""externalId"" property which would be equivalent of the ""id"" property in LAPPS.",,,,,
+DOCUMENT/META-DATA LAYER,,,,,
+Document,Thing,,DocumentMetaData,DocumentAnnotation / Annotation,
+Document.properties.id,String,A unique identifier associated with the document.,<similar> DocumentMetaData.documentId,String,The ID of the document within the collection
+Document.properties.source,String or URI,The source of the document.,DocumentMetaData.documentUri,String,"The URI from which the document was obtained, typically this is a location on the local file system or from within a JAR/ZIP file."
+Document.properties.sourceType,String or URI,"Source types include creator, distributor, contributor, publisher, etc.",<no equivalent>,,
+Document.properties.encoding,String or URI,"The physical or digital manifestation of the resource. Encoding may be used to determine the software, hardware or other equipment needed to display or operate the resource. Recommended best practice is to select a value from the list of Internet Media Types [http://www.iana.org/ assignments/media-types/] defining computer media formats).
+                
+See also http://dublincore.org/documents/2001/04/12/usageguide/sectd.shtml#format",<no equivalent>,,"Encoding is only relevant when ingesting and writing data. While the data is in memory, the Java String representation (a 16bit unicode variant I believe) is used. For reading/writing data, DKPro Core defaults to UTF-8 on all platformss, but this can be overwritten per component."
+Document.properties.language,String or URI,"A language of the intellectual content of the resource. Recommended best practice for the values of the Language element is defined by  RFC 3066 [RFC 3066, http://www.ietf.org/rfc/ rfc3066.txt] which, in conjunction with ISO 639 [ISO 639, http://www.oasis- open.org/cover/iso639a.html]), defines two- and three-letter  primary language tags with optional sub-tags. Examples include ""en"" or ""eng"" for English,  ""akk"" for Akkadian, and ""en-GB"" for English used in the United Kingdom.
+
+See also http://dublincore.org/documents/2001/04/12/usageguide/sectd.shtml#language",DocumentAnnotation.language,String,ISO 639 two-letter code. DKPro Core uses these to automatically look up models. Other language codes can be stored but model lookup will fail. Language will then have to be overwritten per processing component.
+<no equivalent>,,,DocumentMetaData.collectionId,String,The ID of the collection/corpus.
+<no equivalent>,,,DocumentMetaData.documentTitle,String,The title of the document.
+<no equivalent>,,,DocumentMetaData.documentBaseUri,String,The base URI for the corpus/collection.
+<no equivalent>,,,DocumentMetaData.isLastSegment,boolean,"If a document was split during processing, this flag indicates the last segment, e.g. when reconstructing the full document from the splits."
+,,,,,
+TextDocument,Document,,<no equivalent>,,
+,,,,,
+AudioDocument,Document,,<no equivalent>,,
+,,,,,
+<similar> Token.metadata.posTagSet and friends,,,TagSetDescription,Annotation,Describes a tag set
+,,,TagSetDescription.layer,String,"The annotation type for which this tag set applies (e.g. ""Token"" FQN)"
+,,,TagSetDescription.name,String,The name of the tagset
+,,,TagSetDescription.tags,TagDescription[],The tag descriptions
+,,,,,
+,,,TagDescription,TOP,
+,,,TagDescription.name,String,"The tag (e.g. N, VP, Person, ...)"
+"Comments:
+- DKPro Core uses two methods of document identification, one via collectionId/documentId, the other via documentUri. If both are used, documentUri is typically preferred.
+- Knowning the documentBaseUri in DKPro Core is important for the recursive processing of corpora - it is used to reconstruct the relative hierarchy on output.
+- If possible, the TagSetDescription is extracted directly from the model file used by DKPro Core - it should contain all tags, not only the ones used in the document!",,,,,
+SEGMENTATION LAYER,,,,,
+Token,Span,,Token,Annotation,
+Token.metadata.posTagSet,String or URI,,<similar> TagSetDescription,,
+Token.properties.pos,String or URI,,Token.pos.posValue,String,Original POS tag produced by tagger.
+Token.properties.lemma,String or URI,,Token.lemma.value,String,Lemma produced by lemmatizer.
+Token.properties.tokenType,String or URI,"Sub-type such as word, punctuation, abbreviation, number, symbol, etc. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+Token.properties.orth,String or URI,"Orthographic properties of the token such as LowerCase, UpperCase, UpperInitial, etc. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+Token.properties.length,Integer,,<similar> Token.getCoveredText().length(),Integer,Method to get the length of the covered text (end - begin basically)
+<similar> Constituent.parent,,,Token.parent,Annotation,"By convention, the parent is a Constituent. For purely technical reasons, it is an Annotation."
+<no equivalent>,,,Token.stem.value,String,Stem produced by a stemmer.
+<no equivalent>,,,Token.morphologicalFeatures,MorphologicalFeatures,Morphological features as per Universal Dependency Treebank.
+,,,,,
+Sentence,Span,"A sequence of words capable of standing alone to make an assertion, ask a question, or give a command, usually consisting of a subject and a predicate containing a finite verb.",Sentence,Annotation,
+Sentence.properties.sentenceType,String or URI,"Values such as declarative, interrogative, exclamatory, question, fragment. Ideally a URI referencing a pre-defined descriptor.",<no equivalent>,,
+"Comments: 
+- POS, Lemma, Stem, MorphologicalFeatures are own annotation types in DKPro Core. 
+- In LAPPS they are just features. 
+- DKPro Core provides elevated types for POS, e.g. N, V, etc. These are largely aligned with the Universal POS tags.
+- In LAPPS, sentences can point to their tokens using the ""targets"" property from Span. In DKPro Core, only offset information can be used.
+- In DKPro Core, the terminals in constituency trees are tokens and there are no pre-terminals (POS) in the constituency tree. Instead, the preterminals (POS) are attached to the Token.",,,,,
+CHUNKING LAYER,,,,,
+<no equivalent>,,,Chunk,Annotation,
+<no equivalent>,,,chunkValue,String,Chunk category as produced by chunker
+,,,,,
+NounChunk,Span,"The initial portion of a non-recursive noun phrase up to the head, including determiners but not including postmodifying prepositional phrases or clauses.",NC,Chunk,
+,,,,,
+VerbChunk,Span,"Non-recursive verb groups, which include modals, auxiliary verbs, and medial adverbs, and end at the head verb or predicate adjective.",VC,Chunk,
+VerbChunk.vcType,String or URI,"Values such as finite, non-finite, participle, modal, special (e.g., 'is going to investigate').",<similar> MorphologicalFeatures.verbForm,String,I think this information is typically encoded in the POS or morph tags.
+VerbChunk.tense,String or URI,"Provides tense information for the verb. Example values include BeVBG, BeVBN, FutCon, HaveVBN, Pas, PasCon, PasPer, PasPerCon, Per, Pre, PreCon, PrePer, PrePerCon, SimFut, SimPas, SimPre, none",<similar> MorphologicalFeatures.tense,String,
+VerbChunk.voice,String or URI,"Indicates if the verb group is active or passive. Possible values include ACTIVE, PASSIVE, or NONE",<similar> MorphologicalFeatures.voice,String,
+VerbChunk.neg,String or URI,"Indicates whether or not the verb is negated. Values include YES, NO.",<similar> MorphologicalFeatures.negative,String,
+,,,,,
+<no equivalent>,,,MorphologicalFeatures,Annotation,Morphological features per Universal Dependencies Treebank definition
+<no equivalent>,,,MorphologicalFeatures.animacy,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.aspect,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.case,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.definiteness,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.degree,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.gender,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.mood,String,Normalized category mapped from original tag
+<similar> VerbChunk.neg,,,MorphologicalFeatures.negative,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.number,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.numType,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.person,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.possessive,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.pronType,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.reflex,String,Normalized category mapped from original tag
+<similar> VerbChunk.tense,,,MorphologicalFeatures.tense,String,Normalized category mapped from original tag
+<no equivalent>,,,MorphologicalFeatures.value,String,Original tag as produced by morphological analyzer
+<similar> VerbChunk.vcType,,,MorphologicalFeatures.verbForm,String,Normalized category mapped from original tag
+<similar> VerbChunk.voice,,,MorphologicalFeatures.voice,String,Normalized category mapped from original tag
+,,,,,
+"Comments: 
+- Features like tense or voice are part of the MorphologicalFeatures annotation which is attached to Token in DKPro Core - not at chunk level. 
+- DKPro Core provides elevated types for chunks such as VC, NC, etc. They are subtypes of Chunk and when used the ""chunkValue"" feature must resemble a respective tag.
+- The MorphologicalFeatures type in DKPro Core is modelled after the Universal Dependency Treebank model which appears to be the Interset model.",,,,,
+NAMED ENTITY LAYER,,,,,
+NamedEntity,Span,,NamedEntity,Annotation,
+,,,NamedEntity.value,String,Entity category
+,,,,,
+Date,NamedEntity,,Date,NamedEntity,
+Date.properties.dateType,String or URI,"Sub-type information such as date, datetime, time, etc. Ideally a URI referencing a pre-defined descriptor.",<similar> NamedEntity.value,,
+,,,,,
+Location,NamedEntity,,Location,NamedEntity,
+Location.properties.locType,String or URI,"Location type: country, city, GPE, sea, lake, etc. Ideally a URI referencing a pre-defined descriptor.",<similar> NamedEntity.value,,
+,,,,,
+Organization,NamedEntity,,Organization,NamedEntity,
+Organization.properties.orgType,String or URI,"Sub-type information (e.g., government, educational, religious, political, museum, hotel, medical, etc.). Ideally a URL referencing a pre-defined descriptor.",<similar> NamedEntity.value,,
+,,,,,
+Person,NamedEntity,,Person,NamedEntity,
+Person.properties.gender,String or URI,"A value such as male, female, unknown. Ideally a URI referencing a pre-defined descriptor.",<similar> NamedEntity.value,,
+"Comments: 
+- Any kind of subtype information in DKPro Core is expected to be encoded in the original category stored in the ""value"" feature. A mapping is then used to select the correct subtype of NamedEntity (e.g. Date, Location, Organization, etc.) for the annotation. The value retains the original category produced by the NE tagger.",,,,,
+COREFERENCE LAYER,,,,,
+Coreference,Annotation,Used to mark references to other mentions of the same entity or instance.,CoreferenceChain,TOP,Type to easily find the entry into a coreference chain.
+Coreference.properties.mentions,ID[],"A list of identifiers. Each identifier points to an object of type Annotation, or a subtype thereof.",<similar> CoreferenceChain.links(),CoreferenceLink[],Convenience method at JCas level to collect all the links (mentions) in a chain.
+Coreference.properties.representative,ID,An identifier that points to the representative item in the coreference chain.,<no equivalent>,,
+<similar> Coreference.properties.mentions,,,CoreferenceChain.first,CoreferenceLink,The head of the coreference chain
+,,,,,
+Markable,Span,Annotation type used if the coreferenced item is not already wrapped in a suitable annotation type that can be referenced.,CoreferenceLink,Annotation,
+<similar> Coreference.properties.mentions,,,CoreferenceLink.next,CoreferenceLink,Points to next element in chain
+<no equivalent>,,,CoreferenceLink.referenceType,String,Category of the present element
+<no equivalent>,,,CoreferenceLink.referenceLink,String,Category of the link to the next element in the chain
+"Comments: 
+- LAPPS uses mention-based coreference. 
+- DKPro Core uses a chain model for coreference. In the chain, there can be labels on the edges between the coreferents.",,,,,
+CONSTITUENCY LAYER,,,,,
+PhraseStructure,Annotation,A container for phrase structure information.,<similar> ROOT,,
+PhraseStructure.metadata.categorySet,String or URI,The URI for the category set.,<similar> TagSetDescription,,
+PhraseStructure.properties.constituents,ID[] (Set),The set of IDs for the top-level Constituents in the paarse tree. (cf. https://github.com/lapps/vocabulary-pages/issues/15),,,
+,,,,,
+Constituent,Span,,Constituent,Annotation,
+Constituent.properties.label,String or URI,,Constituent.constituentType,String,Label on the constituent
+Constituent.properties.parent,ID,,Constituent.parent,Annotation,Points to parent Constituent or null
+Constituent.properties.children,ID[],,Constituent.children,Annotation[],Points to child Constituents or Tokens
+,,,Constituent.syntacticFunction,String,Label on the link to the parent
+"Comments: 
+- DKPro Core has elevated types for different syntactic categories, e.g. NP, VP, etc. Eventually, these should be aligned with some coarse grained universal syntactic categories.
+- The elevated type ROOT is always the root of a constituent tree.",,,,,
+DEPENDENCY LAYER,,,,,
+DependencyStructure,Annotation,,<no equivalent>,,
+DependencyStructure.metadata.dependencySet,String or URI,,<similar> TagSetDescription,,
+DependencyStructure.properties.dependencyType,String of URI,,<no equivalent>,,
+DependencyStructure.properties.dependencies,ID[] (Set),,<no equivalent>,,
+,,,,,
+Dependency,Annotation,,Dependency,Annotation,
+Dependency.properties.governor,ID,,Dependency.governor,Token,Points to governor
+Dependency.properties.dependent,ID,,Dependency.dependent,Token,Points to dependent
+Dependency.properties.label,String or URI,,Dependency.dependencyType,String,The dependency category as per parser
+"Comments:
+- In DKPro Core, the contract is that the ""begin"" and ""end"" properties of the Dependency are the same as for the Token that is the dependent.
+- For LAPPS, it is unclear to what the offsets of the Dependency are set.
+- DKPro Core provides elevated types for dependencies, e.g. NSUBJ, PRED, etc. - eventually these should be aligned with the Universal Dependency categories",,,,,
