@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter</name>
+        <description>Write CAS in one of the UIMA binary formats.
+
+&lt;table&gt;
+&lt;caption&gt;Supported formats&lt;/caption&gt;
+&lt;tr&gt;
+&lt;th&gt;Format&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;Type system on load&lt;/th&gt;
+&lt;th&gt;CAS Addresses preserved&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;S&lt;/td&gt;
+&lt;td&gt;CAS structures are dumped to disc as they are using Java serialization (CASSerializer
+). Because these structures are pre-allocated in memory at larger sizes than what is actually
+required, files in this format may be larger than necessary. However, the CAS addresses of
+feature structures are preserved in this format. When the data is loaded back into a CAS, it must
+have been initialized with the same type system as the original CAS.&lt;/td&gt;
+&lt;td&gt;must be the same&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;S+&lt;/td&gt;
+&lt;td&gt;CAS structures are dumped to disc as they are using Java serialization as in form 0, but
+now using the CASCompleteSerializer which includes CAS metadata like type system and
+index repositories.&lt;/td&gt;
+&lt;td&gt;is reinitialized&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;CAS structures are dumped to disc as they are using Java serialization (CASSerializer
+). This is basically the same as format S but includes a UIMA header and can be read
+using org.apache.uima.cas.impl.Serialization#deserializeCAS.&lt;/td&gt;
+&lt;td&gt;must be the same&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;
+UIMA binary serialization saving all feature structures (reachable or not). This format
+internally uses gzip compression and a binary representation of the CAS, making it much more
+efficient than format 0.&lt;/td&gt;
+&lt;td&gt;must be the same&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;
+UIMA binary serialization as format 4, but saving only reachable feature structures.&lt;/td&gt;
+&lt;td&gt;must be the same&lt;/td&gt;
+&lt;td&gt;no&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6+&lt;/td&gt;
+&lt;td&gt;
+UIMA binary serialization as format 6, but also contains the type system defintion. This allows
+the BinaryCasReader to load data leniently into a CAS that has been initialized with a
+different type system.&lt;/td&gt;
+&lt;td&gt;lenient loading&lt;/td&gt;
+&lt;td&gt;no&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>typeSystemLocation</name>
+                <description>Location to write the type system to. The type system is saved using Java serialization, it
+is not saved as a XML type system description. We recommend to use the name
+typesystem.ser.
+&lt;br&gt;
+The #PARAM_COMPRESSION parameter has no effect on the
+type system. Instead, if the type system file should be compressed or not is detected from
+the file name extension (e.g. ".gz").
+&lt;br&gt;
+If this parameter is set, the type system and index repository are no longer serialized into
+the same file as the test of the CAS. The SerializedCasReader can currently not
+read such files. Use this only if you really know what you are doing.
+&lt;br&gt;
+This parameter has no effect if formats S+ or 6+ are used as the type system information
+is embedded in each individual file. Otherwise, it is recommended that this parameter be
+set unless some other mechanism is used to initialize the CAS with the same type system and
+index repository during reading that was used during writing.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>format</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>filenameExtension</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>Target location. If this parameter is not yet, data is written to stdout.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>singularTarget</name>
+                <description>Treat target location as a single file name. This is particularly useful if only a single
+input file is processed and the result should be written to a pre-defined output file instead
+of deriving the file name from the document URI or document ID. It can also be useful if
+the user wishes to force multiple input files to be written to a single target file. The
+latter case does not work for all formats (e.g. binary, XMI, etc.), but can be useful, e.g.
+for Conll-based formats. This option has no effect if the target location points to an
+archive location (ZIP/JAR). The #PARAM_COMPRESSION is respected, but does not 
+automatically add an extension. The #PARAM_STRIP_EXTENSION has no effect as the
+original extension is not preserved.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>compression</name>
+                <description>Choose a compression method. (default: CompressionMethod#NONE)</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>stripExtension</name>
+                <description>Remove the original extension.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>useDocumentId</name>
+                <description>Use the document ID as file name even if a relative path information is present.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>escapeDocumentId</name>
+                <description>URL-encode the document ID in the file name to avoid illegal characters (e.g. \, :, etc.)</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>overwrite</name>
+                <description>Allow overwriting target files (ignored when writing to ZIP archives).</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>format</name>
+                <value>
+                    <string>6+</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>filenameExtension</name>
+                <value>
+                    <string>.bin</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>singularTarget</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>compression</name>
+                <value>
+                    <string>NONE</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>stripExtension</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>useDocumentId</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>escapeDocumentId</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>overwrite</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

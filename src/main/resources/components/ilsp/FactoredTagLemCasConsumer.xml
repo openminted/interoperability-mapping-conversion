@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>gr.ilsp.nlp.casconsumers.FactoredTagLemCasConsumer</implementationName>
+  <processingResourceMetaData>
+    <name>Factored Tag Lem Consumer</name>
+    <description>Writes sentences from the CAS in the Factored Tag Lem format</description>
+    <version>1.2</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>OutputDirectory</name>
+        <description>Directory where the output files will be written</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>AppendExt</name>
+        <description>Extension to be appended to the output files.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>StripExt</name>
+        <description>Extension to be stripped from the input files.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>StripExt</name>
+        <value>
+          <string>txt</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>OutputDirectory</name>
+        <value>
+          <string>.</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>AppendExt</name>
+        <value>
+          <string>tag</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+        </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.nlp.types.Header</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Paragraph</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</casConsumerDescription>

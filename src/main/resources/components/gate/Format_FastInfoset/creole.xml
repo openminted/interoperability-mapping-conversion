@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>format-fastinfoset.jar</JAR>
+  <JAR>lib/FastInfoset-1.2.13.jar</JAR>
+  <JAR>gcp/fastinfoset4gcp.jar</JAR>
+<RESOURCE><CLASS>gate.corpora.FastInfosetDocumentFormat</CLASS><PRIVATE /><NAME>Fast Infoset Document Format</NAME><COMMENT>Format parser for GATE XML stored in the binary Fast Infoset format</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:creole:fastinfoset</HELPURL><HIDDEN-AUTOINSTANCE /></RESOURCE><RESOURCE><CLASS>gate.corpora.FastInfosetExporter</CLASS><TOOL /><NAME>Fast Infoset Exporter</NAME><COMMENT>Export GATE documents to GATE XML stored in the binary Fast Infoset format</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:creole:fastinfoset</HELPURL><AUTOINSTANCE /></RESOURCE></CREOLE-DIRECTORY>

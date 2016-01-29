@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+	<JAR>abner.jar</JAR>
+	<JAR>lib/abner1.0.0.jar</JAR>
+	<JAR>lib/mallet.jar</JAR>
+<RESOURCE><CLASS>gate.abner.AbnerTagger</CLASS><NAME>ABNER Tagger</NAME><COMMENT>GATE wrapper over ABNER</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:parsers:abner</HELPURL><ICON>DNA.png</ICON><PARAMETER NAME="annotationName" COMMENT="The name of the annotation to create, if blank (or null) the type of entity is used as the annotation name" DEFAULT="Tagger" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="outputASName" COMMENT="The annotation set in which new annotations will be created" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="abnerMode" COMMENT="This option allows tow different models to be used for tagging. Namely: NLPBA and BIOCREATIVE. NLPBA entity types are Gene, DNA, RNA, Cell Lines, Cell cultures. BIOCREATIVE entity type is Gene." DEFAULT="BIOCREATIVE" RUNTIME="true">gate.abner.AbnerRunMode</PARAMETER><PARAMETER NAME="corpus" COMMENT="The corpus containing the document to process" RUNTIME="true" OPTIONAL="true">gate.Corpus</PARAMETER><PARAMETER NAME="document" COMMENT="The document to process" RUNTIME="true">gate.Document</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

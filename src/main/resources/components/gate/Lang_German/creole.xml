@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>german.jar</JAR>
+<RESOURCE><CLASS>german.GermanIE</CLASS><NAME>German IE System</NAME><COMMENT>Ready-made German IE application</COMMENT><AUTOINSTANCE><PARAM NAME="pipelineURL" VALUE="resources/german.gapp" /><PARAM NAME="menu" VALUE="German" /></AUTOINSTANCE><PARAMETER NAME="pipelineURL">java.net.URL</PARAMETER><PARAMETER NAME="menu" ITEM_CLASS_NAME="java.lang.String" OPTIONAL="true">java.util.List</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

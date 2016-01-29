@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.reuters.Reuters21578TxtReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.reuters.Reuters21578TxtReader</name>
+        <description>Read a Reuters-21578 corpus that has been transformed into text format using ExtractReuters in
+the lucene-benchmarks project.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>sourceLocation</name>
+                <description>The directory that contains the Reuters-21578 text files, named according to the pattern #FILE_PATTERN.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

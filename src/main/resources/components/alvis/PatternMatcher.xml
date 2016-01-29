@@ -1,0 +1,55 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="PatternMatcher" target="org.bibliome.alvisnlp.modules.pattern.PatternMatcher">
+  <synopsis>
+    <p>Matches a regular expression-like pattern on the sequence of annotations in a given layer.</p>
+  </synopsis>
+  <module-doc>
+    <description>
+      <p><this/> searches for <param name="pattern"/> on the sequence of annotations in layer <param name="layerName"/>. Note that in a layer, annotations are sorted in increasing order of start boundary, then decreasing order of end boundary; the order is undefined for annotations with the exact same span.</p>
+      <p>For each match, <this/> applies all actions specified by <param name="actions"/>. Each action concerns a sub-group of the pattern, if no sub-group is specified then the action applies to the whole match.</p>
+    </description>
+
+    <param-doc mandatory="required" name="pattern" short-type="ElementPattern" type="org.bibliome.alvisnlp.modules.pattern.ElementPattern">
+      <p>Pattern to match see <converter name="AnnotationPattern"/> for pattern syntax.</p>
+    </param-doc>
+
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Features to add to all annotations created by this module, these features are added for all actions that create an annotation.</p>
+    </param-doc>
+
+    <param-doc mandatory="optional" name="constantRelationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Features to add to all relations created by this module, these features are added for all realtions that have been created by an action that creates a tuple.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+    
+    <param-doc mandatory="optional" name="constantTupleFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Features to add to all tuples created by this module, these features are added for all actions that create a tuple.</p>
+    </param-doc>
+
+    <param-doc mandatory="required" name="actions" short-type="MatchAction[]" type="org.bibliome.alvisnlp.modules.pattern.action.MatchAction[]">
+      <p>Actions to perform each time the pattern is matched on the annotation sequence. See <converter name="MatchActionArray"/> for all available actions.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process documents that satisfy this filter.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: boolean:and(true, nav:layer:words())" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process sections that satisfy this filter.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: words" name="layerName" short-type="String" type="java.lang.String">
+      <p>Match the pattern on the annotations contained in this layer.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: remove" name="overlappingBehaviour" short-type="OverlappingBehaviour" type="org.bibliome.alvisnlp.modules.pattern.OverlappingBehaviour">
+      <p>What to do if the layer contains overlapping annotations.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: length" name="annotationComparator" short-type="AnnotationComparator" type="alvisnlp.corpus.AnnotationComparator">
+      <p>Comparator to use when removing overlaps.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

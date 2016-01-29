@@ -1,0 +1,107 @@
+<alvisnlp-doc author="" date="" short-target="BioNLPSTReader" target="org.bibliome.alvisnlp.modules.bionlpst.BioNLPSTReader">
+  <synopsis>
+    <p>Reads documents and annotations in the <a href="XXX">BioNLP-ST 2013 a1/a2 format</a>.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads text files in the directory specified by <param name="textDir"/> as documents, then imports annotations in the corresponding files in the directories specified by <param name="a1Dir"/> and <param name="a2Dir"/>.</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="a1Dir" short-type="InputDirectory" type="org.bibliome.util.files.InputDirectory">
+      <p>Path to the directory containing <code>.a1</code> files. If this parameter is not set, then <this/> does not read <code>a1</code> files. This directory must contain one <code>.a1</code> file for each <code>.txt</code> file found in <param name="textDir"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Expression evaluated as a boolean with the corpus as context element. If the result is false, then the module does not process the module.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="textDir" short-type="InputDirectory" type="org.bibliome.util.files.InputDirectory">
+      <p>Path to the directory containing <code>.a2</code> files.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: item" name="equivalenceItemPrefix" short-type="String" type="java.lang.String">
+      <p>Prefix of the role of arguments that represent group elements.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantDocumentFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each document created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="a2Dir" short-type="InputDirectory" type="org.bibliome.util.files.InputDirectory">
+      <p>Path to the directory containing <code>.a2</code> files. If this parameter is not set, then <this/> does not read <code>a2</code> files. This directory must contain one <code>.a2</code> file for each <code>.txt</code> file found in <param name="textDir"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantRelationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each relation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="schema" short-type="DocumentSchema" type="org.bibliome.util.bionlpst.schema.DocumentSchema">
+      <p>Annotation schema against which the annotations are checked. <this/> aborts if the annotations do not check. If not set, the annotations are not checked.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: UTF-8" name="charset" short-type="String" type="java.lang.String">
+      <p>Character encoding of all imported files.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: frag" name="textBoundFragmentRolePrefix" short-type="String" type="java.lang.String">
+      <p>Prefix of the role of arguments that represent text-bound fragments.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: id" name="idFeatureName" short-type="String" type="java.lang.String">
+      <p>Feature where to store the annotation identifier.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: type" name="typeFeatureName" short-type="String" type="java.lang.String">
+      <p>Feature where to store the type of the annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: equiv" name="equivalenceRelationName" short-type="String" type="java.lang.String">
+      <p>Name of the relation whose tuples represent equivalences.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: fragments" name="fragmentCountFeatureName" short-type="String" type="java.lang.String">
+      <p>Feature where to store the number of merged fragments. This feature is only set if <param name="textBoundAsAnnotations"/> is <code>true</code>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantSectionFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each section created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: trigger" name="triggerRole" short-type="String" type="java.lang.String">
+      <p>Role of the argument that represent an event trigger.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="textBoundAsAnnotations" short-type="Boolean" type="java.lang.Boolean">
+      <p>If <code>true</code>, <this/> imports text-bound annotations as annotations instead of tuples. Multiple fragments text-bound annotations are merged.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: text" name="sectionName" short-type="String" type="java.lang.String">
+      <p>Name of the unique section contating all the text.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantTupleFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each tuple created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: relation" name="relationKind" short-type="String" type="java.lang.String">
+      <p>Kind value for relation annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: text" name="textKind" short-type="String" type="java.lang.String">
+      <p>Kind value for text annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: event" name="eventKind" short-type="String" type="java.lang.String">
+      <p>Kind value for event annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: kind" name="kindFeatureName" short-type="String" type="java.lang.String">
+      <p>Feature of relations contatining the annotation kind.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

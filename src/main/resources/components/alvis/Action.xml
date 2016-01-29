@@ -1,0 +1,85 @@
+<alvisnlp-doc author="Robert Bossy" date="2012-04-30" short-target="Action" target="org.bibliome.alvisnlp.modules.Action">
+  <synopsis>
+    <p>Applies action expressions on selected elements.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> evaluates <param name="target"/> as a list of elements, then it evaluates <param name="action"/> on each element.</p>
+
+      <p><this/> is useful when <param name="action"/> is a side-effect expression. The side-effect expressions allowed are controlled by: <param name="createDocuments"/>, <param name="createSections"/>, <param name="createRelations"/>, <param name="createTuples"/>, <param name="createAnnotations"/>, <param name="setArguments"/>, <param name="setFeatures"/> and <param name="deleteElements"/>. If these parameters are not set to true then <this/> will refuse to evaluate the corresponding side-effect expressions.</p>
+    </description>
+  
+    <param-doc mandatory="required" name="target" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Elements on which to perform the action. The expression is evaluated as a list of elements with the corpus as the context element.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p><this/> only runs if this expression evaluates to true.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="createAnnotations" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow the creation of annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="createDocuments" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow the creation of documents.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="createRelations" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow the creation of relations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantDocumentFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each document created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantRelationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each relation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantSectionFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each section created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantTupleFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each tuple created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="action" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Action to perform on each result of <param name="target"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="createSections" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow the creation of sections.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="setArguments" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to set tuple arguments.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="setFeatures" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to set element features.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="deleteElements" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to delete elements.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="createTuples" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to create tuples.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="addToLayer" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to add annotations to layers.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="removeFromLayer" short-type="Boolean" type="java.lang.Boolean">
+      <p>Allow to remove annotations from layers.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

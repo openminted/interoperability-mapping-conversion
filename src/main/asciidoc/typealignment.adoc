@@ -1,0 +1,16 @@
+= Type alignments
+
+This document provides an alignment of the type systems and annotation conventions used by the
+OpenMinTeD partners and LAPPS with each other, based on the types supported by LAPPS.
+
+== Overview
+include::{generated-dir}overview.adoc[]
+
+== Type alignments
+include::{generated-dir}typeAlignment.adoc[]
+
+== Feature alignments
+include::{generated-dir}featureAlignment.adoc[]
+
+== Typesystems
+include::{generated-dir}typeSystems.adoc[]

@@ -1,0 +1,87 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="TreeTagger" target="org.bibliome.alvisnlp.modules.treetagger.TreeTagger">
+  <synopsis>
+    <p>Runs <em>tree-tagger</em>.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> applies <em>tree-tagger</em> on annotations in <param name="wordLayerName"/> by generating an appropriate input file. This file will contain one line for each annotation. The first column, the token surface form, is the value of the <param name="formFeature"/> feature. The second column, the token predefined POS tag, is the value <param name="posFeature"/> feature. The third column, the token predefined lemma, is the value of <param name="lemmaFeature"/> feature. If <param name="posFeature"/> or <param name="lemmaFeature"/> are not defined, then the second and third column are left blank.</p>
+      <p>The <em>tree-tagger</em> binary is specified by <param name="treeTaggerExecutable"/> and the language model to use is specified by <param name="parFile"/>. Additionally a lexicon file can be given through <param name="lexiconFile"/>.</p>
+      <p>If <param name="sentenceLayerName"/> is defined, then <this/> considers annotations in this layer as sentences. Sentence boundaries are reinforced by providing <em>tree-tagger</em> an additional end-of-sentence marker.</p>
+      <p>Once <em>tree-tagger</em> has processed the corpus, <this/> adds the predicted POS tag and lemma to the respective <param name="posFeature"/> and <param name="lemmaFeature"/> features of the corresponding annotations.</p>
+      <p>If <param name="recordDir"/> and <param name="recordFeatures"/> are both defined, then <em>tree-tagger</em> predictions are written into files in one file per section in the <param name="recordDir"/> directory. <param name="recordFeatures"/> is an array of feature names to record. An additional feature <em>n</em> is recognized as the annotation ordinal in the section.</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="recordDir" short-type="OutputDirectory" type="org.bibliome.util.files.OutputDirectory">
+      <p>Path to the directory where to write tree-tagger result files (one file per section).</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: sentences" name="sentenceLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer containing sentence annotations, sentences are reinforced.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: ISO-8859-1" name="inputCharset" short-type="String" type="java.lang.String">
+      <p>Tree-tagger input corpus character set.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="recordFeatures" short-type="String[]" type="java.lang.String[]">
+      <p>List of attributes to display in result files.</p>
+    </param-doc>
+    
+    <param-doc mandatory="default: UTF-8" name="recordCharset" short-type="String" type="java.lang.String">
+      <p>Character encoding of the result files.</p>
+    </param-doc>
+
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: ISO-8859-1" name="outputCharset" short-type="String" type="java.lang.String">
+      <p>Tree-tagger output character set.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="lexiconFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to a tree-tagger lexicon file, if set the lexicon will be applied to the corpus before treetagger processes it.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="noUnknownLemma" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to replace unknown lemmas with the surface form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: words" name="wordLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer containing the word annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: lemma" name="lemmaFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature to set with the lemma.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="treeTaggerExecutable" short-type="ExecutableFile" type="org.bibliome.util.files.ExecutableFile">
+      <p>Path to the tree-tagger executable file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="parFile" short-type="InputFile" type="org.bibliome.util.files.InputFile">
+      <p>Path to the language model file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: form" name="formFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature denoting the token surface form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: pos" name="posFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature to set with the POS tag.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

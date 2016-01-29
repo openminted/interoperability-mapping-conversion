@@ -1,0 +1,81 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="WoSMig" target="org.bibliome.alvisnlp.modules.segmig.WoSMig">
+  <synopsis>
+    <p>Performs word segmentation on section contents.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> searches for word boundaries in the section contents, creates an annotation for each word and adds it to the layer <param name="targetLayerName"/>. The following are considered as word boundaries:
+      <ul>
+	<li>consecutive whitespace characters, including ' ', newline, carriage return and horizontal tabulation;</li>
+	<li>the positions before and after each punctuation character defined in <param name="punctuation"/> and <param name="balancedPunctuations"/>, thus a punctuation character always form a single-character word, a balanced punctuation breaks a word iff the corresponding punctuation is found.</li>
+      </ul>
+      </p>
+      <p>If <param name="fixedFormLayerName"/> is defined then non-overlapping annotations in this layer will be added as is in <param name="targetLayerName"/>, the start and end positions of these annotations are considered as word boundaries and no word boundary is searched inside.</p>
+      <p>The created annotations have the feature <param name="annotationTypeFeature"/> with a value corresponding to the word type:
+      <ul>
+	<li><strong>punctuation</strong>: if the word is a single-character punctuation;</li>
+	<li><strong>word</strong>: if the word is a plain non-punctuation word.</li>
+      </ul>
+      The <param name="eosStatusFeature"/> feature contains the end-of-sentence status of the word:
+      <ul>
+	<li><strong>not-eos</strong>: if the word cannot be an end of sentence;</li>
+	<li><strong>maybe-eos</strong>: if the word may be an end of sentence;</li>
+	<li><strong>eos</strong>: if the word is definitely an end of sentence.</li>
+      </ul>
+      </p>
+    </description>
+  
+    <param-doc mandatory="optional" name="fixedFormLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer containing annotations that should not be split into several words.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: ?.!;,:-" name="punctuations" short-type="String" type="java.lang.String">
+      <p>List of punctuations, be them weak or strong.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: wordType" name="annotationTypeFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to put the word type (word, punctuation, etc).</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: ()[]{}&quot;&quot;" name="balancedPunctuations" short-type="String" type="java.lang.String">
+      <p>Balanced punctuation characters. The opening punctuation must be immediately followed by the corresponding closing punctuation. If this parameter value has an odd length, then a warning will be issued and the last character will be ignored.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: words" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p>Layer where to store word annotations.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: fixed" name="fixedType" short-type="String" type="java.lang.String">
+      <p>Value of the type feature for annotations copied from fixed forms.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: word" name="wordType" short-type="String" type="java.lang.String">
+      <p>Value of the type feature for regular word annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: punctuation" name="punctuationType" short-type="String" type="java.lang.String">
+      <p>Value of the type feature for punctuation annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: length" name="annotationComparator" short-type="AnnotationComparator" type="alvisnlp.corpus.AnnotationComparator">
+      <p>Comparator to use when removing overlapping fixed form annotations.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

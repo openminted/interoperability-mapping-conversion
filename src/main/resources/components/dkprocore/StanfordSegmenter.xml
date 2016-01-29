@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter</name>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>languageFallback</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>boundaryTokenRegex</name>
+                <description>The set of boundary tokens. If null, use default.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>boundaryFollowers</name>
+                <description>This is a Set of String that are matched with .equals() which are allowed to be tacked onto
+the end of a sentence after a sentence boundary token, for example ")".</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>xmlBreakElementsToDiscard</name>
+                <description>These are elements like "p" or "sent", which will be wrapped into regex for approximate XML
+matching. They will be deleted in the output, and will always trigger a sentence boundary.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>boundaryToDiscard</name>
+                <description>The set of regex for sentence boundary tokens that should be discarded.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>regionElementRegex</name>
+                <description>A regular expression for element names containing a sentence region. Only tokens in such
+elements will be included in sentences. The start and end tags themselves are not included in
+the sentence.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>newlineIsSentenceBreak</name>
+                <description>Strategy for treating newlines as paragraph breaks.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>tokenRegexesToDiscard</name>
+                <description>The set of regex for sentence boundary tokens that should be discarded.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>isOneSentence</name>
+                <description>Whether to treat all input as one sentence.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>allowEmptySentences</name>
+                <description>Whether to generate empty sentences.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>zoneTypes</name>
+                <description>A list of type names used for zoning.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>strictZoning</name>
+                <description>Strict zoning causes the segmentation to be applied only within the
+boundaries of a zone annotation. This works only if a single zone type
+is specified (the zone annotations should NOT overlap) or if no zone
+type is specified - in which case the whole document is taken as a zone.
+If strict zoning is turned off, multiple zone types can be specified.
+A list of all zone boundaries (start and end) is created and segmentation
+happens between them.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>The language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeToken</name>
+                <description>Create Token annotations.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeSentence</name>
+                <description>Create Sentence annotations.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>boundaryTokenRegex</name>
+                <value>
+                    <string>\.|[!?]+</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>boundaryFollowers</name>
+                <value>
+                    <array>
+                        <string>)</string>
+                        <string>]</string>
+                        <string>}</string>
+                        <string>"</string>
+                        <string>'</string>
+                        <string>''</string>
+                        <string>’</string>
+                        <string>”</string>
+                        <string>-RRB-</string>
+                        <string>-RSB-</string>
+                        <string>-RCB-</string>
+                        <string>)</string>
+                        <string>]</string>
+                        <string>}</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>boundaryToDiscard</name>
+                <value>
+                    <array>
+                        <string>
+</string>
+                        <string>*NL*</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>newlineIsSentenceBreak</name>
+                <value>
+                    <string>TWO_CONSECUTIVE</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>tokenRegexesToDiscard</name>
+                <value>
+                    <array/>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>isOneSentence</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>allowEmptySentences</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>zoneTypes</name>
+                <value>
+                    <array>
+                        <string>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Div</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>strictZoning</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeToken</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeSentence</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

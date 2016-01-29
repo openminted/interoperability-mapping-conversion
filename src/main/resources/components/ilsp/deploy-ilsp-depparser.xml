@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDeploymentDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>ILSP Dependency Parser AS</name>
+  <description>Deploys the ilsp-depparser-ae as an asynchronous collection processing engine.</description>
+  <version/>
+  <vendor/>
+  <deployment protocol="jms" provider="activemq">
+    <casPool numberOfCASes="1" initialFsHeapSize="2000000"/>
+    <service>
+      <inputQueue endpoint="ilsp-depparser-queue" brokerURL="tcp://localhost:61616" prefetch="0"/>
+      <topDescriptor>
+        <import name="ilsp-depparser-ae"/>
+      </topDescriptor>
+          <analysisEngine key="ilsp-depparser-ae" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+        <asyncPrimitiveErrorConfiguration>
+          <processCasErrors thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+          <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+        </asyncPrimitiveErrorConfiguration>
+      </analysisEngine>
+    </service>
+  </deployment>
+</analysisEngineDeploymentDescription>

@@ -1,6 +1,18 @@
 <!-- Generate cross-document links to the other documentation files -->
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
+<script>
+$( document ).ready(function() {
+    $( "#toc" ).prepend( "\
+            <ul style='margin-bottom: 1.5em;'>\
+              <li><a href='main.html'>Home</a>\
+              <li><a href='components.html'>Components</a>\
+              <li><a href='typealignment.html'>Type alignments</a>\
+            </ul>\
+    " );
+})
+
+</script>
 <!-- Generate a nice TOC -->
 <!-- script src="https://code.jquery.com/jquery-1.11.3.min.js"></script -->
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>

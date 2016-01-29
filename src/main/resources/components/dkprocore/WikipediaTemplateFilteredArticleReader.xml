@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.jwpl.WikipediaTemplateFilteredArticleReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.jwpl.WikipediaTemplateFilteredArticleReader</name>
+        <description>Reads all pages that contain or do not contain the templates specified in the template whitelist
+and template blacklist.
+
+&lt;p&gt;
+It is possible to just define a whitelist OR a blacklist. If both whitelist and blacklist are
+provided, the articles are chosen that DO contain the templates from the whitelist and at the
+same time DO NOT contain the templates from the blacklist (= the intersection of the
+"whitelist page set" and the "blacklist page set")
+&lt;/p&gt;
+
+&lt;p&gt;
+This reader only works if template tables have been generated for the JWPL database using the
+WikipediaTemplateInfoGenerator.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;NOTE:&lt;/strong&gt; This reader directly extends the WikipediaReaderBase and not the
+WikipediaStandardReaderBase
+&lt;/p&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>OnlyFirstParagraph</name>
+                <description>If set to true, only the first paragraph instead of the whole article is used.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>OutputPlainText</name>
+                <description>Whether the reader outputs plain text or wiki markup.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>IncludeDiscussions</name>
+                <description>Whether the reader should read also include talk pages.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>DoubleCheckAssociatedPages</name>
+                <description>If this option is set, discussion pages are rejected that are associated with a blacklisted
+article. Analogously, articles are rejected that are associated with a blacklisted discussion
+page.
+&lt;p&gt;
+This check is rather expensive and could take a long time. This is option is not active if
+only a whitelist is used.
+&lt;/p&gt;
+&lt;p&gt;
+Default Value: false
+&lt;/p&gt;</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>LimitNUmberOfArticlesToRead</name>
+                <description>Optional parameter that allows to define the max number of articles that should be delivered
+by the reader.
+&lt;p&gt;
+This avoids unnecessary filtering if only a small number of articles is needed.
+&lt;/p&gt;</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>TemplateWhitelist</name>
+                <description>Defines templates that the articles MUST contain.
+&lt;p&gt;
+If you also define a blacklist, the intersection of both sets is used. (= pages that DO
+contain templates from the whitelist, but DO NOT contain templates from the blacklist)
+&lt;/p&gt;</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>TemplateBlacklist</name>
+                <description>Defines templates that the articles MUST NOT contain.
+&lt;p&gt;
+If you also define a whitelist, the intersection of both sets is used. (= pages that DO
+contain templates from the whitelist, but DO NOT contain templates from the blacklist)
+&lt;/p&gt;</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>ExactTemplateMatching</name>
+                <description>Defines whether to match the templates exactly or whether to match all
+templates that start with the String given in the respective parameter
+list.
+&lt;p&gt;Default Value: true&lt;/p&gt;</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>PageBuffer</name>
+                <description>The page buffer size (#pages) of the page iterator.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Host</name>
+                <description>The host server.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Database</name>
+                <description>The name of the database.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>User</name>
+                <description>The username of the database account.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Password</name>
+                <description>The password of the database account.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Language</name>
+                <description>The language of the Wikipedia that should be connected to.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>CreateDBAnno</name>
+                <description>Sets whether the database configuration should be stored in the CAS,
+ so that annotators down the pipeline can access additional data.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>OnlyFirstParagraph</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>OutputPlainText</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>IncludeDiscussions</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>DoubleCheckAssociatedPages</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>ExactTemplateMatching</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>PageBuffer</name>
+                <value>
+                    <integer>1000</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>CreateDBAnno</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.io.jwpl.type.DBConfig</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

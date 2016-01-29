@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.reuters.Reuters21578SgmlReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.reuters.Reuters21578SgmlReader</name>
+        <description>Read a Reuters-21578 corpus in SGML format.
+&lt;p&gt;
+Set the directory that contains the SGML files with #PARAM_SOURCE_LOCATION.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>sourceLocation</name>
+                <description>The directory that contains the Reuters-21578 SGML files.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

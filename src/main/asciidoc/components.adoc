@@ -1,0 +1,13 @@
+= Components
+
+This document provides an overview over the analytics components and data formats supported by
+the component collections of the OpenMinTeD partners.
+
+== Analytics by category
+include::{generated-dir}overviewByCategory.adoc[]
+
+== Analytics by product
+include::{generated-dir}overviewByProduct.adoc[]
+
+== I/O components by format
+include::{generated-dir}overviewByFormat.adoc[]

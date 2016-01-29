@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.textcat.LanguageIdentifier</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.textcat.LanguageIdentifier</name>
+        <description>&lt;p&gt;Detection based on character n-grams. Uses the &lt;a href="http://textcat.sourceforge.net"&gt;Java
+Text Categorizing Library&lt;/a&gt; based on a technique by Cavnar and Trenkle.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cavnar, W. B. and J. M. Trenkle (1994). N-Gram-Based Text Categorization. 
+In Proceedings of Third Annual Symposium on Document Analysis and Information Retrieval, 
+Las Vegas, NV, UNLV Publications/Reprographics, pp. 161-175, 11-13 April 1994.&lt;/li&gt;&lt;/ul&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters/>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

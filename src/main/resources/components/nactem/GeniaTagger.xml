@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.GeniaTagger</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>GENIA Tagger</name>
+    <description>Tags biological named entities: proteins, cell lines, cell types, DNAs, and RNAs. It has its own tokeniser, part-of-speech tagger, and shallow parser. The models were trained on the GENIA corpus. 
+
+Project website: http://www.nactem.ac.uk/GENIA/tagger/</description>
+    <version>1.0</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>tokenize</name>
+        <description>True if the Sentences found should be tokenized, false if the tagger should use pre-set Tokens</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>chunkTag</name>
+        <description>If true, chunk tags will be found (default is true)</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>neTag</name>
+        <description>If true, ne tags will be found (default true)</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.RichToken</type>
+          <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.geniatagger.Chunk</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.RNA</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.Protein</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.DNA</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.CellType</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.CellLine</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>geniataggermodels</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>geniataggermodels</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:geniataggermodels</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>geniataggermodels</key>
+        <resourceName>geniataggermodels</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

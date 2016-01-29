@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.gdep.GDepParser</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>GENIA Dependency Parser</name>
+    <description>A dependency parser for biomedical text. The model was trained on the GENIA Treebank.
+
+Original software developed by Tsujii Lab (University of Tokyo) and 
+the Institute for Creative Technologies (University of Southern California).
+Website: http://people.ict.usc.edu/~sagae/parser/gdep/</description>
+    <version>1.0</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters>
+    	<configurationParameter>
+    		<name>DisableTokenisation</name>
+    		<description>Take tokens as input from a preceding component.</description>
+    		<type>Boolean</type>
+    		<multiValued>false</multiValued>
+    		<mandatory>true</mandatory>
+    	</configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+    	<nameValuePair>
+    		<name>DisableTokenisation</name>
+    		<value>
+    			<boolean>false</boolean>
+    		</value>
+    	</nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.geniatagger.GeniaToken</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Dependency</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>gdepmodels</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>gdepmodels</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:gdepmodels</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>gdepmodels</key>
+        <resourceName>gdepmodels</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

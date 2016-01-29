@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.text.StringReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.text.StringReader</name>
+        <description>Simple reader that generates a CAS from a String. This can be useful in situations where a reader
+is preferred over manually crafting a CAS using JCasFactory#createJCas().</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>language</name>
+                <description>Set this as the language of the produced documents.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>documentText</name>
+                <description>The document text.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>collectionId</name>
+                <description>The collection ID to set in the DocumentMetaData.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>documentId</name>
+                <description>The document ID to set in the DocumentMetaData.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>documentBaseUri</name>
+                <description>The document base URI to set in the DocumentMetaData.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>documentUri</name>
+                <description>The document URI to set in the DocumentMetaData.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>collectionId</name>
+                <value>
+                    <string>COLLECTION_ID</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>documentId</name>
+                <value>
+                    <string>DOCUMENT_ID</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>documentUri</name>
+                <value>
+                    <string>STRING</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

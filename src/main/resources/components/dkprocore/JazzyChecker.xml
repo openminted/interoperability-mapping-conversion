@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.jazzy.JazzyChecker</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.jazzy.JazzyChecker</name>
+        <description>This annotator uses Jazzy for the decision whether a word is spelled correctly or not.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description>Location from which the model is read. The model file is a simple word-list with one word
+per line.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelEncoding</name>
+                <description>The character encoding used by the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>ScoreThreshold</name>
+                <description>Determines the maximum edit distance (as an int value) that a suggestion for a spelling error may have.
+E.g. if set to one suggestions are limited to words within edit distance 1 to the original word.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>modelEncoding</name>
+                <value>
+                    <string>UTF-8</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>ScoreThreshold</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.anomaly.type.SpellingAnomaly</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.anomaly.type.SuggestedAction</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

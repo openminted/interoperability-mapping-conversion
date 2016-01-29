@@ -1,0 +1,125 @@
+<alvisnlp-doc author="" date="" short-target="SimpleProjector2" target="org.bibliome.alvisnlp.modules.trie.SimpleProjector2">
+  <synopsis>
+    <p>Projects a simple dictionary on sections.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads a list of entries from <param name="dictFile"/> and searches for these entries in sections. The format of the dictionary is one entry per line. Each line is split into columns separated by tab characters, or whichever character defined by <param name="separator"/>. The column specified by <param name="keyIndex"/> will be the entry to be searched and the other columns are data associated to the entry.</p>
+      <p>The parameters <param name="skipBlank"/>, <param name="skipEmpty"/>, <param name="strictColumnNumber"/>, <param name="trimColumns"/>, <param name="separator"/>, <param name="multipleEntryBehaviour"/> control the loading of the dictionary file.</p>
+      <p>The parameters <param name="allowJoined"/>, <param name="allUpperCaseInsensitive"/>, <param name="caseInsensitive"/>, <param name="ignoreDiacritics"/>, <param name="joinDash"/>, <param name="matchStartCaseInsensitive"/>, <param name="skipConsecutiveWhitespaces"/>, <param name="skipWhitespace"/> and <param name="wordStartCaseInsensitive"/> control the matching between the section and the entry keys.</p>
+      <p>The <param name="subject"/> parameter specifies which text of the section should be matched. There are two options:
+      <ul>
+	<li>the entries are matched on the contents of the section, <param name="subject"/> can also control if matches boundaries coincide with word delimiters;</li>
+	<li>the entries are matched on the feature value of annotations of a given layer separated by a whitespace, in this way entries can be searched against word lemmas for instance.</li>
+      </ul>
+      </p>
+      <p><this/> creates an annotation for each matched entry and adds these annotations to the layer named <param name="targetLayerName"/>. The created annotations will have features whose keys correspond to <param name="entryFeatureNames"/> and values to the data associated to the matched entry (columns in the dictionary file). For instance if <param name="entryFeatureNames"/> is <em>[a,b,c]</em>, then each annotation will have three features named <em>a</em>, <em>b</em> and <em>c</em> with the respective values of the entry's second, third and fourth columns. A feature name left blank in <param name="entryFeatureNames"/> will not create a feature. Thus, in order not to keep the entry in the <em>a</em> feature, <param name="entryFeatureNames"/> should be <em>[,b,c]</em>.<nl/>In addition, the created annotations will have the feature keys and values defined in <param name="constantAnnotationFeatures"/>.</p>
+      <p>If specified, then <this/> assumes that <param name="trieSource"/> contains a compiled version of the dictionary. <param name="dictFile"/> is not read. If specified, <this/> writes a compiled version of the dictionary in <param name="trieSink"/>. The use of compiled dictionaries may accelerate the processing for large dictionaries.</p>
+    </description>
+  
+    <param-doc mandatory="default: false" name="skipWhitespace" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows arbitrary insertion of whitespace characters in the subject. For instance, the contents <em>amino acid</em> matches the entry <em>aminoacid</em>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="strictColumnNumber" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to check that every line in <param name="dictFile"/> has the same number of columns as the number of features specified in <param name="entryFeatureNames"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="skipBlank" short-type="Boolean" type="java.lang.Boolean">
+      <p>In <param name="dictFile"/>, skip lines that contain only whitespace characters.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: WORD" name="subject" short-type="Subject" type="org.bibliome.alvisnlp.modules.trie.Subject">
+      <p>Specifies the contents to match.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="trieSink" short-type="OutputFile" type="org.bibliome.util.files.OutputFile">
+      <p>If set, <this/> writes the compiled dictionary to the specified file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="wordStartCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows case substitution on the first character of words.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="caseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows case substitutions on all characters.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="allowJoined" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows arbitrary suppression of whitespace characters in the subject. For instance, the contents <em>aminoacid</em> matches the entry <em>amino acid</em>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="trimColumns" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to trim column values in <param name="dictFile"/> from leading and trailing whitespace characters.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer that contains the match annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="dictFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Source of the dictionary.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="skipEmpty" short-type="Boolean" type="java.lang.Boolean">
+      <p>In <param name="dictFile"/>, skip empty lines.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="trieSource" short-type="InputFile" type="org.bibliome.util.files.InputFile">
+      <p>If set, read the compiled dictionary from the specified files. Compiled dictionaries are generally faster for large dictionaries.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="skipConsecutiveWhitespaces" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows insertion of consecutive whitespace characters in the subject. For instance, the contents <em>amino  acid</em> matches the entry <em>amino acid</em>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: &#9;" name="separator" short-type="Character" type="java.lang.Character">
+      <p>Specifies the character that separates columns in <param name="dictFile"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="valueFeatures" short-type="String[]" type="java.lang.String[]">
+      <p>Target features in match annotations. The values are the columns in the matched entry line.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="joinDash" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to treat dash characters (-) as whitespace characters if <param name="allowJoined"/> is <code>true</code>. For instance, the contents <em>aminoacid</em> matches the entry <em>amino-acid</em>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: all" name="multipleEntryBehaviour" short-type="MultipleEntryBehaviour" type="org.bibliome.alvisnlp.modules.trie.MultipleEntryBehaviour">
+      <p>Specifies the behavious of <this/> if <param name="dictFile"/> contains several entries with the same key.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="allUpperCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows case substitution on all characters in words that are all upper case.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreDiacritics" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows dicacritics substitutions on all characters. For instance the contents <em>acide amine</em> matches the entry <em>acide aminé</em>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="matchStartCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either the match allows case substitution on the first character of the entry key.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: 0" name="keyIndex" short-type="Integer[]" type="java.lang.Integer[]">
+      <p>Specifies the key column index (starting at 0).</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

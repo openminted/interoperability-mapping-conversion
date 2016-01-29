@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <CREOLE>
+    <JAR>DataSift.jar</JAR>
+  </CREOLE>
+<RESOURCE><CLASS>gate.corpora.DataSiftFormat</CLASS><PRIVATE /><NAME>GATE DataSift JSON Document Format</NAME><COMMENT>Format parser for DataSift JSON files</COMMENT><HIDDEN-AUTOINSTANCE /></RESOURCE></CREOLE-DIRECTORY>

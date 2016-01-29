@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.TokenCaseTransformer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.TokenCaseTransformer</name>
+        <description>Change tokens to follow a specific casing: all upper case, all lower case, or 'normal case':
+lowercase everything but the first character of a token and the characters immediately following
+a hyphen.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>tokenCase</name>
+                <description>The case to convert tokens to:
+&lt;ul&gt;
+&lt;li&gt;UPPERCASE: uppercase everything.&lt;/li&gt;
+&lt;li&gt;LOWERCASE: lowercase everything.&lt;/li&gt;
+&lt;li&gt;NORMALCASE: retain first letter in word and after hyphens, lowercase everything else.&lt;/li&gt;
+&lt;/ul&gt;</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>typesToCopy</name>
+                <description>A list of fully qualified type names that should be copied to the transformed CAS where
+available. By default, no types are copied apart from DocumentMetaData, i.e. all
+other annotations are omitted.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>typesToCopy</name>
+                <value>
+                    <array/>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

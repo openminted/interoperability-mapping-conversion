@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.mallet.topicmodel.MalletTopicModelEstimator</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.mallet.topicmodel.MalletTopicModelEstimator</name>
+        <description>Estimate an LDA topic model using Mallet and write it to a file. It stores all incoming CAS' to&#13;
+Mallet Instances before estimating the model, using a ParallelTopicModel.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>typeName</name>
+                <description>The annotation type to use for the topic model. Default:&#13;
+de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>The target model file location.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>nTopics</name>
+                <description>The number of topics to estimate for the topic model.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>nThreads</name>
+                <description>The number of threads to use during model estimation. Default: 1.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>nIterations</name>
+                <description>The number of iterations during model estimation. Default: 1000.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>useLemma</name>
+                <description>If set, uses lemmas instead of original text as features.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>burninPeriod</name>
+                <description>The number of iterations before hyperparameter optimization begins. Default: 100</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>optimizeInterval</name>
+                <description>Interval for optimizing Dirichlet hyperparameters. Default: 50</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>randomSeed</name>
+                <description>Set random seed. If set to -1 (default), uses random generator.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>saveInterval</name>
+                <description>Define how often to save a serialized model during estimation. Default: 0 (only save when&#13;
+estimation is done).</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>useSymmetricAlph</name>
+                <description>Use a symmatric alpha value during model estimation? Default: false.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>displayInterval</name>
+                <description>The interval in which to display the estimated topics. Default: 50.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>displayNTopicWords</name>
+                <description>The number of top words to display during estimation. Default: 7.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minTokenLength</name>
+                <description>Ignore tokens (or lemmas, respectively) that are shorter than the given value. Default: 3.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelEntityType</name>
+                <description>If specific, the text contained in the given segmentation type annotations are fed as&#13;
+separate units to the topic model estimator e.g.&#13;
+de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.sentence. Text that is not within&#13;
+such annotations is ignored.&#13;
+&lt;p&gt;&#13;
+By default, the full document text is used as a document.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>alphaSum</name>
+                <description>The sum of alphas over all topics. Default: 1.0.&#13;
+&lt;p&gt;&#13;
+Another recommended value is 50 / T (number of topics).</description>
+                <type>Float</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>beta</name>
+                <description>Beta for a single dimension of the Dirichlet prior. Default: 0.01.</description>
+                <type>Float</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>typeName</name>
+                <value>
+                    <string>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>nTopics</name>
+                <value>
+                    <integer>10</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>nThreads</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>nIterations</name>
+                <value>
+                    <integer>1000</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>useLemma</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>burninPeriod</name>
+                <value>
+                    <integer>100</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>optimizeInterval</name>
+                <value>
+                    <integer>50</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>randomSeed</name>
+                <value>
+                    <integer>-1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>saveInterval</name>
+                <value>
+                    <integer>0</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>useSymmetricAlph</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>displayInterval</name>
+                <value>
+                    <integer>50</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>displayNTopicWords</name>
+                <value>
+                    <integer>7</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minTokenLength</name>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>alphaSum</name>
+                <value>
+                    <float>1.0</float>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>beta</name>
+                <value>
+                    <float>0.01</float>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

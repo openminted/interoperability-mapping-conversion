@@ -1,0 +1,111 @@
+<alvisnlp-doc author="" beta="yes" date="" short-target="TomapProjector" target="org.bibliome.alvisnlp.modules.tomap.TomapProjector">
+  <synopsis>
+    <p>synopsis</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p>synopsis</p>
+    </description>
+  
+    <param-doc mandatory="default: false" name="lemmaKeys" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="skipWhitespace" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: WORD" name="subject" short-type="Subject" type="org.bibliome.alvisnlp.modules.trie.Subject">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="trieSink" short-type="OutputFile" type="org.bibliome.util.files.OutputFile">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="onlyMNP" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="wordStartCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="explanationFeaturePrefix" short-type="String" type="java.lang.String">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="yateaFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="conceptFeature" short-type="String" type="java.lang.String">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="scoreFeature" short-type="String" type="java.lang.String">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="caseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="allowJoined" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Expression evaluated as a boolean with the corpus as context element. If the result is false, then the module does not process the module.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="trieSource" short-type="InputFile" type="org.bibliome.util.files.InputFile">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="skipConsecutiveWhitespaces" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="joinDash" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: all" name="multipleEntryBehaviour" short-type="MultipleEntryBehaviour" type="org.bibliome.alvisnlp.modules.trie.MultipleEntryBehaviour">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="allUpperCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreDiacritics" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="matchStartCaseInsensitive" short-type="Boolean" type="java.lang.Boolean">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="tomapClassifier" short-type="TomapClassifier" type="org.bibliome.alvisnlp.modules.tomap.TomapClassifier">
+      <p/>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

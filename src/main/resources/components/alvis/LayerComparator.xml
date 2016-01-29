@@ -1,0 +1,35 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="LayerComparator" target="org.bibliome.alvisnlp.modules.LayerComparator">
+  <synopsis>
+    <p>Compares annotations in two different layers.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> traverses the annotations in the layers <param name="predictedLayerName"/> and <param name="referenceLayerName"/> in each section. This is useful when analyzing the result of named entity recognition systems. The result of the comparison is written for each section in terms of recall and precision into the file <param name="outFile"/>. This file will also point boundary mismatches.</p>
+    </description>
+  
+    <param-doc mandatory="required" name="outFile" short-type="TargetStream" type="org.bibliome.util.streams.TargetStream">
+      <p>Path to the file where to store results.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="predictedLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the source layer.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="required" name="referenceLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the reference layer.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

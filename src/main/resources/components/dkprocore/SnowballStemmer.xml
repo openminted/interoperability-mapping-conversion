@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer</name>
+        <description>&lt;p&gt;UIMA wrapper for the Snowball stemmer. Annotation types to be stemmed can beconfigured by a
+FeaturePath.&lt;/p&gt;
+&lt;p&gt;If you use this component in a pipeline which uses stop word removal, make sure that it
+runs after the stop word removal step, so only words that are no stop words are stemmed.&lt;/p&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>language</name>
+                <description>Use this language instead of the document language to resolve the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>lowerCase</name>
+                <description>Per default the stemmer runs in case-sensitive mode. If this parameter is enabled, tokens
+are lower-cased before being passed to the stemmer.
+
+&lt;table border="1" cellspacing="0"&gt;
+&lt;caption&gt;Examples&lt;/caption&gt;
+&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;false (default)&lt;/th&gt;&lt;th&gt;true&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;EDUCATIONAL&lt;/td&gt;&lt;td&gt;EDUCATIONAL&lt;/td&gt;&lt;td&gt;educ&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Educational&lt;/td&gt;&lt;td&gt;Educat&lt;/td&gt;&lt;td&gt;educ&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;educational&lt;/td&gt;&lt;td&gt;educ&lt;/td&gt;&lt;td&gt;educ&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>paths</name>
+                <description>Specify a path that is used for annotation. Format is de.type.name/feature/path. All type
+objects will be annotated with a IndexTermAnnotation. The value of the IndexTerm is specified
+by the feature path.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>filterFeaturePath</name>
+                <description>Specifies a feature path that is used in the filter. If this is set, you also have to specify
+&lt;code&gt;PARAM_FILTER_CONDITION_OPERATOR&lt;/code&gt; and &lt;code&gt;PARAM_FILTER_CONDITION_VALUE&lt;/code&gt;.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>filterConditionOperator</name>
+                <description>Specifies the operator for a filtering condition.
+&lt;p&gt;
+It is only used if &lt;code&gt;PARAM_FILTER_FEATUREPATH&lt;/code&gt; is set.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>filterConditionValue</name>
+                <description>Specifies the value for a filtering condition.
+&lt;p&gt;
+It is only used if &lt;code&gt;PARAM_FILTER_FEATUREPATH&lt;/code&gt; is set.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>lowerCase</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Stem</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

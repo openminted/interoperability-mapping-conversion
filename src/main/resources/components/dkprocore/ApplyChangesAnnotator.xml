@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.castransformation.ApplyChangesAnnotator</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.castransformation.ApplyChangesAnnotator</name>
+        <description>Applies changes annotated using a SofaChangeAnnotation.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters/>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.transform.type.SofaChangeAnnotation</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.transform.type.SofaChangeAnnotation</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

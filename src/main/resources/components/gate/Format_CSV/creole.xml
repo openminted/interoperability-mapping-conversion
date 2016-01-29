@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>format-csv.jar</JAR>
+  <JAR>lib/opencsv-2.3.jar</JAR>
+  <JAR>gcp/csv4gcp.jar</JAR>
+<RESOURCE><CLASS>gate.corpora.CSVImporter</CLASS><TOOL /><NAME>CSV Corpus Populater</NAME><COMMENT>Populate a corpus from CSV files</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:creole:csv</HELPURL><AUTOINSTANCE /></RESOURCE></CREOLE-DIRECTORY>

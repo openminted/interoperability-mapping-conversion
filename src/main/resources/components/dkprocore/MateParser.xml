@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.matetools.MateParser</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.matetools.MateParser</name>
+        <description>DKPro Annotator for the MateToolsParser.&#13;
+&#13;
+&lt;p&gt;&#13;
+Please cite the following paper, if you use the parser: Bernd Bohnet. 2010. Top Accuracy and Fast&#13;
+Dependency Parsing is not a Contradiction. The 23rd International Conference on Computational&#13;
+Linguistics (COLING 2010), Beijing, China.&#13;
+&lt;/p&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>language</name>
+                <description>Use this language instead of the document language to resolve the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelVariant</name>
+                <description>Override the default variant used to locate the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description>Load the model from this location instead of locating the model automatically.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>printTagSet</name>
+                <description>Log the tag set(s) when a model is loaded.&#13;
+&#13;
+Default: false</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>DependencyMappingLocation</name>
+                <description>Load the dependency to UIMA type mapping from this location instead of locating&#13;
+the mapping automatically.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>printTagSet</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.syntax.type.dependency.Dependency</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

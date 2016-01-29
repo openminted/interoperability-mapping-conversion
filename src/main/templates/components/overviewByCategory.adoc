@@ -1,0 +1,26 @@
+<%
+components
+    .grep { it.categories.isEmpty() || !(it.categories[0] in ['Reader', 'Writer'])}
+    .groupBy { it.categories.isEmpty() ? ' Uncategorized' : it.categories[0] }
+    .sort { it.key }
+    .each { category, categoryGroup ->
+%>
+=== ${category} (${categoryGroup.size()})
+
+${data[category] ?: ''}
+
+|====
+|Component|Description|Framework
+<%
+        categoryGroup.sort { it.name }.each { component ->
+%>
+| ${component.name}
+| ${component.description}
+| ${component.framework}
+<%        
+        }
+%>
+|====
+<%    
+    }
+%>

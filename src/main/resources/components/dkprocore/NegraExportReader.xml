@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.negra.NegraExportReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.negra.NegraExportReader</name>
+        <description>This CollectionReader reads a file which is formatted in the NEGRA export format. The texts and
+add. information like constituent structure is reproduced in CASes, one CAS per text (article) .</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>sourceLocation</name>
+                <description>Location from which the input is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>The language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>sourceEncoding</name>
+                <description>Character encoding of the input data.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>readPOS</name>
+                <description>Write part-of-speech information.
+
+Default: true</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>readLemma</name>
+                <description>Write lemma information.
+
+Default: true</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>readPennTree</name>
+                <description>Write Penn Treebank bracketed structure information. Mind this may not work with all tagsets,
+in particular not with such that contain "(" or ")" in their tags. The tree is generated
+using the original tag set in the corpus, not using the mapped tagset!
+
+Default: false</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>POSMappingLocation</name>
+                <description>Location of the mapping file for part-of-speech tags to UIMA types.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>POSTagSet</name>
+                <description>Use this part-of-speech tag set to use to resolve the tag set mapping instead of using the
+tag set defined as part of the model meta data. This can be useful if a custom model is
+specified which does not have such meta data, or it can be used in readers.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>collectionId</name>
+                <description>The collection ID to the written to the document meta data. (Default: none)</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>generateNewIds</name>
+                <description>If true, the unit IDs are used only to detect if a new document (CAS) needs to be created,
+but for the purpose of setting the document ID, a new ID is generated. (Default: false)</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>documentUnit</name>
+                <description>What indicates if a new CAS should be started. E.g., if set to
+DocumentUnit#ORIGIN_NAME ORIGIN_NAME, a new CAS is generated whenever the origin name
+of the current sentence differs from the origin name of the last sentence. (Default:
+ORIGIN_NAME)</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>sourceEncoding</name>
+                <value>
+                    <string>UTF-8</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>readPOS</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>readLemma</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>readPennTree</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>generateNewIds</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>documentUnit</name>
+                <value>
+                    <string>ORIGIN_NAME</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.Constituent</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

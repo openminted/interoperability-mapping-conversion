@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.textnormalizer.frequency.SharpSNormalizer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.textnormalizer.frequency.SharpSNormalizer</name>
+        <description>Takes a text and replaces sharp s</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>MinFrequencyThreshold</name>
+                <description/>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>typesToCopy</name>
+                <description>A list of fully qualified type names that should be copied to the transformed CAS where
+available. By default, no types are copied apart from DocumentMetaData, i.e. all
+other annotations are omitted.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>MinFrequencyThreshold</name>
+                <value>
+                    <integer>100</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>typesToCopy</name>
+                <value>
+                    <array/>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+    <externalResourceDependencies>
+        <externalResourceDependency>
+            <key>FrequencyProvider</key>
+            <description/>
+            <interfaceName>java.lang.Object</interfaceName>
+            <optional>false</optional>
+        </externalResourceDependency>
+    </externalResourceDependencies>
+</analysisEngineDescription>

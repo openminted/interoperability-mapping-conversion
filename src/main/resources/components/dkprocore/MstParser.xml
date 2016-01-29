@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.mstparser.MstParser</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.mstparser.MstParser</name>
+        <description>Dependency parsing using MSTParser.&#13;
+&lt;p&gt;&#13;
+Wrapper for the MSTParser (&lt;b&gt;high memory requirements&lt;/b&gt;). More information about the parser&#13;
+can be found &lt;a href="http://www.seas.upenn.edu/~strctlrn/MSTParser/MSTParser.html"&gt;here&lt;/a&gt; &lt;a&#13;
+href="http://sourceforge.net/projects/mstparser/"&gt;here&lt;/a&gt;&#13;
+&lt;/p&gt;&#13;
+&lt;p&gt;&#13;
+The MSTParser models tend to be very large, e.g. the &lt;a&#13;
+href="http://nlp.stanford.edu/software/stanford-dependencies.shtml"&gt;Eisner&lt;/a&gt; model is about 600&#13;
+MB uncompressed. With this model, parsing a simple sentence with MSTParser requires about 3 GB&#13;
+heap memory.&#13;
+&lt;/p&gt;&#13;
+&lt;p&gt;&#13;
+This component feeds MSTParser only with the FORM (token) and POS (part-of-speech) fields. LEMMA,&#13;
+CPOS, and other columns from the CONLL 2006 format are not generated (cf.&#13;
+mstparser.DependencyInstance DependencyInstance).&#13;
+&lt;/p&gt;</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>language</name>
+                <description>Use this language instead of the document language to resolve the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelVariant</name>
+                <description>Override the default variant used to locate the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description>Load the model from this location instead of locating the model automatically.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>printTagSet</name>
+                <description>Log the tag set(s) when a model is loaded.&#13;
+&#13;
+Default: false</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>DependencyMappingLocation</name>
+                <description>Load the dependency to UIMA type mapping from this location instead of locating&#13;
+the mapping automatically.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>order</name>
+                <description>Specifies the order/scope of features. 1 only has features over single edges&#13;
+and 2 has features over pairs of adjacent edges in the tree. The model must have been&#13;
+trained with the respective order set here.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>printTagSet</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.syntax.type.dependency.Dependency</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpSemanticRoleLabeler</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpSemanticRoleLabeler</name>
+        <description>ClearNLP semantic role labeller.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>printTagSet</name>
+                <description>Write the tag set(s) to the log when a model is loaded.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>Use this language instead of the document language to resolve the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelVariant</name>
+                <description>Variant of a model the model. Used to address a specific model if here are multiple models
+for one language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>predModelLocation</name>
+                <description>Location from which the predicate identifier model is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>roleModelLocation</name>
+                <description>Location from which the roleset classification model is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>srlModelLocation</name>
+                <description>Location from which the semantic role labeling model is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>expandArguments</name>
+                <description>&lt;p&gt;Normally the arguments point only to the head words of arguments in the dependency tree.
+With this option enabled, they are expanded to the text covered by the minimal and maximal
+token offsets of all descendants (or self) of the head word.&lt;/p&gt;
+
+&lt;p&gt;Warning: this parameter should be used with caution! For one, if the descentants of a
+head word cover a non-continuous region of the text, this information is lost. The arguments
+will appear to be spanning a continuous region. For another, the arguments may overlap with
+each other. E.g. if a sentence contains a relative clause with a verb, the subject of the
+main clause may be recognized as a dependent of the verb and may cause the whole main
+clause to be recorded in the argument.&lt;/p&gt;</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>printTagSet</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>expandArguments</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.syntax.type.dependency.Dependency</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.semantics.type.SemanticPredicate</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.semantics.type.SemanticArgument</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

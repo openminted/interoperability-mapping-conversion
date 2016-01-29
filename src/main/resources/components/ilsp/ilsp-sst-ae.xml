@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>gr.ilsp.nlp.sst.SentenceSplitterAndTokenizerAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>ILSP Paragraph, Sentence and Token Segmentor</name>
+    <description>This module is a regex and abbreviation based segmentor targetting texts written in Greek.</description>
+    <version>1.15</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>Mode</name>
+        <description>mode: default: let ilsp-sst decide on sentence splits; nla: force ilsp-sst to always use newlines as sentence splits; nlo: force ilsp-sst to use only newlines as sentence splits</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>Mode</name>
+        <value>
+          <string>default</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+         <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+        </outputs>
+        <languagesSupported>
+          <language>el</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>POSGuesserLexicon</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>POSGuesserSuffixLexicon</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>Abbreviations</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>Contractions</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>SegmentationRules</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>POSGuesserLexiconFile</name>
+        <description>The sentence splitter may use the POS of frequent known words  to disambiguate end-of-sentence boundary conditions. This resource provides access to a word-POS lexicon for determining the possible POS  for a word without performing a full POS tagging operation.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:nlpos_gold_corpus_10.lex</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>POSGuesserSuffixLexiconFile</name>
+        <description>The sentence splitter may use the POS of frequent suffixes  to disambiguate end-of-sentence boundary conditions. This resource provides access to a suffix-POS lexicon for determining the possible POS  for a word without performing a full POS tagging operation.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:nlpos_gold_corpus_suffix_10.lex</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>AbbreviationsFile</name>
+        <description>A list of EN and EL abbreviations.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:abbreviations.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>InitialsFile</name>
+        <description>A list of known EN and EL initials.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:initials.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>ContractionsFile</name>
+        <description>A list of EL contractions.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:contractions.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>SegmentationRulesFile</name>
+        <description>An file with ICU rules for initial sentence boundary detection.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:icu_segmentation_rules_gr.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>POSGuesserLexicon</key>
+        <resourceName>POSGuesserLexiconFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>POSGuesserSuffixLexicon</key>
+        <resourceName>POSGuesserSuffixLexiconFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>Abbreviations</key>
+        <resourceName>AbbreviationsFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>Initials</key>
+        <resourceName>InitialsFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>Contractions</key>
+        <resourceName>ContractionsFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>SegmentationRules</key>
+        <resourceName>SegmentationRulesFile</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

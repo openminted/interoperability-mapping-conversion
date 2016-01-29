@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>MutationFinder.jar</JAR>
+  <JAR>lib/jakarta-oro-2.0.8.jar</JAR>
+  <JAR>lib/mutationFinder.jar</JAR>
+<RESOURCE><CLASS>gate.creole.mutationfinder.MutationFinderPR</CLASS><NAME>MutationFinder</NAME><COMMENT>GATE MutationFinder Wrapper</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:domain-creole:biomed:mutationfinder</HELPURL><ICON>DNA.png</ICON><PARAMETER NAME="annotationSetName" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="regexURL" DEFAULT="resources/regex.txt">java.net.URL</PARAMETER><PARAMETER NAME="corpus" COMMENT="The corpus containing the document to process" RUNTIME="true" OPTIONAL="true">gate.Corpus</PARAMETER><PARAMETER NAME="document" COMMENT="The document to process" RUNTIME="true">gate.Document</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

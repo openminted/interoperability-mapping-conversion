@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator</name>
+        <description>This component adds Tfidf annotations consisting of a term and a tfidf weight. &lt;br&gt;
+The annotator is type agnostic concerning the input annotation, so you have to specify the
+annotation type and string representation. It uses a pre-serialized DfStore, which can be
+created using the TfidfConsumer.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>featurePath</name>
+                <description>This annotator is type agnostic, so it is mandatory to specify the type of the working
+annotation and how to obtain the string representation with the feature path.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>tfdfPath</name>
+                <description>Provide the path to the Df-Model. When a shared SharedDfModel is bound to this
+annotator, this is ignored.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>lowercase</name>
+                <description>If set to true, the whole text is handled in lower case.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>weightingModeTf</name>
+                <description>The model for term frequency weighting.&lt;br&gt;
+Invoke toString() on an enum of WeightingModeTf for setup.
+&lt;p&gt;
+Default value is "NORMAL" yielding an unweighted tf.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>weightingModeIdf</name>
+                <description>The model for inverse document frequency weighting.&lt;br&gt;
+Invoke toString() on an enum of WeightingModeIdf for setup.
+&lt;p&gt;
+Default value is "NORMAL" yielding an unweighted idf.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>lowercase</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>weightingModeTf</name>
+                <value>
+                    <string>NORMAL</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>weightingModeIdf</name>
+                <value>
+                    <string>NORMAL</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.frequency.tfidf.type.Tfidf</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.enju.Enju</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>Enju Parser</name>
+    <description>A syntactic parser for English. With a wide-coverage probabilistic HPSG grammar and an efficient parsing algorithm, this parser can effectively analyze syntactic/semantic structures of English sentences and provide a user with phrase structures and predicate-argument structures.
+
+Main features:
+Accurate deep analysis - the parser can output both phrase structures and predicate-argument structures. The accuracy of predicate-argument relations is around 90% for newswire articles and biomedical papers.
+High speed - parsing speed is less than 500 msec. per sentence by default (faster than most Penn Treebank parsers), and less than 50 msec. when using the high-speed setting ("mogura").
+
+Enju website: http://www.nactem.ac.uk/enju</description>
+    <version>1.1</version>
+    <vendor>National Centre for Text Mining (NaCTeM)</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>UseHighSpeedParser</name>
+        <description>Use the high speed parser "mogura".</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>UseBiomedicalModel</name>
+        <description>Use the biomedical model trained on the GENIA corpus.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DisableTokenisation</name>
+        <description>Take tokens as input from a preceding component.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DisablePOSTagging</name>
+        <description>Take tokens and their corresponding POS tags as input from a preceding component.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>UseHighSpeedParser</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>UseBiomedicalModel</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DisableTokenisation</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DisablePOSTagging</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+        <import name="org.u_compare.U_compareTypeSystem"/>>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.GeniaToken</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.enju.EnjuToken</type>
+          <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.enju.EnjuSentence</type>
+          <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.enju.EnjuConstituent</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>enju</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>enju</name>
+        <description>Enju Execution Directory</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:enju</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>enju</key>
+        <resourceName>enju</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

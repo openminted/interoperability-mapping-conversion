@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ --><CREOLE-DIRECTORY>
+  <JAR>chinese.jar</JAR>
+  <JAR>../Learning/learningapi.jar</JAR>
+  
+  <!-- Processing Resources -->
+  <CREOLE>    
+    <!-- creole.xml for the Chinese Segmenter PR -->
+    <RESOURCE>
+      <NAME>Chinese Segmenter PR</NAME>
+      <COMMENT>Segment the Chinese text into words, based on the PAUM learning algorithm.</COMMENT>
+      <HELPURL>http://gate.ac.uk/userguide/sec:misc-creole:chineseSeg</HELPURL>
+      <CLASS>gate.chineseSeg.ChineseSegMain</CLASS>
+      
+      <PARAMETER NAME="modelURL" COMMENT="The URL referring to one directory containing the model files" RUNTIME="true" OPTIONAL="false">java.net.URL</PARAMETER>
+	    <PARAMETER NAME="learningAlg" COMMENT="Learning algorithm used for learning model" RUNTIME="true" DEFAULT="PAUM" OPTIONAL="false">java.lang.String</PARAMETER>
+	    <PARAMETER NAME="textFilesURL" COMMENT="The URL referring to the directory containing the Chinese text files" RUNTIME="true" OPTIONAL="false">java.net.URL</PARAMETER>
+      <PARAMETER NAME="textCode" COMMENT="The code of the Chinese text files used" RUNTIME="true" DEFAULT="UTF-8" OPTIONAL="false">java.lang.String</PARAMETER>
+      <PARAMETER NAME="learningMode" COMMENT="segment Chinese text or learn a model" RUNTIME="true" DEFAULT="SEGMENTING" OPTIONAL="false">gate.chineseSeg.RunMode</PARAMETER>
+    </RESOURCE>
+  </CREOLE>
+<RESOURCE><CLASS>chinese.ChineseIE</CLASS><NAME>Chinese IE System</NAME><COMMENT>Ready-made Chinese IE application</COMMENT><ICON>ChineseLanguage</ICON><AUTOINSTANCE><PARAM NAME="pipelineURL" VALUE="resources/chinese.gapp" /><PARAM NAME="menu" VALUE="Chinese" /></AUTOINSTANCE><PARAMETER NAME="pipelineURL">java.net.URL</PARAMETER><PARAMETER NAME="menu" ITEM_CLASS_NAME="java.lang.String" OPTIONAL="true">java.util.List</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

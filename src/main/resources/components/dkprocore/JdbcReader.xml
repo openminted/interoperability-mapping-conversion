@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.jdbc.JdbcReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.jdbc.JdbcReader</name>
+        <description>Collection reader for JDBC database.The obtained data will be written into CAS DocumentText as
+well as fields of the DocumentMetaData annotation.
+&lt;p&gt;
+The field names are available as constants and begin with &lt;code&gt;CAS_&lt;/code&gt;. Please specify the
+mapping of the columns and the field names in the query. For example,
+&lt;p&gt;
+&lt;code&gt;SELECT text AS cas_text, title AS cas_metadata_title FROM test_table&lt;/code&gt;
+&lt;p&gt;
+will create a CAS for each record, write the content of "text" column into CAS documen text and
+that of "title" column into the document title field of the DocumentMetaData annotation.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>driver</name>
+                <description>Specify the class name of the JDBC driver.
+&lt;p&gt;
+If used with uimaFIT and the value is not given, &lt;code&gt;com.mysql.jdbc.Driver&lt;/code&gt; will be
+taken.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>connection</name>
+                <description>Specifies the URL to the database.
+&lt;p&gt;
+If used with uimaFIT and the value is not given, &lt;code&gt;jdbc:mysql://127.0.0.1/&lt;/code&gt; will be
+taken.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>database</name>
+                <description>Specifies name of the database to be accessed.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>user</name>
+                <description>Specifies the user name for database access.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>password</name>
+                <description>Specifies the password for database access.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>query</name>
+                <description>Specifies the query.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>Specifies the language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>driver</name>
+                <value>
+                    <string>com.mysql.jdbc.Driver</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>connection</name>
+                <value>
+                    <string>jdbc:mysql://127.0.0.1/</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

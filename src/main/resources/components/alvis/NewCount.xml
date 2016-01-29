@@ -1,0 +1,39 @@
+<alvisnlp-doc author="Robert Bossy" date="2012-04-30" short-target="NewCount" target="org.bibliome.alvisnlp.modules.count.NewCount" use-instead="org.bibliome.alvisnlp.modules.aggregate.AggregateValues">
+  <synopsis>
+    <p>Counts element occurrences and writes the results in a file, including <em>tfidf</em>.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> evaluates <param name="documents"/> as a list of elements with the corpus as the context element. Items in the result are hereby called <em>documents</em> even though they are not required to be AlvisNLP/ML documents (they are documents in the tfidf meaning of the term). Then <pram name="target"/> is evaluated as a list of elements with the document as the context element. The values of the feature <param name="featureKey"/> are stored and counted. Results (occurrences and tfidf) for each distinct value are written in human and machine readable formats (<param name="countFile"/> and <param name="tfidfFile"/> respectively).</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="countFile" short-type="TargetStream" type="org.bibliome.util.streams.TargetStream">
+      <p>Output file for occurrences.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="target" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Elements to count. This expression is evaluated as a list of elements with the document as the context element.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="tfidfFile" short-type="TargetStream" type="org.bibliome.util.streams.TargetStream">
+      <p>Output file for tfidf.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: false" name="headers" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to write a header line in output files describing each column.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="featureKey" short-type="String" type="java.lang.String">
+      <p>Feature to count.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="documents" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Documents (in the tfidf meaning). This expression is evaluated as a list of elements with the corpus as the context element.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

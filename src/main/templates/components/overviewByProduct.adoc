@@ -1,0 +1,26 @@
+<%
+components
+    .grep { it.categories.isEmpty() || !(it.categories[0] in ['Reader', 'Writer'])}
+    .groupBy { it.product ?: ' Uncategorized' }
+    .sort { it.key }
+    .each { product, productGroup ->
+%>
+=== ${product} (${productGroup.size()})
+
+${data[product] ?: ''}
+
+|====
+|Component|Description|Framework
+<%
+        productGroup.sort { it.name }.each { component ->
+%>
+| ${component.name}
+| ${component.description}
+| ${component.framework}
+<%        
+        }
+%>
+|====
+<%    
+    }
+%>

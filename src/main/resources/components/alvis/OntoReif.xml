@@ -1,0 +1,31 @@
+<alvisnlp-doc author="" date="" short-target="OntoReif" target="org.bibliome.alvisnlp.modules.OntoReif" use-instead="org.bibliome.alvisnlp.modules.Action">
+  <synopsis>
+    <p>synopsis</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p>synopsis</p>
+    </description>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p/>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantRelationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each relation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantTupleFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each tuple created by this module</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

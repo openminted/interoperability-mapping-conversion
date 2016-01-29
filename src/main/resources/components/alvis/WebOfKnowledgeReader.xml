@@ -1,0 +1,39 @@
+<alvisnlp-doc author="" date="" short-target="WebOfKnowledgeReader" target="org.bibliome.alvisnlp.modules.wok.WebOfKnowledgeReader">
+  <synopsis>
+    <p>Reads <a href="http://apps.webofknowledge.com/UA_GeneralSearch_input.do?product=UA&amp;search_mode=GeneralSearch">Web of Knowledge</a> search result import files.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><strong>WARNING:</strong> WoK delivers files with a wrong <a href="https://en.wikipedia.org/wiki/Byte_order_mark">Byte Order Mark</a>, it is advised you remove it using a text editor before feeding it to <this/>.</p>
+      
+      <p>The PT field (Publication Type) is used as a document marker, <this/> will create a document each time it reads a PT field.</p>
+      <p>The VR field will be read and, if its value is different from "1.0", then <this/> fails.</p>
+      <p>The following fields will be read and stored as document features, one feature per line: AU, AF, BA, BF, CA, GP, BE, SO, SE, BS, LA, CT, CY, CL, SP, HO, C1, RP, EM, RI, OI, FU, CR, TC, Z9, PU, PI, PA, SN, BN, J9, JI, PD, PY, VL, IS, PN, SU, MA, BP, EP, AR, DI, D2, PG, P2, GA, UT, SI, NR.</p>
+      <p>The following fields will be read and stored as document features, several features per line split with semicolons: DE, DT, ID, WC, SC.</p>
+      <p>The following fields will be read and stored as sections, all lines concatenated for the contents: TI, AB, FX.</p>
+      <p>The following fields will be ignored: ER, EF, FN.</p>
+      <p>The feature and section names are the 2-character field code. For an interpretation of field codes, see <a href="http://images.webofknowledge.com/WOKRS510B3_1/help/WOS/hs_wos_fieldtags.html">WoK format documentation</a>.</p>
+    </description>
+  
+    <param-doc mandatory="required" name="source" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Location of the WoK file(s).</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Expression evaluated as a boolean with the corpus as context element. If the result is false, then the module does not process the module.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantSectionFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each section created by this module.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantDocumentFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each document created by this module.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="tabularFormat" short-type="Boolean" type="java.lang.Boolean">
+      <p>Read files in tabular export format.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>french.jar</JAR>
+<RESOURCE><CLASS>french.FrenchIE</CLASS><NAME>French IE System</NAME><COMMENT>Ready-made French IE application</COMMENT><AUTOINSTANCE><PARAM NAME="pipelineURL" VALUE="french.gapp" /><PARAM NAME="menu" VALUE="French" /></AUTOINSTANCE><PARAMETER NAME="pipelineURL">java.net.URL</PARAMETER><PARAMETER NAME="menu" ITEM_CLASS_NAME="java.lang.String" OPTIONAL="true">java.util.List</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

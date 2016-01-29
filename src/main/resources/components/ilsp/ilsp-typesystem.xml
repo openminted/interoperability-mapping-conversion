@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>ILSP Type System</name>
+  <description>This version of the ILSP Type System includes types relevant to the OpenMinted WG4 type system alignment task. The ILSP UIMA type system was based on the JULIE Lab Type Sytem available from http://julielab.de. </description>
+  <version/>
+  <vendor>ILSP</vendor>
+  <types>
+  
+        <typeDescription>
+            <name>gr.ilsp.types.Annotation</name>
+            <description>The super-type for all types.</description>
+            <supertypeName>uima.tcas.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>confidence</name>
+                    <description>Confidence score</description>
+                    <rangeTypeName>uima.cas.Long</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>componentId</name>
+                    <description>NLP component used to create this annotation</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>id</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        
+        <typeDescription>
+            <name>gr.ilsp.types.DocumentAnnotation</name>
+            <description>Document information</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>docId</name>
+                    <description>Identifier associated with the document.</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>uri</name>
+                    <description>The URI from which this document was created.</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>language</name>
+                    <description>The language of the document. Expected to be a 2 or 3-letter code</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>title</name>
+                    <description>The title of the document</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>offsetInSource</name>
+                    <description>Byte offset of the start of document content within original source file or other input source. Only used if the CAS document was retrieved from an source where one physical source file contained several conceptual documents. Zero otherwise.</description>
+                    <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>author</name>
+                    <description>Author of the document</description>
+                    <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+                    <elementType>gr.ilsp.types.Author</elementType>
+                    <multipleReferencesAllowed>true</multipleReferencesAllowed>
+                </featureDescription>
+                <featureDescription>
+                    <name>date</name>
+                    <description>Document Creation Time</description>
+                    <rangeTypeName>gr.ilsp.types.Date</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Author</name>
+            <description>Author information.</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>firstName</name>
+                    <description>An author's firstname</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>surName</name>
+                    <description>An author's surname.</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Date</name>
+            <description>Date information</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>day</name>
+                    <description>day of the month</description>
+                    <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>month</name>
+                    <description>month of the year</description>
+                    <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>year</name>
+                    <description>full year</description>
+                    <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+        
+        <typeDescription>
+            <name>gr.ilsp.types.Token</name>
+            <description>Token annotation includes annotations on the token level.</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>posTag</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.POSTag</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>lemma</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.Lemma</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>tokenType</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>orthogr</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.Orthography</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>parent</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.Annotation</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>stemmedForm</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.StemmedForm</rangeTypeName>
+                </featureDescription>
+<!--
+                <featureDescription>
+                    <name>feats</name>
+                    <description>FIXME. See comment in type description for POS</>                    
+                    <rangeTypeName>gr.ilsp.types.GrammaticalFeats</rangeTypeName>
+                </featureDescription>
+-->                
+                <featureDescription>
+                    <name>sentOrd</name>
+                    <description>Order of this token in the sentence it belongs.</description>
+                    <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>depRel</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.DependencyRelation</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Sentence</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>orthogr</name>
+                    <description/>
+                    <rangeTypeName>gr.ilsp.types.Orthography</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Paragraph</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+        </typeDescription>
+
+
+        <typeDescription>
+            <name>gr.ilsp.types.Chunk</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>label</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Clause</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>label</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.ConceptMention</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>specificType</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.EntityMention</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.ConceptMention</supertypeName>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Timex2Mention</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.ConceptMention</supertypeName>
+        </typeDescription>
+        
+        <typeDescription>
+            <name>gr.ilsp.types.LOC</name>
+            <description>Location</description>
+            <supertypeName>gr.ilsp.types.EntityMention</supertypeName>
+        </typeDescription>
+        
+        <typeDescription>
+            <name>gr.ilsp.types.ORG</name>
+            <description>Organization</description>
+            <supertypeName>gr.ilsp.types.EntityMention</supertypeName>
+        </typeDescription>
+        
+        <typeDescription>
+            <name>gr.ilsp.types.PER</name>
+            <description>Person</description>
+            <supertypeName>gr.ilsp.types.EntityMention</supertypeName>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Orthography</name>
+            <description/>
+            <supertypeName>uima.cas.String</supertypeName>
+            <allowedValues>
+                <value>
+                    <string>lowercase</string>
+                    <description>this is lowercase</description>
+                </value>
+                <value>
+                    <string>uppercase</string>
+                    <description>THIS IS UPPERCASE</description>
+                </value>
+                <value>
+                    <string>capitalized</string>
+                    <description>This Is A Capitalized Sentence</description>
+                </value>
+            </allowedValues>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.POSTag</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>value</name>
+                    <description>POS values from the ILSP tagger (No, Pn, At, Cj, etc.). 
+                    In practice, often used to store morphosyntactic features as well, e.g. NoCmMaSgNm for common masculine singular nominative nouns.</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.Lemma</name>
+            <description/>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>value</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+        <typeDescription>
+            <name>gr.ilsp.types.StemmedForm</name>
+            <description>Often the part of the word that is common to all its inflected variants, τραπεζ- for τραπέζι.</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>value</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+
+        <typeDescription>
+            <name>gr.ilsp.types.DependencyRelation</name>
+            <description>Syntactic dependency relation annotation</description>
+            <supertypeName>gr.ilsp.types.Annotation</supertypeName>
+            <features>
+                <featureDescription>
+                    <name>head</name>
+                    <description>Head token of the dependency relation</description>
+                    <rangeTypeName>gr.ilsp.types.Token</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>projective</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+                </featureDescription>
+                <featureDescription>
+                    <name>label</name>
+                    <description>The label of the relation (e.g. AuxS, Sb, Obj, Atr, etc.)</description>
+                    <rangeTypeName>uima.cas.String</rangeTypeName>
+                </featureDescription>
+            </features>
+        </typeDescription>
+
+    </types>
+</typeSystemDescription>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.biocgm.BioCreativeGeneMentionTagger</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>BioCreative Gene Mention Tagger</name>
+    <description>Tags Gene mentions using a model trained on BioCreative GM task data, with Entrez Gene and UMLS dictionary features.</description>
+    <version>0.0.1-SNAPSHOT</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+        <import name="uk.ac.nactem.uima.EUPMCTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>org.u_compare.shared.syntactic.Sentence</type>
+        <type>org.u_compare.shared.syntactic.Chunk</type>
+        <type>org.u_compare.shared.syntactic.RichToken</type>
+        <type>uk.ac.nactem.uima.eupmc.DictionaryFeatures</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.eupmc.DictionaryFeatures</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Chunk</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.RichToken</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.NamedEntity</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>biocgmmodel</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>biocgmmodel</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:bc2gm.entrezgene_umls.c1.0.m</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>biocgmmodel</key>
+        <resourceName>biocgmmodel</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

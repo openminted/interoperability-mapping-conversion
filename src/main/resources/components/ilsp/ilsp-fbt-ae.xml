@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>gr.ilsp.nlp.fbttagger.FBTTaggerAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>ILSP FBT Tagger</name>
+    <description>ILSP FBT Tagger is an adaptation of the Brill tagger trained on Greek text. It uses a PAROLE compatible tagset of 584 different tags which capture the morphosyntactic particularities of the Greek language. Working on the output of a sentence detection and tokenisation tool, the tagger assigns initial tags, looking the words up in a lexicon created from a manually annotated corpus during training. A suffix lexicon is used for initially tagging of unknown words. 799 contextual rules are then applied to improve the initial phase output.</description>
+    <version>1.14</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>LexicaDir</name>
+        <description>The directory containing the Berkeley DB lexical resources. Default is /opt/ilsp-nlp/lexica/fbt.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>LexicaDir</name>
+        <value>
+          <string>/opt/ilsp-nlp/lexica/fbt</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+        </outputs>
+        <languagesSupported>
+          <language>el</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>PostProcessingRules</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>PostProcessingRulesFile</name>
+        <description>A file with postprocessing rules that are applied after the main algorithm.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:rules.ruta</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.sst.SharedResource</implementationName>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>PostProcessingRules</key>
+        <resourceName>PostProcessingRulesFile</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

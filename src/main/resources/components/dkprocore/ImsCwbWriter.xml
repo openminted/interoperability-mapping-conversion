@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.io.imscwb.ImsCwbWriter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.imscwb.ImsCwbWriter</name>
+        <description>This Consumer outputs the content of all CASes into the IMS workbench format.
+
+This writer produces a text file which needs to be converted to the binary IMS CWB index files
+using the command line tools that come with the CWB.
+
+It is possible to set the parameter #PARAM_CQP_HOME to directly create output in the
+native binary CQP format via the original CWB command line tools.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>Location to which the output is written.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetEncoding</name>
+                <description>Character encoding of the output data.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeDocId</name>
+                <description>Write the document ID for each token. It is usually a better idea to generate a
+#PARAM_WRITE_DOCUMENT_TAG document tag or a #PARAM_WRITE_TEXT_TAG text tag
+which also contain the document ID that can be queried in CQP.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writePOS</name>
+                <description>Write part-of-speech tags.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeCPOS</name>
+                <description>Write coarse-grained part-of-speech tags. These are the simple names of the UIMA types used
+to represent the part-of-speech tag.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeLemma</name>
+                <description>Write lemmata.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeDocumentTag</name>
+                <description>Write a pseudo-XML tag with the name document to mark the start and end of a
+document.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeTextTag</name>
+                <description>Write a pseudo-XML tag with the name text to mark the start and end of a document.
+This is used by CQPweb.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeOffsets</name>
+                <description>Write the start and end position of each token.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>additionalFeatures</name>
+                <description>Write additional token-level annotation features. These have to be given as an array of fully
+qualified feature paths (fully.qualified.classname/featureName). The names for these
+annotations in CQP are their lowercase shortnames.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>cqpwebCompatibility</name>
+                <description>Make document IDs compatible with CQPweb. CQPweb demands an id consisting of only letters,
+numbers and underscore.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>cqpHome</name>
+                <description>Set this parameter to the directory containing the cwb-encode and cwb-makeall commands if you
+want the write to directly encode into the CQP binary format.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>cqpCompress</name>
+                <description>Set this parameter to compress the token streams and the indexes using cwb-huffcode and
+cwb-compress-rdx. With modern hardware, this may actually slow down queries, so we turn it
+off by default. If you have large data sets, you best try yourself what works best for you.
+(default: false)</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>corpusName</name>
+                <description>The name of the generated corpus.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>sentenceTag</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>targetEncoding</name>
+                <value>
+                    <string>UTF-8</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeDocId</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writePOS</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeCPOS</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeLemma</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeDocumentTag</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeTextTag</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeOffsets</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>cqpwebCompatibility</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>cqpCompress</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>corpusName</name>
+                <value>
+                    <string>corpus</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>sentenceTag</name>
+                <value>
+                    <string>s</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

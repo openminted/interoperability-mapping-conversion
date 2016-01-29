@@ -1,0 +1,15 @@
+<alvisnlp-doc author="" date="" short-target="Sequence_Impl" target="org.bibliome.alvisnlp.modules.Sequence_Impl">
+  <synopsis>
+    <p>Sequence of modules.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> is not intended to be used directly. AlvisNLP/ML instanciates <this/> when the plan file specifies a <code>sequence</code>.</p>
+    </description>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p><this/> only runs if this expression evaluates to true. If the sequence is inhibited, the all included modules and sub-sequences are skipped.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

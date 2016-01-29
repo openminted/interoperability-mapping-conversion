@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>gr.ilsp.nlp.nerc.NercAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>ILSP NERC</name>
+    <description>This module uses a Maximum Entropy NER engine focusing on EL or EN textual newsy data.</description>
+    <version>1.2</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>DatabaseServer</name>
+        <description>The type of server the AE connects to. Default is postgresql.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabaseName</name>
+        <description>The name of the database.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabaseUser</name>
+        <description>Use this user name for read-only access to the database</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabasePass</name>
+        <description>Use this password for read-only access to the database</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabasePort</name>
+        <description>The port the server listens to. Default is 5432.</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabaseHost</name>
+        <description>The host where the server resides. Default is localhost.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>DatabaseDriverClass</name>
+        <description>The JDBC driver to use to connect to this DB. Default is org.postgresql.Driver</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>NercEngine</name>
+        <description>The NercEngine to be used. The default value is "mener".</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>Language</name>
+        <description>ISO language code for text language</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ModelDir</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>DatabasePort</name>
+        <value>
+          <integer>5432</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabaseDriverClass</name>
+        <value>
+          <string>org.postgresql.Driver</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabaseUser</name>
+        <value>
+          <string>user</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabaseServer</name>
+        <value>
+          <string>postgresql</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabaseHost</name>
+        <value>
+          <string>localhost</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabaseName</name>
+        <value>
+          <string>mener</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>NercEngine</name>
+        <value>
+          <string>fsmener</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>Language</name>
+        <value>
+          <string>el</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>DatabasePass</name>
+        <value>
+          <string>pass</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>ModelDir</name>
+        <value>
+          <string>/opt/ilsp-nlp/models/</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Paragraph</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.PER</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.ORG</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.LOC</type>
+        </outputs>
+        <languagesSupported>
+          <language>el</language>
+          <language>en</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

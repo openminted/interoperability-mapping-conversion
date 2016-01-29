@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.textnormalizer.annotations.TrailingCharacterRemover</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.textnormalizer.annotations.TrailingCharacterRemover</name>
+        <description>Removing trailing character (sequences) from tokens, e.g. punctuation.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>pattern</name>
+                <description>A regex to be trimmed from the end of tokens.&#13;
+&lt;p&gt;&#13;
+Default: "[\\Q,-“^»*’()&amp;amp;/\"'©§'—«·=\\E0-9A-Z]+" (remove punctuations, special&#13;
+characters and capital letters).</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minTokenLength</name>
+                <description>All tokens that are shorter than the minimum token length after removing trailing chars are&#13;
+completely removed. By default (1), empty tokens are removed. Set to 0 or a negative value if&#13;
+no tokens should be removed.&#13;
+&lt;p&gt;&#13;
+Shorter tokens that do not have trailing chars removed are always retained, regardless of&#13;
+their length.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>pattern</name>
+                <value>
+                    <string>[\Q,-“^»*’()&amp;/"'©§'—«·=\E0-9A-Z]+</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minTokenLength</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

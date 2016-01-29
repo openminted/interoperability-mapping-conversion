@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordParser</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordParser</name>
+        <description>Stanford Parser component.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>printTagSet</name>
+                <description>Write the tag set(s) to the log when a model is loaded.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>Use this language instead of the document language to resolve the model and tag set mapping.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelVariant</name>
+                <description>Variant of a model the model. Used to address a specific model if here are multiple models
+for one language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description>Location from which the model is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>POSMappingLocation</name>
+                <description>Location of the mapping file for part-of-speech tags to UIMA types.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>ConstituentMappingLocation</name>
+                <description>Location of the mapping file for constituent tags to UIMA types.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeDependency</name>
+                <description>Sets whether to create or not to create dependency annotations.
+
+&lt;p&gt;Default: true</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>mode</name>
+                <description>Sets the kind of dependencies being created.
+
+&lt;p&gt;Default: DependenciesMode#COLLAPSED TREE</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeConstituent</name>
+                <description>Sets whether to create or not to create constituent tags. This is required for POS-tagging
+and lemmatization.
+&lt;p&gt;
+Default: true</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writePennTree</name>
+                <description>If this parameter is set to true, each sentence is annotated with a PennTree-Annotation,
+containing the whole parse tree in Penn Treebank style format.
+&lt;p&gt;
+Default: false</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>annotationTypeToParse</name>
+                <description>This parameter can be used to override the standard behavior which uses the &lt;i&gt;Sentence&lt;/i&gt;
+annotation as the basic unit for parsing.
+&lt;p&gt;If the parameter is set with the name of an annotation type &lt;i&gt;x&lt;/i&gt;, the parser will no
+longer parse &lt;i&gt;Sentence&lt;/i&gt;-annotations, but &lt;i&gt;x&lt;/i&gt;-Annotations.&lt;/p&gt;
+&lt;p&gt;Default: null</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writePOS</name>
+                <description>Sets whether to create or not to create POS tags. The creation of constituent tags must be
+turned on for this to work.
+&lt;p&gt;
+Default: false</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>readPOS</name>
+                <description>Sets whether to use or not to use already existing POS tags from another annotator for the
+parsing process.
+&lt;p&gt;
+Default: true</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>maxTokens</name>
+                <description>Maximum number of tokens in a sentence. Longer sentences are not parsed. This is to avoid out
+of memory exceptions.
+&lt;p&gt;
+Default: 130</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>maxItems</name>
+                <description>Controls when the factored parser considers a sentence to be too complex and falls back to
+the PCFG parser.
+&lt;p&gt;
+Default: 200000</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>ptb3Escaping</name>
+                <description>Enable all traditional PTB3 token transforms (like -LRB-, -RRB-).</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>quoteBegin</name>
+                <description>List of extra token texts (usually single character strings) that should be treated like
+opening quotes and escaped accordingly before being sent to the parser.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>quoteEnd</name>
+                <description>List of extra token texts (usually single character strings) that should be treated like
+closing quotes and escaped accordingly before being sent to the parser.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>printTagSet</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeDependency</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>mode</name>
+                <value>
+                    <string>TREE</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeConstituent</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writePennTree</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writePOS</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>readPOS</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>maxTokens</name>
+                <value>
+                    <integer>130</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>maxItems</name>
+                <value>
+                    <integer>200000</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>ptb3Escaping</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

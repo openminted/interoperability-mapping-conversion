@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>gr.ilsp.nlp.collectionreaders.GateXmlReader</implementationName>
+  <processingResourceMetaData>
+    <name>GateXMLReaderDescriptor</name>
+    <description>Reads GATE documents created with ILSP tools</description>
+    <version>0.9</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>InputDirectory</name>
+        <description>Directory of xml files to read in</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>InputEncoding</name>
+        <description>Character encoding for the documents.  If not specified,
+                   the default system encoding will be used.  Note that this parameter
+                   only applies if there is no CAS Initializer provided; otherwise,
+                   it is the CAS Initializer's responsibility to deal with character
+                   encoding issues.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>StripExt</name>
+        <description>The file extension to strip from the original filenames. Only files with this extension will be processed by the reader.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>InputFile</name>
+        <description>Single file to be processed</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>

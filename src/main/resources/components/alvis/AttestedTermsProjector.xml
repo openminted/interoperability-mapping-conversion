@@ -1,0 +1,88 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="AttestedTermsProjector" target="org.bibliome.alvisnlp.modules.projectors.AttestedTermsProjector">
+  <synopsis>
+    <p>Projects a list of terms given in tree-tagger format.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads a list of terms from <param name="termsFile"/> and searches for these terms in sections. The terms must be in tree-tagger format: each line contains a token/POS/lemma and each term is terminated by a period/<em>SENT</em>. The searched string for each term is the concatenation of token surface forms, or lemma if <param name="lemmaKeys"/> is true, separated with a space character.</p>
+      <p>The parameters <param name="warnDuplicateValues"/>, <param name="multipleValueAction"/>, <param name="errorDuplicateValues"/> and <param name="warnMultipleValues"/> control who <this/> reacts when encountering duplicate terms.</p>
+      <p>The parameters <param name="normalizeSpace"/>, <param name="ignoreCase"/>, <param name="ignoreDiacritics"/> and <param name="ignoreWhitespace"/> control the matching of entries on the sections.</p>
+      <p>The <param name="subject"/> parameter specifies which text of the section should be matched. There are two options:
+      <ul>
+	<li>the entries are matched on the contents of the section, <param name="subject"/> can also control if matches boundaries coincide with word delimiters;</li>
+	<li>the entries are matched on the feature value of annotations of a given layer separated by a whitespace, in this way entries can be searched against word lemmas for instance.</li>
+      </ul>
+      </p>
+      <p><this/> creates an annotation for each matched term and adds these annotations to the layer named <param name="targetLayerName"/>. The created annotations will have the features <param name="termFeatureName"/>, <param name="posFeatureName"/> and <param name="lemmaFeatureName"/> containing the concatenation of the corresponding term tokens surface form, POS tag and lemma respectively.<nl/>In addition, the created annotations will have the feature keys and values defined in <param name="constantAnnotationFeatures"/>.</p>
+    </description>
+  
+    <param-doc mandatory="default: true" name="lemmaKeys" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to project lemmas instead of the forms.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: false" name="normalizeSpace" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match normalizing whitespace.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: add" name="multipleValueAction" short-type="MultipleValueAction" type="org.bibliome.alvisnlp.modules.projectors.MultipleValueAction">
+      <p>Either to stop when multiple entries with the same key is seen.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: org.bibliome.alvisnlp.modules.projectors.ContentsSubject@20e2fdf4" name="subject" short-type="Subject" type="org.bibliome.alvisnlp.modules.projectors.Subject">
+      <p>Subject on which to project the dictionary.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreCase" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring case.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: pos" name="posFeatureName" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to write the term POS tags.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="termsFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Attested terms file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="errorDuplicateValues" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to stop when a duplicate entry is seen.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: lemma" name="lemmaFeatureName" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to write the term lemma.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreDiacritics" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring diacritics.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreWhitespace" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring whitespace characters.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="termFeatureName" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to write the term form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer where to put match annotations.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

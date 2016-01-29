@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>gr.ilsp.nlp.depparser.DependencyAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>ILSP Dependency Parser</name>
+    <description>ILSP Dependency Parser is a tool trained on the Greek Dependency Treebank (Prokopidis et al., 2005), a resource which comprises data annotated at several linguistic levels. Training data at the level of syntax consisted of ~150+ KWords annotated using a dependency-based syntactic scheme that includes 25 main relations. Different types of parsers (transition-based. graph-based, Maltparser, MateParser) are used during training and application of learned models. ILSP Dependency Parser is used in parsing EL POS-tagged and lemmatized sentences.</description>
+    <version>1.15</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>useDepParser</name>
+        <description>The dependency parser to use</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>useDepParser</name>
+        <value>
+          <string>mateparser</string>
+<!--           <string>maltparser</string>           -->
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>gr.ilsp.types.Paragraph</type>
+        <type>gr.ilsp.types.Sentence</type>
+        <type>gr.ilsp.types.Token</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Paragraph</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.POSTag</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Lemma</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Paragraph</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Sentence</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.POSTag</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Lemma</type>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.DependencyRelation</type>
+        </outputs>
+        <languagesSupported>
+          <language>el</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>model</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>modelFile</name>
+        <description>URL pointing to the parser model used.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:////opt/ilsp-nlp/models/gdt_mateparser-default.model</fileUrl>
+<!--           <fileUrl>file:////opt/ilsp-nlp/models/gdt_maltparser-default.mco </fileUrl> -->
+        </fileResourceSpecifier>        
+        <implementationName>gr.ilsp.nlp.depparser.resources.SharedResource</implementationName>        
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>model</key>
+        <resourceName>modelFile</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

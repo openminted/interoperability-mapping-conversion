@@ -1,0 +1,51 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="TextFileReader" target="org.bibliome.alvisnlp.modules.TextFileReader">
+  <synopsis>
+    <p>Reads files and adds a document in the corpus for each file.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads file(s) from <param name="sourcePath"/> and creates a document in the corpus for each file. The identifier of the created document is the absolute path of the corresponding file. The created document has a single section named <param name="section"/> whose contents is the contents of the corresponding file.</p>
+      <p>If <param name="sourcePath"/> is a path to a file, then <this/> will read this file. If <param name="sourcePath"/> is a path to a directory, then <this/> will read the files in this directory. If <param name="recursive"/> is set to true, then the files in sub-directories will be read recursively. <this/> only reads files whose name match <param name="acceptPattern"/>. If <param name="acceptPattern"/> is not set, then <this/> reads all files.</p>
+      <p>If <param name="linesLimit"/> is set, then <this/> creates a new document for each set of lines. For instance, if <param name="linesLimit"/> is set to 10 and a file contains 25 lines, then 3 documents are created: two containing 10 lines and one containing the las 5 lines.</p>
+      <p>Files are read using the same encoding <param name="charset"/>.</p>
+      <p>The created documents will all have the features defined in <param name="constantDocumentFeatures"/>. The unique section will have the features defined in <param name="constantSectionFeatures"/>.</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="constantDocumentFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each document created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: UTF-8" name="charset" short-type="String" type="java.lang.String">
+      <p>Character set of the input files.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantSectionFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each section created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="linesLimit" short-type="Integer" type="java.lang.Integer">
+      <p>Maximum number of lines per document.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="sourcePath" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the source directory or source file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: contents" name="sectionName" short-type="String" type="java.lang.String">
+      <p>Name of the single section containing the whole contents of a file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="sizeLimit" short-type="Integer" type="java.lang.Integer">
+      <p>Maximum number of characters per document. No limit if not set.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="baseNameId" short-type="Boolean" type="java.lang.Boolean">
+      <p>Use the filename base name instead of the full path as document identifier.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

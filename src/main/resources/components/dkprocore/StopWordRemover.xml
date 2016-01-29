@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover</name>
+        <description>Remove all of the specified types from the CAS if their covered text is in the stop word
+dictionary. Also remove any other of the specified types that is covered by a matching instance.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description>A list of URLs from which to load the stop word lists. If an URL is prefixed with a language
+code in square brackets, the stop word list is only used for documents in that language.
+Using no prefix or the prefix "[*]" causes the list to be used for every document.
+Example: "[de]classpath:/stopwords/en_articles.txt"</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>modelEncoding</name>
+                <description>The character encoding used by the model.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Paths</name>
+                <description>Feature paths for annotations that should be matched/removed. The default is
+
+&lt;pre&gt;
+StopWord.class.getName()
+Token.class.getName()
+Lemma.class.getName()+"/value"
+&lt;/pre&gt;</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>StopWordType</name>
+                <description>Anything annotated with this type will be removed even if it does not match any word in the
+lists.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>modelEncoding</name>
+                <value>
+                    <string>UTF-8</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.StopWord</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

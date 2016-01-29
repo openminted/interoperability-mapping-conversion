@@ -1,0 +1,67 @@
+<alvisnlp-doc author="Robert Bossy" date="2012-04-30" short-target="WhatsWrongExport" target="org.bibliome.alvisnlp.modules.WhatsWrongExport">
+  <synopsis>
+    <p>Writes files in <a href="">What's Wrong with my NLP</a> format.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p>synopsis</p>
+    </description>
+  
+    <param-doc mandatory="default: dependent" name="dependent" short-type="String" type="java.lang.String">
+      <p>Name of the tuple role that references the dependent. The dependent must be in the <param name="words"/> layer.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="sentences" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Expression evaluated as a list of elements with the section as the context element. The result specifies the sentences in the section.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="relationName" short-type="String" type="java.lang.String">
+      <p>Name of the relation that contains tuples that will be represented as relations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="required" name="outFile" short-type="TargetStream" type="org.bibliome.util.streams.TargetStream">
+      <p>Data sink where to write.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: words" name="words" short-type="String" type="java.lang.String">
+      <p>Nme of the layer that contains the tokens.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: boolean:and(true, nav:layer:words())" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: form" name="wordForm" short-type="String" type="java.lang.String">
+      <p>Name of the feature that specifies the word form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: label" name="label" short-type="String" type="java.lang.String">
+      <p>Name of the tuple feature that specifies the relation label.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: head" name="head" short-type="String" type="java.lang.String">
+      <p>Name of the tuple role that references the head. The head must be in the <param name="words"/> layer.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: sentence" name="sentence" short-type="String" type="java.lang.String">
+      <p>Name of the tuple role that references the sentence.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="entities" short-type="String[]" type="java.lang.String[]">
+      <p>Names of layers containing named entities.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="entityType" short-type="String" type="java.lang.String">
+      <p>Name of the feature of entity annotations containing the named entity type.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

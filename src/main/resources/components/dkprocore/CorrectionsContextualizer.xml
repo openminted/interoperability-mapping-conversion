@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.jazzy.CorrectionsContextualizer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.jazzy.CorrectionsContextualizer</name>
+        <description>This component assumes that some spell checker has already been applied upstream (e.g. Jazzy).&#13;
+It then uses ngram frequencies from a frequency provider in order to rank the provided corrections.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters/>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+    <externalResourceDependencies>
+        <externalResourceDependency>
+            <key>FrequencyProvider</key>
+            <description/>
+            <interfaceName>java.lang.Object</interfaceName>
+            <optional>false</optional>
+        </externalResourceDependency>
+    </externalResourceDependencies>
+</analysisEngineDescription>

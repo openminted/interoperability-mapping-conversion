@@ -27,9 +27,19 @@
       <version>1.2</version>
     </dependency>
     <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.16</version>
     </dependency>
     <dependency>
       <groupId>org.asciidoctor</groupId>
@@ -70,7 +80,8 @@
             </goals>
             <configuration>
               <source>
-                eu.openminted.interop.mappingconversion.Main.main();
+                eu.openminted.interop.componentoverview.ComponentsMain.main();
+                eu.openminted.interop.mappingconversion.TypeAlignmentMain.main();
               </source>
               <classpathScope>runtime</classpathScope>
             </configuration>

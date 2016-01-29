@@ -1,0 +1,62 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="RemoveOverlaps" target="org.bibliome.alvisnlp.modules.RemoveOverlaps">
+  <synopsis>
+    <p>Removes overlapping annotations from a given layer.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> removes overlapping annotations in the layer <param name="layerName"/>.</p>
+	  <p>
+	  	<this/> scans each specified layer and finds clusters of overlapping annotations.
+	  	<this/> distinguishes three overlapping situations:
+	  	<ol>
+	  	<li><em>equal</em>: two annotations have exactly the same span;</li>
+	  	<li><em>included</em>: one annotation includes the other completely;</li>
+	  	<li><em>overlapping</em>: one annotation overlaps with the head or the tail of the other annotation.</li>
+	  	</ol>
+	  </p>
+	  <p>
+	  <param name="removeEqual"/>, <param name="removeIncluded"/> and <param name="removeOverlapping"/> specify the behavior for each situation.
+	  If the parameter is <code>true</code>, then <this/> will remove one of the annotations. 
+	  </p>
+	  <p>
+	  <param name="annotationComparator"/> controls which annotation is removed.
+	  </p>
+	  <p>
+	  By default <this/> removes all kinds of annotations, keeping the longest one.
+	  </p>
+    </description>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="layerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer to clear.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: length" name="annotationComparator" short-type="AnnotationComparator" type="alvisnlp.corpus.AnnotationComparator">
+      <p>Comparator to use in order to choose between overlapping annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="removeEqual" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to remove annotations with equal spans.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="removeIncluded" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to remove annotations fully included in another annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="removeOverlapping" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to remove strictly overlapping annotations.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

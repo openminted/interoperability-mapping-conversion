@@ -1,0 +1,26 @@
+<%
+components
+    .grep { it.categories[0] in ['Reader', 'Writer']}
+    .groupBy { it.format ?: ' Uncategorized' }
+    .sort { it.key }
+    .each { format, formatGroup ->
+%>
+=== ${format} (${formatGroup.size()})
+
+${data[format] ?: ''}
+
+|====
+|Component|Description|Framework
+<%
+        formatGroup.sort { it.name }.each { component ->
+%>
+| ${component.name}
+| ${component.description}
+| ${component.framework}
+<%        
+        }
+%>
+|====
+<%    
+    }
+%>

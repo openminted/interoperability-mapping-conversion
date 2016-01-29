@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.semantictagging.SemanticFieldAnnotator</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.semantictagging.SemanticFieldAnnotator</name>
+        <description>This Analysis Engine annotates
+English single words with semantic field information retrieved from an ExternalResource.
+This could be a lexical resource such as WordNet or a simple key-value map.
+The annotation is stored in the SemanticField annotation type.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>annotationType</name>
+                <description>Annotation types which should be annotated with semantic fields</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>constraint</name>
+                <description>A constraint on the annotations that should be considered in form of a JXPath statement.
+Example: set #PARAM_ANNOTATION_TYPE to a NamedEntity type and set the
+#PARAM_CONSTRAINT to ".[value = 'LOCATION']" to annotate only tokens with semantic fields that are
+part of a location named entity.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.NamedEntity</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+    <externalResourceDependencies>
+        <externalResourceDependency>
+            <key>semanticFieldResource</key>
+            <description/>
+            <interfaceName>de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.semantictagging.SemanticTagResource</interfaceName>
+            <optional>false</optional>
+        </externalResourceDependency>
+    </externalResourceDependencies>
+</analysisEngineDescription>

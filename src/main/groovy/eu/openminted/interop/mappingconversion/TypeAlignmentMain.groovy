@@ -14,7 +14,7 @@ import org.asciidoctor.AttributesBuilder;
 import org.asciidoctor.OptionsBuilder;
 import org.asciidoctor.SafeMode;
 
-class Main
+class TypeAlignmentMain
 {
     static Map<String, Map<String, TypeDef>> typeSystems = [:];
     
@@ -23,11 +23,11 @@ class Main
     
     static void main(String... args) {
         List<String> files = [
-            "src/test/resources/alvis.csv", 
-            "src/test/resources/argo.csv", 
-            "src/test/resources/dkpro.csv", 
-            "src/test/resources/gate.csv", 
-            "src/test/resources/ilsp.csv"
+            "src/main/resources/typemappings/alvis.csv", 
+            "src/main/resources/typemappings/argo.csv", 
+            "src/main/resources/typemappings/dkpro.csv", 
+            "src/main/resources/typemappings/gate.csv", 
+            "src/main/resources/typemappings/ilsp.csv"
             ];
         
         files.each { parse it as File };
@@ -43,7 +43,7 @@ class Main
         File adocTargetFolder = new File("target/generated-adoc");
 
         def te = new groovy.text.SimpleTemplateEngine(this.class.classLoader);
-        new File("src/main/templates/").eachFile(FILES) { tf ->
+        new File("src/main/templates/typemappings").eachFile(FILES) { tf ->
             println "Processing template ${tf.name}...";
             try {
                 def template = te.createTemplate(tf.getText("UTF-8"));

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.tokit.RegexTokenizer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.tokit.RegexTokenizer</name>
+        <description>This segmenter splits sentences and tokens based on regular expressions that define the sentence
+and token boundaries.
+&lt;p&gt;
+The default behaviour is to split sentences by a line break and tokens by whitespace.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>tokenBoundaryRegex</name>
+                <description>Defines the pattern that is used as token end boundary. Default: [\s\n]+ (matching
+whitespace and linebreaks.
+&lt;p&gt;
+When setting custom patterns, take into account that the final token is often terminated by a
+linebreak rather than the boundary character. Therefore, the newline typically has to be
+added to the group of matching characters, e.g. "tokenized-text" is correctly
+tokenized with the pattern [-\n].</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>sentenceBoundaryRegex</name>
+                <description>Define the sentence boundary. Default: \n (assume one sentence per line).</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>zoneTypes</name>
+                <description>A list of type names used for zoning.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>strictZoning</name>
+                <description>Strict zoning causes the segmentation to be applied only within the
+boundaries of a zone annotation. This works only if a single zone type
+is specified (the zone annotations should NOT overlap) or if no zone
+type is specified - in which case the whole document is taken as a zone.
+If strict zoning is turned off, multiple zone types can be specified.
+A list of all zone boundaries (start and end) is created and segmentation
+happens between them.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>The language.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeToken</name>
+                <description>Create Token annotations.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeSentence</name>
+                <description>Create Sentence annotations.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>tokenBoundaryRegex</name>
+                <value>
+                    <string>[\s
+]+</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>sentenceBoundaryRegex</name>
+                <value>
+                    <string>
+</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>zoneTypes</name>
+                <value>
+                    <array>
+                        <string>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Div</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>strictZoning</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeToken</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeSentence</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

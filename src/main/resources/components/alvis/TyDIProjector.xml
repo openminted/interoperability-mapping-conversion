@@ -1,0 +1,100 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="TyDIProjector" target="org.bibliome.alvisnlp.modules.projectors.TyDIProjector">
+  <synopsis>
+    <p>Projects terms from a TiDI export.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads different files from a <a href="https://migale.jouy.inra.fr/redmine/projects/tydi">TyDI</a> text export, resolves all synonymies and projects the terms into sections.</p>
+      <p>The parameters <param name="lemmaFile"/>, <param name="synonymsFile"/>, <param name="quasiSynonymsFile"/>, <param name="acronymsFile"/> and <param name="typographicVariationsFile"/> point to the paths to the corresponding TyDI file export.</p>
+      <p>The parameters <param name="normalizeSpace"/>, <param name="ignoreCase"/>, <param name="ignoreDiacritics"/> and <param name="ignoreWhitespace"/> control the matching of entries on the sections.</p>
+      <p>The <param name="subject"/> parameter specifies which text of the section should be matched. There are two options:
+      <ul>
+	<li>the entries are matched on the contents of the section, <param name="subject"/> can also control if matches boundaries coincide with word delimiters;</li>
+	<li>the entries are matched on the feature value of annotations of a given layer separated by a whitespace, in this way entries can be searched against word lemmas for instance.</li>
+      </ul>
+      </p>
+      <p><this/> creates an annotation for each matched entry and adds these annotations to the layer named <param name="targetLayerName"/>. The created annotations will have a feature named <param name="canonicalFormFeature"/> containing the canonical form of the matched term.<nl/>In addition, the created annotations will have the feature keys and values defined in <param name="constantAnnotationFeatures"/>.</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="acronymsFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the acronyms file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: false" name="normalizeSpace" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match normalizing whitespace.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: add" name="multipleValueAction" short-type="MultipleValueAction" type="org.bibliome.alvisnlp.modules.projectors.MultipleValueAction">
+      <p>Either to stop when multiple entries with the same key is seen.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="lemmaFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the file containing lemmas.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="quasiSynonymsFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the quasi-synonyms file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: org.bibliome.alvisnlp.modules.projectors.ContentsSubject@20e2fdf4" name="subject" short-type="Subject" type="org.bibliome.alvisnlp.modules.projectors.Subject">
+      <p>Subject on which to project the dictionary.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="synonymsFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the synonyms file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreCase" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring case.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: lemma" name="canonicalFormFeature" short-type="String" type="java.lang.String">
+      <p>Feature where to store the term canonical form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="errorDuplicateValues" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to stop when a duplicate entry is seen.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="typographicVariationsFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the typographic variations file.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreDiacritics" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring diacritics.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="ignoreWhitespace" short-type="Boolean" type="java.lang.Boolean">
+      <p>Match ignoring whitespace characters.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="mergeFile" short-type="SourceStream" type="org.bibliome.util.streams.SourceStream">
+      <p>Path to the merged terms file.</p>
+    </param-doc>
+ 
+    <param-doc mandatory="required" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer where to put match annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="saveDictFile" short-type="TargetStream" type="org.bibliome.util.streams.TargetStream">
+      <p>Path of the file where to save the dictionary.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

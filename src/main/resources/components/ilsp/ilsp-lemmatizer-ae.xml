@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>gr.ilsp.nlp.lemmatizer.LemmaAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>ILSP Lemmatizer</name>
+    <description>ILSP Lemmatizer consults a assigns lemmas to tokens from Greek texts.
+ILSP Lemmatizer consults the ILSP Morphological Lexicon to assign lemmas to tokens. The AE uses POS tags (if they exist in the input) to select between lemmas when the ILSP ML returns more that one results for one token.</description>
+    <version>1.1</version>
+    <vendor>Institute for Language and Speech Processing</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>LexicaDir</name>
+        <description>The directory containing the Berkeley DB lexical resources. Default is /opt/ilsp-nlp/lexica/fbt.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>LexicaDir</name>
+        <value>
+          <string>/opt/ilsp-nlp/lexica/lemmatizer</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="ilsp-typesystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">gr.ilsp.types.Token</type>
+        </outputs>
+        <languagesSupported>
+          <language>el</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>LemmaExceptionsTable</key>
+      <description/>
+      <interfaceName>gr.ilsp.nlp.lemmatizer.StringMapResource</interfaceName>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>TokenReplacementsTable</key>
+      <description/>
+      <interfaceName>gr.ilsp.nlp.lemmatizer.StringMapResource</interfaceName>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>LemmaExceptionsTableFile</name>
+        <description>A table containing lemma exceptions that override information from the ILSP Morphological Lexicon.</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:gr/ilsp/nlp/lemmatizer/LemmaExceptions.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.lemmatizer.StringMapResource_impl</implementationName>
+      </externalResource>
+      <externalResource>
+        <name>TokenReplacementsFile</name>
+        <description>Some token replacements before lemma checking (e.g. παρ+απόστροφος-&gt;παρά)</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:gr/ilsp/nlp/lemmatizer/TokenReplacements.txt</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>gr.ilsp.nlp.lemmatizer.StringMapResource_impl</implementationName>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>TokenReplacementsTable</key>
+        <resourceName>TokenReplacementsFile</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>LemmaExceptionsTable</key>
+        <resourceName>LemmaExceptionsTableFile</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

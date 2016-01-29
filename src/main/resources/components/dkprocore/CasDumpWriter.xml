@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter</name>
+        <description>Dumps CAS content to a text file. This is useful when setting up test cases which contain a
+reference output to which an actually produced CAS is compared. The format produced by this
+component is more easily comparable than a XCAS or XMI format.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>Output file. If multiple CASes as processed, their contents are concatenated into this file.
+Mind that a test case using this consumer with multiple CASes requires a reader which
+produced the CASes always in the same order. When this file is set to "-", the dump does to
+System#out (default).</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>writeDocumentMetaData</name>
+                <description>Whether to dump the content of the CAS#getDocumentAnnotation().</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>featurePatterns</name>
+                <description>Include/exclude features according to the following patterns. Mind that the patterns do not
+actually match feature names but lines produced by FeatureStructure.toString().</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>typePatterns</name>
+                <description>Include/exclude specified UIMA types in the output.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>sort</name>
+                <description>Sort increasing by begin, decreasing by end, increasing by name instead of relying on index
+order.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>targetLocation</name>
+                <value>
+                    <string>-</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>writeDocumentMetaData</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>featurePatterns</name>
+                <value>
+                    <array>
+                        <string>+|.*</string>
+                        <string>-|^.*documentUri:.*$</string>
+                        <string>-|^.*collectionId:.*$</string>
+                        <string>-|^.*documentBaseUri:.*$</string>
+                        <string>-|^\s+\w+: &lt;null&gt;$</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>typePatterns</name>
+                <value>
+                    <array>
+                        <string>+|.*</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>sort</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

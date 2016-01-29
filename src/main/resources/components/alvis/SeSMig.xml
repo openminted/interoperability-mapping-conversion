@@ -1,0 +1,69 @@
+<alvisnlp-doc author="Robert Bossy" date="2010-10-28" short-target="SeSMig" target="org.bibliome.alvisnlp.modules.segmig.SeSMig">
+  <synopsis>
+    <p>Detects sentence boundaries and creates one annotation for each sentence.</p>
+    <p>This module assumes WoSMig processed the same sections.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> scans for annotations in <param name="wordLayerName"/> and detects a sentence boundaries defined as either:
+      <ul>
+	<li>an annotation whose feature <param name="eosStatusFeature"/> equals <em>eos</em>;</li>
+	<li>an annotation whose surface form contains only characaters of the value of <param name="strongPunctuations"/> and which is followed by an uppercase character;</li>
+	<li>an annotation whose feature <param name="eosStatusFeature"/> equals <em>maybe-eos</em> and which is followed by an uppercase character.</li>
+      </ul>
+      </p>
+      <p><this/> creates an annotation for each sentence and adds it into the <param name="targetLayerName"/>. The <param name="eosStatusFeature"/> of word annotations are given a new value:
+      <ul>
+	<li><strong>eos</strong>: for the last word of each sentence;</li>
+	<li><strong>not-eos</strong>: for all other words.</li>
+      </ul>
+      </p>
+      <p>If <param name="noBreakLayerName"/> is defined, then <this/> will prevent sentence boundaries inside annotations in this layer.</p>
+    </description>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: ?.!" name="strongPunctuations" short-type="String" type="java.lang.String">
+      <p>List of strong punctuations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: wordType" name="typeFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to read word annotation type.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>This expression is evaluated as a boolean with the corpus as the context element, the module will process the document only if the result is true.</p>
+    </param-doc>
+      
+    <param-doc mandatory="default: words" name="wordLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer containing word annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="documentFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Only process document that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: eos" name="eosStatusFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature (in words) containing the end-of-sentence status (not-eos, maybe-eos).</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: boolean:and(true, nav:layer:words())" name="sectionFilter" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>Process only sections that satisfy this filter.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: form" name="formFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature containing the word surface form.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="noBreakLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer containing annotations within which there cannot be sentence boundaries.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: sentences" name="targetLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer where to store sentence annotations.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>

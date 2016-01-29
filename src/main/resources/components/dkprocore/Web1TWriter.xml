@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.io.web1t.Web1TWriter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.web1t.Web1TWriter</name>
+        <description>Web1T n-gram index format writer.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>inputTypes</name>
+                <description>Types to generate n-grams from.
+
+Example: Token.class.getName() + "/pos/PosValue" for part-of-speech n-grams</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>Location to which the output is written.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetEncoding</name>
+                <description>Character encoding of the output data.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minNgramLength</name>
+                <description>Minimum n-gram length.
+
+Default: 1</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>maxNgramLength</name>
+                <description>Maximum n-gram length.
+
+Default: 3</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>lowercase</name>
+                <description>Create a lower case index.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>createIndexes</name>
+                <description>Create the indexes that jWeb1T needs to operate. (default: true)</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minFreq</name>
+                <description>Specifies the minimum frequency a NGram must have to be written to the
+final index. The specified value is interpreted as inclusive value, the
+default is 1. Thus, all NGrams with a frequency of at least 1 or higher
+will be written.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>splitFileTreshold</name>
+                <description>The input file(s) is/are split into smaller files for quick access. An
+own file is created if the first two starting letters (or the starting
+letter if the word has a length of 1 character) account for at least x%
+of all starting letters in the input file(s). The default value for
+splitting a file is 1.0%. Every word that has starting characters which
+does not suffice the threshold is written with other words that also did
+not meet the threshold into an own file for miscellaneous words. A high
+threshold will lead to only a few, but large files and a most likely very
+large misc. file. A low threshold results in many small files. Use a zero or a negative
+value to write everything to one file.</description>
+                <type>Float</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>contextType</name>
+                <description>The type being used for segments</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>targetEncoding</name>
+                <value>
+                    <string>UTF-8</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minNgramLength</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>maxNgramLength</name>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>lowercase</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>createIndexes</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minFreq</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>splitFileTreshold</name>
+                <value>
+                    <float>1.0</float>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>contextType</name>
+                <value>
+                    <string>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</string>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

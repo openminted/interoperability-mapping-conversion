@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>microdata.jar</JAR>
+<RESOURCE><CLASS>gate.creole.microdata.MicrodataExporter</CLASS><TOOL /><NAME>HTML5 Microdata Exporter</NAME><COMMENT>Exports Annotations as HTML5 Microdata</COMMENT><ICON>HTML5</ICON><AUTOINSTANCE /><PARAMETER NAME="annotationSetName" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="configURL" DEFAULT="resources/schema.org/ANNIE.xml" RUNTIME="true">java.net.URL</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

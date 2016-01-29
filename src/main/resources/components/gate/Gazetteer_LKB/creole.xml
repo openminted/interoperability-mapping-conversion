@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>		     
+	<JAR>lib/commons-cli-1.1.jar</JAR>
+	<JAR>lib/commons-codec-1.3.jar</JAR>
+	<JAR>lib/commons-collections-3.2.1.jar</JAR>
+	<JAR>lib/commons-httpclient-3.1.jar</JAR>
+	<JAR>lib/kim-api-3.0-RC5.jar</JAR>
+	<JAR>lib/kim-util-3.0-RC5.jar</JAR>
+	<JAR>lib/slf4j-api-1.5.11.jar</JAR>
+	<JAR>lib/slf4j-log4j12-1.5.11.jar</JAR>
+	<JAR>lib/trove4j-2.0.2.jar</JAR>
+	<JAR>lib/owlim-lite-5.4.jar</JAR>
+	<JAR>lib/openrdf-sesame-2.7.9-onejar.jar</JAR> 
+	<JAR>Gazetteer_LKB.jar</JAR>	
+	<CREOLE>
+
+		<!-- 
+    The large knowledge base gazetteer allows loading huge collections of 
+    identifiers and labels and using them for gazetteer lookup.
+	-->
+		<RESOURCE>  
+			<NAME>Large KB Gazetteer</NAME>
+			<CLASS>com.ontotext.kim.gate.KimGazetteer</CLASS>
+			<COMMENT>KIM KB based alias-lookup commponent</COMMENT>
+			<HELPURL>http://nmwiki.ontotext.com/lkb_gazetteer</HELPURL>
+			<PARAMETER NAME="document" RUNTIME="true" COMMENT="The document to be processed">gate.Document</PARAMETER>
+			<PARAMETER NAME="annotationSetName" RUNTIME="true" COMMENT="The annotation set to be used for the generated annotations" OPTIONAL="true">java.lang.String</PARAMETER>
+
+
+			<!-- Setting limit of the number of the created annotations 
+	           will reduce the memory consumption of GATE on large documents.
+		 Note that GATE documents consume gigabytes of memory if there are tens of thousands
+		 of annotations in the document. All PRs that create large number of 
+		 annotations like the gazetteers and tokenizers may cause an Out Of Memory error
+		 on large texts. Setting that options limits the amount of memory that the gazetteer will use. -->
+			<PARAMETER NAME="annotationLimit" RUNTIME="true" COMMENT="   The maximum number of the generated annotations. NULL or 0 for no limit.      See the comments in the creole.xml for more information." OPTIONAL="true">java.lang.Integer</PARAMETER>
+
+
+			<PARAMETER NAME="dictionaryPath" RUNTIME="false" COMMENT="Path where the gazetteer dictionary is stored." DEFAULT="dictionary" OPTIONAL="false">java.net.URL</PARAMETER>
+
+			<PARAMETER NAME="forceCaseSensitive" RUNTIME="false" COMMENT="Whether the gazeteer should return case-sensitive matches regardless of the loaded dictionary." OPTIONAL="true">java.lang.Boolean</PARAMETER>		
+
+		</RESOURCE>
+
+		<RESOURCE>
+			<CLASS>com.ontotext.kim.gate.SesameEnrichment</CLASS>
+		<NAME>Semantic Enrichment PR</NAME><COMMENT>The Semantic Enrichment PR allows adding new data to semantic annotations by querying external RDF (Linked Data) repositories.</COMMENT><HELPURL>http://nmwiki.ontotext.com/lkb_gazetteer/semantic_encrichment_pr.html</HELPURL><PARAMETER NAME="version" COMMENT="The version of the Gazetteer_LKB build. Read-only" DEFAULT="to be loaded from jar manifest" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="annotationTypes" ITEM_CLASS_NAME="java.lang.String" COMMENT="Types of annotations that will be enriched." RUNTIME="true">java.util.List</PARAMETER><PARAMETER NAME="inputASName" COMMENT="Input annotation set to be scanned for semantic annotations" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="repositoryUrl" COMMENT="The URL of a Sesame 2 HTTP repository. Supports generic SPARQL endpoints as well." DEFAULT="http://factforge.net/sparql">java.lang.String</PARAMETER><PARAMETER NAME="query" COMMENT="The sparql query pattern. The query will be processed like this - String.format(query, uriFromAnnotation), so you can use parameters like %s or %1$s" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="deleteOnNoRelations" COMMENT="Whether we want to delete the annotation that weren't encriched." DEFAULT="false" RUNTIME="true" OPTIONAL="true">java.lang.Boolean</PARAMETER><PARAMETER NAME="corpus" COMMENT="The corpus containing the document to process" RUNTIME="true" OPTIONAL="true">gate.Corpus</PARAMETER><PARAMETER NAME="document" COMMENT="The document to process" RUNTIME="true">gate.Document</PARAMETER></RESOURCE>
+
+	</CREOLE>
+
+</CREOLE-DIRECTORY>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+      <JAR>TextRazorTagger.jar</JAR>
+      <JAR>lib/textrazor-1.0.0.jar</JAR>
+<RESOURCE><CLASS>gate.textrazor.TextRazorServicePR</CLASS><NAME>TextRazor Service PR</NAME><COMMENT>Runs the TextRazor annotation service (http://textrazor.com) on a GATE document</COMMENT><HELPURL>http://gate.ac.uk/userguide/sec:misc-creole:textrazor</HELPURL><PARAMETER NAME="outputASName" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="apiKey" COMMENT="API key. One has to obtain this from TextRazor by creating an account online">java.lang.String</PARAMETER><PARAMETER NAME="corpus" COMMENT="The corpus containing the document to process" RUNTIME="true" OPTIONAL="true">gate.Corpus</PARAMETER><PARAMETER NAME="document" COMMENT="The document to process" RUNTIME="true">gate.Document</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

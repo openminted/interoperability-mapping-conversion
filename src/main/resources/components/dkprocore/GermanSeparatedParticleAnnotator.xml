@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.tokit.GermanSeparatedParticleAnnotator</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.tokit.GermanSeparatedParticleAnnotator</name>
+        <description>Annotator to be used for post-processing of German corpora that have been lemmatized and POS-tagged with the&#13;
+TreeTagger, based on the STTS tagset.&#13;
+&#13;
+This Annotator deals with German particle verbs. Particle verbs consist of a particle and a stem, e.g. anfangen = an+fangen&#13;
+There are many usages of German particle verbs where the stem and the particle are separated, e.g., Wir fangen gleich an.&#13;
+The TreeTagger lemmatizes the verb stem as "fangen" and the separated particle as "an",&#13;
+the proper verblemma "anfangen" is thus not available as an annotation.&#13;
+The GermanSeparatedParticleAnnotator replaces the lemma of the stem of particle-verbs (e.g., fangen) by the proper verb lemma&#13;
+(e.g. anfangen) and leaves the lemma of the separated particle unchanged.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters/>
+        <configurationParameterSettings/>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

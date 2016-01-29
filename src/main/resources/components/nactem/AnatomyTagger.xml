@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.eurpmc.nersuite.AnatomyTagger</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>Anatomical Entity Tagger</name>
+    <description>Tags anatomical entities using Brown, UMLS and OBO Anatomy dictionary features</description>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+        <import name="uk.ac.nactem.uima.EUPMCTypeSystem"/>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>org.u_compare.shared.syntactic.Sentence</type>
+        <type>org.u_compare.shared.syntactic.Chunk</type>
+        <type>uk.ac.nactem.uima.eupmc.AlternateToken</type>
+        <type>uk.ac.nactem.uima.eupmc.DictionaryFeatures</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Chunk</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.eupmc.AlternateToken</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.eupmc.DictionaryFeatures</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.NamedEntity</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>anatomyTaggerModelFile1</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>anatomyTaggerModelFile2</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>anatomyTaggerModelFile1</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:model1.m</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+      <externalResource>
+        <name>anatomyTaggerModelFile2</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:model2.m</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>anatomyTaggerModelFile1</key>
+        <resourceName>anatomyTaggerModelFile1</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>anatomyTaggerModelFile2</key>
+        <resourceName>anatomyTaggerModelFile2</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

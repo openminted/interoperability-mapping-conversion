@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.mallet.topicmodel.MalletTopicModelInferencer</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.mallet.topicmodel.MalletTopicModelInferencer</name>
+        <description>Infers the topic distribution over documents using a Mallet ParallelTopicModel.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>modelLocation</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>typeName</name>
+                <description>The annotation type to use as tokens. Default: Token</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>nIterations</name>
+                <description>The number of iterations during inference. Default: 10.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>burnIn</name>
+                <description>The number of iterations before hyperparameter optimization begins. Default: 1</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>thinning</name>
+                <description/>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minTopicProb</name>
+                <description>Minimum topic proportion for the document-topic assignment.</description>
+                <type>Float</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>maxTopicAssignments</name>
+                <description>Maximum number of topics to assign. If not set (or &amp;lt;= 0), the number of topics in the&#13;
+model divided by 10 is set.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>useLemma</name>
+                <description>If set, uses lemmas instead of original text as features.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>minTokenLength</name>
+                <description>Ignore tokens (or lemmas, respectively) that are shorter than the given value. Default: 3.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>typeName</name>
+                <value>
+                    <string>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>nIterations</name>
+                <value>
+                    <integer>10</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>burnIn</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>thinning</name>
+                <value>
+                    <integer>5</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minTopicProb</name>
+                <value>
+                    <float>0.2</float>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>maxTopicAssignments</name>
+                <value>
+                    <integer>0</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>useLemma</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>minTokenLength</name>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token</type>
+                </inputs>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.mallet.type.TopicDistribution</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CREOLE-DIRECTORY>
+  <JAR>NormaGene.jar</JAR>
+<RESOURCE><CLASS>gate.creole.normagene.NormaGene</CLASS><NAME>NormaGene Tagger</NAME><ICON>DNA.png</ICON><COMMENT>A processing resource that takes document and corpus parameters</COMMENT><PARAMETER NAME="threshold" DEFAULT="0.6" RUNTIME="true">java.lang.Double</PARAMETER><PARAMETER NAME="annotationSetName" RUNTIME="true" OPTIONAL="true">java.lang.String</PARAMETER><PARAMETER NAME="corpus" COMMENT="The corpus containing the document to process" RUNTIME="true" OPTIONAL="true">gate.Corpus</PARAMETER><PARAMETER NAME="document" COMMENT="The document to process" RUNTIME="true">gate.Document</PARAMETER></RESOURCE></CREOLE-DIRECTORY>

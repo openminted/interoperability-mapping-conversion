@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>de.tudarmstadt.ukp.dkpro.core.io.solr.SolrWriter</annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.solr.SolrWriter</name>
+        <description>A simple implementation of SolrWriter_ImplBase</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>update</name>
+                <description>Define whether existing documents with same ID are updated (true) of overwritten (false)?&#13;
+Default: true (update).</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>targetLocation</name>
+                <description>Solr server URL string in the form &lt;prot&gt;://&lt;host&gt;:&lt;port&gt;/&lt;path&gt;, e.g.&#13;
+http://localhost:8983/solr/collection1.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>queueSize</name>
+                <description>The buffer size before the documents are sent to the server (default: 10000).</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>threads</name>
+                <description>The number of background threads used to empty the queue. Default: 1.</description>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>waitFlush</name>
+                <description>When committing to the index, i.e. when all documents are processed, block until index&#13;
+changes are flushed to disk? Default: true.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>waitSearcher</name>
+                <description>When committing to the index, i.e. when all documents are processed, block until a new&#13;
+searcher is opened and registered as the main query searcher, making the changes visible?&#13;
+Default: true.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>textField</name>
+                <description>The name of the text field in the Solr schema (default: "text").</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>solrIdField</name>
+                <description>The name of the id field in the Solr schema (default: "id").</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>optimizeIndex</name>
+                <description>If set to true, the index is optimized once all documents are uploaded. Default is false.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>update</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>queueSize</name>
+                <value>
+                    <integer>10000</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>threads</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>waitFlush</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>waitSearcher</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>textField</name>
+                <value>
+                    <string>text</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>solrIdField</name>
+                <value>
+                    <string>id</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>optimizeIndex</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities/>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</analysisEngineDescription>

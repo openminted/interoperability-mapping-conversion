@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>de.tudarmstadt.ukp.dkpro.core.io.xml.XmlXPathReader</implementationName>
+    <processingResourceMetaData>
+        <name>de.tudarmstadt.ukp.dkpro.core.io.xml.XmlXPathReader</name>
+        <description>A component reader for XML files implemented with XPath.
+&lt;p&gt;
+This is currently optimized for TREC format, which means the style topics are presented in. You
+should provide the parameter XPath expression that of the &lt;i&gt;parent&lt;/i&gt; node And the child nodes
+of each parent node will be stored separately in its own CAS.
+&lt;p&gt;
+If your expression evaluates to leaf nodes, empty CASes will be created.</description>
+        <version>1.8.0-SNAPSHOT</version>
+        <vendor>DKPro Core Project</vendor>
+        <copyright>Copyright 2010-2015
+                            Ubiquitous Knowledge Processing (UKP) Lab
+                            Technische Universität Darmstadt</copyright>
+        <configurationParameters>
+            <configurationParameter>
+                <name>rootXPath</name>
+                <description>Specifies the XPath expression to all nodes to be processed. Different segments will be
+separated via PARAM_ID_TAG, and each segment will be stored in a separate CAS.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>includeTags</name>
+                <description>Tags which should be worked on. If empty then all tags will be processed.
+&lt;p&gt;
+
+If this and PARAM_EXCLUDE_TAGS are both provided, tags in set PARAM_INCLUDE_TAGS -
+PARAM_EXCLUDE_TAGS will be processed.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>excludeTags</name>
+                <description>Tags which should be ignored. If empty then all tags will be processed.
+&lt;p&gt;
+
+If this and PARAM_INCLUDE_TAGS are both provided, tags in set PARAM_INCLUDE_TAGS -
+PARAM_EXCLUDE_TAGS will be processed.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>language</name>
+                <description>Language of the documents. If given, it will be set in each CAS.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>workingDir</name>
+                <description>Specify to substitute tag names in CAS.
+&lt;p&gt;
+Please give the substitutions each in before - after order. For example to substitute "foo"
+with "bar", and "hey" with "ho", you can provide { "foo", "bar", "hey", "ho" }.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>docIdTag</name>
+                <description>Tag which contains the docId. If it is given, it will be ensured that within the same
+document there is only one id tag and it is not empty</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>sourceLocation</name>
+                <description>Location from which the input is read.</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>patterns</name>
+                <description>A set of Ant-like include/exclude patterns. A pattern starts with #INCLUDE_PREFIX [+]
+if it is an include pattern and with #EXCLUDE_PREFIX [-] if it is an exclude pattern.
+The wildcard &lt;code&gt;&amp;#47;**&amp;#47;&lt;/code&gt; can be used to address any number of sub-directories.
+The wildcard * can be used to a address a part of a name.</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>useDefaultExcludes</name>
+                <description>Use the default excludes.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>caseSensitive</name>
+                <description>States whether the matching is done case sensitive. (default: true)</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>includeTags</name>
+                <value>
+                    <array/>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>excludeTags</name>
+                <value>
+                    <array/>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>useDefaultExcludes</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>caseSensitive</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</type>
+                    <type>de.tudarmstadt.ukp.dkpro.core.api.structure.type.Field</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</collectionReaderDescription>

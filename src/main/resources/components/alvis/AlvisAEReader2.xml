@@ -1,0 +1,187 @@
+<alvisnlp-doc author="" date="" short-target="AlvisAEReader2" target="org.bibliome.alvisnlp.modules.cadixe.AlvisAEReader2">
+  <synopsis>
+    <p><this/> reads documents and annotations from an AlvisAE campaign.</p>
+  </synopsis>
+
+  <module-doc>
+    <description>
+      <p><this/> reads an AlvisAE server database and imports documents and annotation sets from an annotation campaign. The database connection is specified with <param name="url"/>, <param name="username"/>, <param name="password"/> and <param name="schema"/>. The <param name="campaignId"/> parameter specifies the campaign identifier in the AlvisAE database (the AlvisAE client displays this identifier).</p>
+
+      <p>
+	All AlvisAE annotations, including text-bound annotations, will be represented in AlvisNLP/ML as relation tuples, in a relation named after the annotation type.
+	<ul>
+	  <li>For <em>text-bound</em> annotations, each fragment is represented in an annotation stored in the layer <param name="fragmentsLayerName"/>. The tuple references the fragments through its arguments; their role name is <param name="fragmentRolePrefix"/> with the fragment order appended (starting at zero). Thus a single-fragment annotation will have a single argument with role <code>frag0</code>. The type of the annotation is stored in the feature <param name="typeFeature"/> of the tuple and of each fragment.</li>
+	  <li>A <em>group</em> tuple references its items through its arguments; their role name is <param name="itemRolePrefix"/> with the item order appended (starting at zero).</li>
+	  <li>A <em>relation</em> tuple hareferences its arguments in a straightforward way.</li>
+	</ul>
+      </p>
+
+      <p>
+      </p>
+    </description>
+  
+    <param-doc mandatory="optional" name="docExternalIds" short-type="String[]" type="java.lang.String[]">
+      <p>If set, <this/> imports only documents whose external id is included in the value. If not set, then <this/> imports all documents.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantAnnotationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each annotation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: type" name="typeFeature" short-type="String" type="java.lang.String">
+      <p>Feature that contains the type of the annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="password" short-type="String" type="java.lang.String">
+      <p>User password for JDBC connection.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="campaignId" short-type="Integer" type="java.lang.Integer">
+      <p>Identifier of the AlvisAE campaign to import.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="userFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to store the name of the AlvisAE user that created the annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantSectionFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each section created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="userNames" short-type="String[]" type="java.lang.String[]">
+      <p>If set, <this/> imports only annotation sets created by an user included in the value. If this parameter and <param name="userIds"/> are not set, <this/> imports annotations of all users.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="loadTextBound" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to import text-bound annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="taskName" short-type="String" type="java.lang.String">
+      <p>If set, <this/> imports only annotation sets of tasks whose name is included in the value. If this parameter and <param name="taskId"/> are not set, <this/> imports annotations of all tasks.</p>
+    </param-doc>
+
+    <param-doc mandatory="default: true" name="active" short-type="Expression" type="alvisnlp.corpus.expressions.Expression">
+      <p>An expression evaluated as a boolean with the corpus as the context element. This module processes the corpus if the result is <code>true</code></p>
+    </param-doc>
+  
+    <param-doc mandatory="default: item" name="itemRolePrefix" short-type="String" type="java.lang.String">
+      <p>Prefix of the roles of arguments that represent group items.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="taskFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to store the name task where the annotation belongs.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantDocumentFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each document created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="docIds" short-type="Integer[]" type="java.lang.Integer[]">
+      <p>If set, <this/> imports only documents whose external id is included in the value. If not set, then <this/> imports all documents.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="username" short-type="String" type="java.lang.String">
+      <p>PostgreSQL user name.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="loadGroups" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to import group annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="taskId" short-type="Integer" type="java.lang.Integer">
+      <p>If set, <this/> imports only annotation sets of tasks whose id is included in the value. If this parameter and <param name="taskName"/> are not set, <this/> imports annotations of all tasks.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantRelationFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each relation created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="userIds" short-type="Integer[]" type="java.lang.Integer[]">
+      <p>If set, <this/> imports only annotation sets created by an user whose id is included in the value. If this parameter and <param name="userNames"/> are not set, <this/> imports annotations of all users.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="schema" short-type="String" type="java.lang.String">
+      <p>PostgreSQL schema.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: frag" name="fragmentRolePrefix" short-type="String" type="java.lang.String">
+      <p>For tuples that represent text-bound annotations, prefix of the role of fragment arguments.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: alvisae" name="sectionName" short-type="String" type="java.lang.String">
+      <p>Name of the unique section created in each document.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="docDescriptions" short-type="String[]" type="java.lang.String[]">
+      <p>If set, <this/> imports only documents whose description is included in the value. If not set, then <this/> imports all documents.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: type" name="fragmentTypeFeature" short-type="String" type="java.lang.String">
+      <p>In annotations that represent text-bound fragments, name of the feature where to store the type of the annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: kind" name="kindFeature" short-type="String" type="java.lang.String">
+      <p>Name of the relation feature containing the annotation kind (values are: <em>text-bound</em>, <em>group</em>, or <em>relation</em>).</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="loadRelations" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to import relation annotations.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: true" name="head" short-type="Boolean" type="java.lang.Boolean">
+      <p>If <code>true</code>, then <this/> imports the <em>head</em> annotation set. If <code>false</code>, then <this/> imports the annotation set with version 1.</p>
+    </param-doc>
+  
+    <param-doc mandatory="required" name="url" short-type="String" type="java.lang.String">
+      <p>PostgreSQL database URL.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: alvisae" name="fragmentsLayerName" short-type="String" type="java.lang.String">
+      <p>Name of the layer where to store text-bound annotation fragments.</p>
+    </param-doc>
+  
+    <param-doc mandatory="optional" name="constantTupleFeatures" short-type="Mapping" type="alvisnlp.module.types.Mapping">
+      <p>Constant features to add to each tuple created by this module</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: description" name="descriptionFeature" short-type="String" type="java.lang.String">
+      <p>Feature containing the document description.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: external-id" name="externalIdFeature" short-type="String" type="java.lang.String">
+      <p>Feature containing the document external id.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: created" name="createdFeature" short-type="String" type="java.lang.String">
+      <p>Feature containing the annotation creation date.</p>
+    </param-doc>
+    
+    <param-doc mandatory="default: false" name="oldModel" short-type="Boolean" type="java.lang.Boolean">
+      <p>Support database model for AlvisAE v0.3.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: source" name="sourceRolePrefix" short-type="String" type="java.lang.String">
+      <p>Prefix for the roles for source annotations, will only be used if <param name="loadDependencies"/> is true.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="loadDependencies" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to load dependencies if the annotation set task is a review.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: false" name="adjudicate" short-type="Boolean" type="java.lang.Boolean">
+      <p>Either to automatically adjudicate identical source annotations, implies <param name="loadDependencies"/>.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: referent" name="referentFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to store back-reference of sources.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: id" name="annotationIdFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to store AlvisAE identifier of the annotation.</p>
+    </param-doc>
+  
+    <param-doc mandatory="default: annotation-set" name="annotationSetIdFeature" short-type="String" type="java.lang.String">
+      <p>Name of the feature where to store the identifier of the annotation set to which belongs the annotation.</p>
+    </param-doc>
+  </module-doc>
+</alvisnlp-doc>
