@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>EUPMCTypeSystem</name>
+  <description>Type System for EuropePMC Processing</description>
+  <version>1.0</version>
+  <vendor/>
+  <types>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.BioVerb</name>
+      <description>A Biologically relevant verb</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>nominal</name>
+          <description/>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>frame</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>maxFrame</name>
+          <description/>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+          <multipleReferencesAllowed>false</multipleReferencesAllowed>
+        </featureDescription>
+        <featureDescription>
+          <name>nominalisation</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>token</name>
+          <description>The token that represents the verb</description>
+          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.RemovedAnnotation</name>
+      <description>A link to an annotation that has been removed</description>
+      <supertypeName>uima.cas.AnnotationBase</supertypeName>
+      <features>
+        <featureDescription>
+          <name>annotation</name>
+          <description>The removed annotation</description>
+          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.Fact</name>
+      <description>A fact - the span will cross the verb and the two arguments</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>verb</name>
+          <description>The verb of the fact</description>
+          <rangeTypeName>uk.ac.nactem.uima.eupmc.FactVerb</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>negation</name>
+          <description>True if this is negated, False (or missing) if not</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>argument</name>
+          <description>The first argument of the fact verb</description>
+          <rangeTypeName>uk.ac.nactem.uima.eupmc.FactArgument</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>argument2</name>
+          <description>The second argument of the fact verb (if any)</description>
+          <rangeTypeName>uk.ac.nactem.uima.eupmc.FactArgument</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>metaknowledge</name>
+          <description>Metaknowledge about the fact</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>uk.ac.nactem.uima.eupmc.FactMetaknowledgeItem</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>sentence</name>
+          <description>The index of the sentence in the original document that contains the fact.  Assumes that the same sentence splitter is used as was originally used to create the fact.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.AlternateToken</name>
+      <description>Alternate versions of a token (e.g. ascii, truecase etc.)</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>ascii</name>
+          <description>The ascii version of the token</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>ascii_truecase</name>
+          <description>The ascii, truecase version of a token</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>token</name>
+          <description>The token being annotated</description>
+          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>asciiBase</name>
+          <description>Ascii verson of the base form</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>asciiBase_truecase</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.DictionaryFeatures</name>
+      <description>Dictionary Features of a token</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>dictionaryType</name>
+          <description>The type of the dictionary used</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>dictionaryFeatures</name>
+          <description>A list of the dictionary features</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>uk.ac.nactem.uima.eupmc.NonODictionaryItem</elementType>
+          <multipleReferencesAllowed>true</multipleReferencesAllowed>
+        </featureDescription>
+        <featureDescription>
+          <name>token</name>
+          <description>The token with the features</description>
+          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>itemCount</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.NonODictionaryItem</name>
+      <description/>
+      <supertypeName>uima.cas.AnnotationBase</supertypeName>
+      <features>
+        <featureDescription>
+          <name>value</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>position</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.FactArgument</name>
+      <description/>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>syntacticRole</name>
+          <description>The relationship of the argument to the fact (e.g. subject, verb, object, modifier)</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>preposition</name>
+          <description>Any modifier of the argument</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>entity</name>
+          <description>The entity contained within the argument</description>
+          <rangeTypeName>uk.ac.nactem.uima.eupmc.FactEntity</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.FactVerb</name>
+      <description>The verb of a fact</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>base</name>
+          <description>The base form of the verb</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>frame</name>
+          <description>The Verb Frame in use in this Fact</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.FactEntity</name>
+      <description>The named-entity part of an argument of a fact</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>semanticType</name>
+          <description>The semantic type of the named entity</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>extendedEntity</name>
+          <description>Optional extended representation of the entity</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.uima.eupmc.FactMetaknowledgeItem</name>
+      <description>An item of metaknowledge about a fact</description>
+      <supertypeName>uima.cas.AnnotationBase</supertypeName>
+      <features>
+        <featureDescription>
+          <name>name</name>
+          <description>The name of the item of metaknowledge</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>value</name>
+          <description>The value of the metaknowledge item</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>

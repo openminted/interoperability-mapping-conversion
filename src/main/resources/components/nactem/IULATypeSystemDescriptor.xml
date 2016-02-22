@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>apertiumTypeSystemDescriptor</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <imports>
+    <import name="org.u_compare.U_compareTypeSystem"/>
+  </imports>
+  <types>
+    <typeDescription>
+      <name>uk.ac.nactem.TypedNamedEntity</name>
+      <description/>
+      <supertypeName>org.u_compare.shared.semantic.NamedEntity</supertypeName>
+      <features>
+        <featureDescription>
+          <name>netype</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>

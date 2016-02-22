@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>FreelingTypeSystemDescriptor</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <imports>
+    <import name="org.u_compare.U_compareTypeSystem"/>
+  </imports>
+  <types>
+    <typeDescription>
+      <name>uk.ac.nactem.FreelingDependency</name>
+      <description/>
+      <supertypeName>org.u_compare.shared.syntactic.Dependency</supertypeName>
+      <features>
+        <featureDescription>
+          <name>synt</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>uk.ac.nactem.FreelingRichToken</name>
+      <description/>
+      <supertypeName>org.u_compare.shared.syntactic.RichToken</supertypeName>
+      <features>
+        <featureDescription>
+          <name>confidence</name>
+          <description/>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>
