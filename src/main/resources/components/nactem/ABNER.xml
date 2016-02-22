@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taeDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <primitive>true</primitive>
+    <annotatorImplementationName>edu.uchsc.ccp.uima.ABNER
+    </annotatorImplementationName>
+    <analysisEngineMetaData>
+        <name>ABNER</name>
+        <description>Wraps the ABNER entity identification
+            system into the UIMA framework.
+
+            ABNER was developed by Burr Settles and is available here:
+            http://pages.cs.wisc.edu/~bsettles/abner/
+        </description>
+        <version>1.0</version>
+        <vendor>UCHSC</vendor>
+        <configurationParameters>
+            <configurationParameter>
+                <name>mode</name>
+                <description>0=NLPBA Corpus, 1=BioCreative Corpus, 2=Custom</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>model</name>
+                <description>Custom model file (if mode == 2)</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>types</name>
+                <description>Custom type mapping; each string is &lt;entity&gt;=&lt;class&gt;</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings />
+        <typeSystemDescription>
+            <imports>
+                <import name="org.u_compare.U_compareTypeSystem" />
+            </imports>
+        </typeSystemDescription>
+        <capabilities>
+            <capability>
+                <inputs />
+                <outputs />
+                <languagesSupported />
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </analysisEngineMetaData>
+</taeDescription>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.BioNLPSTDataReader</implementationName>
+  <processingResourceMetaData>
+    <name>BioNLP ST Data Reader</name>
+    <description>Reads files formatted for the BioNLP Shared Task series and outputs documents with named entity, relation and event annotations. File syntax is available on http://2013.bionlp-st.org/.</description>
+    <version>1.1</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>folders</name>
+        <description>A list of folders containing BioNLP Shared Task-format files. The folders must contain at least ".txt" files and optionally ".a1" and ".a2" files.</description>
+        <type>String</type>
+        <multiValued>true</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+        <import name="uk.ac.nactem.uima.BioNLPSTTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Relation</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.semantic.NamedEventParticipant</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Event</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.EquivalentEntities</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Entity</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>

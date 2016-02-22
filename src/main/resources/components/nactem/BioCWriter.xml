@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.bioc.BioCWriter</implementationName>
+  <processingResourceMetaData>
+    <name>BioC Writer</name>
+    <description>Writes BioC annotations to files. 
+Each output file will consist of a single document only.
+
+BioC website: http://bioc.sourceforge.net/</description>
+    <version>1.0</version>
+    <vendor>National Centre for Text Mining (NaCTeM)</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>outputFile</name>
+        <description>A path to a file where an entire collection will be written to.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="uk.ac.nactem.uima.BioCTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Sentence</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Relation</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Referent</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Passage</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Node</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Infon</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Document</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Collection</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.bioc.Annotation</type>
+          <type allAnnotatorFeatures="true">uima.tcas.Annotation</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</casConsumerDescription>

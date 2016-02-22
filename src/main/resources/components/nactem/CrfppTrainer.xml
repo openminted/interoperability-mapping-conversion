@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.ml.CrfppTrainer</implementationName>
+  <processingResourceMetaData>
+    <name>CRF++ Trainer</name>
+    <description>Produces a Conditional Random Fields model. Based on CRF++, an implementation of CRF for labeling sequential data (http://crfpp.googlecode.com/svn/trunk/doc/index.html).</description>
+    <version>1.0</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>RegularizationAlgorithm</name>
+        <description>Default value is CRF-L2. You can use CRF-L1.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>FeatureFrequencyThreshold</name>
+        <description>CRF++ uses features that occur no less than this value. Default value is 1.</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>OverfittingBalance</name>
+        <description>Default value is 1</description>
+        <type>Float</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>ModelFileName</name>
+        <description>Specifies the filename to store the model in.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>LabelAnnotationTypes</name>
+        <description>Fully qualified names of annotation types which will serve as labels during the training of the CRF.</description>
+        <type>String</type>
+        <multiValued>true</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>LabelAnnotationTypes</name>
+        <value>
+          <array/>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>RegularizationAlgorithm</name>
+        <value>
+          <string>CRF-L2</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>FeatureFrequencyThreshold</name>
+        <value>
+          <integer>1</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>OverfittingBalance</name>
+        <value>
+          <float>1.5</float>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="uk.ac.nactem.uima.MachineLearningTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.ml.ObservationsToken</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</casConsumerDescription>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>uk.ac.nactem.uima.SFTPBioNLPSTDataProvider</implementationName>
+    <processingResourceMetaData>
+        <name>SFTP BioNLP Shared Task Data Provider</name>
+        <description>Reads a corpus in BioNLP Shared Task format from a remote directory on a user-specified server via SFTP.</description>
+        <version>1.0</version>
+        <vendor>NaCTeM</vendor>
+        <configurationParameters>
+            <configurationParameter>
+                <name>ServerURL</name>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>RemoteDirectory</name>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Username</name>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>Password</name>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings/>
+        <typeSystemDescription>
+            <imports>
+                <import name="org.apache.uima.examples.SourceDocumentInformation"/>                
+                <import name="uk.ac.nactem.uima.BioNLPSTTypeSystem"/>
+            </imports>
+        </typeSystemDescription>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                	<type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Entity</type>
+                	<type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Relation</type>
+                	<type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Event</type>
+                	<type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Attribute</type>
+                	<type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Note</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+    <resourceManagerConfiguration/>
+</collectionReaderDescription>

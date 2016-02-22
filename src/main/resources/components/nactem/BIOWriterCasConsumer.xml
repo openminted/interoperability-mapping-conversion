@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>org.u_compare.cas_consumer.BIOWriterCasConsumer</implementationName>
+    <processingResourceMetaData>
+        <name>BIO Format Writer Cas Consumer</name>
+        <description>Writes specified types of annotations to the specified directory in the BIO format. BIO format is one line per token, token [tab] 	label, empty line at the end of each sentence (if SentencePerLine is true, one line per sentence, tokenization by spaces where a token is followed by a label like "token|label";). Label is one of O, B-suffix, I-suffix. Suffix should be specified as a string list of mapping from fully qualified type name to its suffix by using comma, e.g. "org.u_compare.syntactic.Sentence,Sent". Sentence and Token annotations required.</description>
+        <version>1.0</version>
+        <vendor>U-Compare</vendor>
+        <configurationParameters>
+            <configurationParameter>
+                <name>outputDir</name>
+                <description>output directory</description>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>TypeToBioSuffixMap</name>
+                <description>Fully qualified type name, comma, suffix string</description>
+                <type>String</type>
+                <multiValued>true</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>SentencePerLine</name>
+                <description>If true, merges one sentence into one line with | as delimiter.</description>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>outputDir</name>
+                <value>
+                    <string>somewhere</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>SentencePerLine</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription>
+            <imports>
+                <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+                <import name="org.u_compare.U_compareTypeSystem"/>
+                <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+            </imports>
+        </typeSystemDescription>
+        <capabilities>
+            <capability>
+                <inputs>
+                    <type allAnnotatorFeatures="true">org.apache.uima.examples.SourceDocumentInformation</type>
+                    <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+                    <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+                </inputs>
+                <outputs/>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>false</modifiesCas>
+            <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+            <outputsNewCASes>false</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+</casConsumerDescription>

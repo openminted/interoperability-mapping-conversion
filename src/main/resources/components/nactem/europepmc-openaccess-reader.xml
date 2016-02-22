@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+	<implementationName>uk.ac.nactem.uima.europepmc.reader.EuropePMCOpenAccessReader
+	</implementationName>
+	<processingResourceMetaData>
+		<name>EuropePMC Open Access Reader</name>
+		<description>Reads open-access full-text articles from the Europe PMC
+			web service
+		</description>
+		<version>1.0</version>
+		<vendor />
+		<configurationParameters>
+			<configurationParameter>
+				<name>query</name>
+				<description>Query term used to retrieve full text articles. NOTE:
+					This or 'ids' must be set, but not both.
+				</description>
+				<type>String</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>limit</name>
+				<description>Maximum number of full text articles to retrieve. NOTE:
+					Only applies when 'query' is set.
+				</description>
+				<type>Integer</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>sortByPublicationDate</name>
+				<description>Retrieve the most recently published articles first.
+					NOTE: Only applies when 'query' is set.
+				</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>ids</name>
+				<description>List of article ids (e.g. PMC4489390) from which to
+					retrieve the full text. NOTE: This or 'query' must be set, but not
+					both.
+				</description>
+				<type>String</type>
+				<multiValued>true</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			
+			<configurationParameter>
+				<name>includeTitle</name>
+				<description>Size of the queue to store articles loaded
+					preemptively.
+				</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>true</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>includeAbstract</name>
+				<description>Size of the queue to store articles loaded
+					preemptively.
+				</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>true</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>includeSubArticles</name>
+				<description>Size of the queue to store articles loaded
+					preemptively.
+				</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>true</mandatory>
+			</configurationParameter>
+			
+			<configurationParameter>
+				<name>cacheSize</name>
+				<description>Size of the queue to store articles loaded
+					preemptively.
+				</description>
+				<type>Integer</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			
+			<configurationParameter>
+				<name>retryOnError</name>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>true</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>retrySeconds</name>
+				<type>Integer</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>numRetries</name>
+				<type>Integer</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			
+			<configurationParameter>
+				<name>recorderEnabled</name>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>true</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>recorderJdbcUrl</name>
+				<type>String</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>recorderUsername</name>
+				<type>String</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			<configurationParameter>
+				<name>recorderPassword</name>
+				<type>String</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+			
+		</configurationParameters>
+		<configurationParameterSettings>
+			<nameValuePair>
+				<name>includeTitle</name>
+				<value>
+					<boolean>true</boolean>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>includeAbstract</name>
+				<value>
+					<boolean>true</boolean>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>includeSubArticles</name>
+				<value>
+					<boolean>true</boolean>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>retryOnError</name>
+				<value>
+					<boolean>true</boolean>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>retrySeconds</name>
+				<value>
+					<integer>30</integer>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>numRetries</name>
+				<value>
+					<integer>10</integer>
+				</value>
+			</nameValuePair>
+			<nameValuePair>
+				<name>recorderEnabled</name>
+				<value>
+					<boolean>false</boolean>
+				</value>
+			</nameValuePair>
+		</configurationParameterSettings>
+		<typeSystemDescription>
+			<imports>
+				<import name="org.apache.uima.examples.SourceDocumentInformation" />
+			</imports>
+		</typeSystemDescription>
+		<typePriorities />
+		<fsIndexCollection />
+		<capabilities>
+			<capability>
+				<inputs />
+				<outputs />
+				<languagesSupported />
+			</capability>
+		</capabilities>
+		<operationalProperties>
+			<modifiesCas>true</modifiesCas>
+			<multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+			<outputsNewCASes>true</outputsNewCASes>
+		</operationalProperties>
+	</processingResourceMetaData>
+	<resourceManagerConfiguration />
+</collectionReaderDescription>

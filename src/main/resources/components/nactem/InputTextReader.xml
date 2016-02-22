@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.InputTextReader</implementationName>
+  <processingResourceMetaData>
+    <name>Input Text Reader</name>
+    <description>Reads text supplied in a parameter. 
+This component is useful if you want to quickly process a single document by simply copy-pasting its content.</description>
+    <version>1.0</version>
+    <vendor>National Centre for Text Mining (NaCTeM)</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>inputText</name>
+        <description>The text to be processed.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+    <implementationName>jp.ac.u_tokyo.s.is.www_tsujii.collection_reader.AimedCollectionReader</implementationName>
+    <processingResourceMetaData>
+        <name>Aimed Collection Reader</name>
+        <description>Reads Aimed corpus (225 abstracts from MEDLINE) with the gold standard sentence, protein, protein-protein interaction anntations.</description>
+        <version>1.0</version>
+        <vendor>Tsujii Laboratory, the University of Tokyo</vendor>
+        <configurationParameters searchStrategy="language_fallback">
+            <configurationParameter>
+                <name>NumberOfArticles</name>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>StartingFromArticle</name>
+                <type>Integer</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>GenerateSentenceAnnotations</name>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>GenerateProteinAnnotations</name>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>GeneratePpiAnnotations</name>
+                <type>Boolean</type>
+                <multiValued>false</multiValued>
+                <mandatory>true</mandatory>
+            </configurationParameter>
+            <configurationParameter>
+                <name>PubmedIds</name>
+                <description>Specifies pubmedIDs to pick articles. This parameter has the highest priority.</description>
+                <type>Integer</type>
+                <multiValued>true</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+        </configurationParameters>
+        <configurationParameterSettings>
+            <nameValuePair>
+                <name>GenerateSentenceAnnotations</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>GenerateProteinAnnotations</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>GeneratePpiAnnotations</name>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>NumberOfArticles</name>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>StartingFromArticle</name>
+                <value>
+                    <integer>0</integer>
+                </value>
+            </nameValuePair>
+        </configurationParameterSettings>
+        <typeSystemDescription>
+            <imports>
+                <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+                <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+            </imports>
+        </typeSystemDescription>
+        <typePriorities/>
+        <fsIndexCollection/>
+        <capabilities>
+            <capability>
+                <inputs/>
+                <outputs>
+                    <type allAnnotatorFeatures="true">org.apache.uima.examples.SourceDocumentInformation</type>
+                    <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.corpus.aimed.AimedSentence</type>
+                    <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.corpus.aimed.AimedProtein</type>
+                    <type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.corpus.aimed.AimedPPI</type>
+                </outputs>
+                <languagesSupported/>
+            </capability>
+        </capabilities>
+        <operationalProperties>
+            <modifiesCas>true</modifiesCas>
+            <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+            <outputsNewCASes>true</outputsNewCASes>
+        </operationalProperties>
+    </processingResourceMetaData>
+    <resourceManagerConfiguration/>
+</collectionReaderDescription>

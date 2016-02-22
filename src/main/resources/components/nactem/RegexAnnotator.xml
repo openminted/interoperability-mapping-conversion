@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.RegexAnnotator</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>Regex Annotator</name>
+    <description>Annotates spans of text based on a custom regular expression.</description>
+    <version>1.1</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>regularExpression</name>
+        <description>A valid regular expression.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>caseSensitive</name>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>multilineMatching</name>
+        <description>If true then the "^" and "$" symbols match the beginnngs and ends of lines. Otherwise, they match the beginning and end of the entire text.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>findFirstOnly</name>
+        <description>If true, matching will stop after encountering the first match.</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>annotationType</name>
+        <description>Fully qualified type of annotations to be produced. The type must extend uima.tcas.Annotation or be uima.tcas.Annotation.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>regularExpression</name>
+        <value>
+          <string>\b\S+\b</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>annotationType</name>
+        <value>
+          <string>uima.tcas.Annotation</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription/>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">uima.tcas.Annotation</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

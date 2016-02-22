@@ -2,12 +2,12 @@
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>true</primitive>
-  <annotatorImplementationName>uk.ac.nactem.uima.sentence_splitter.NactemSentenceSplitter</annotatorImplementationName>
+  <annotatorImplementationName>uk.ac.nactem.uima.Oscar4Tokeniser</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>Cafetiere Sentence Splitter</name>
-    <description>Uses a set of heuristics and patterns to find sentence boundaries. Works with English.</description>
+    <name>OSCAR 4 Tokeniser</name>
+    <description>Segments text into tokens. Derived from the OSCAR 4 chemical NER tool, this tokeniser is specifically tuned for processing chemical text.</description>
     <version>1.0</version>
-    <vendor>NaCTeM</vendor>
+    <vendor/>
     <configurationParameters/>
     <configurationParameterSettings/>
     <typeSystemDescription>
@@ -20,10 +20,10 @@
     <capabilities>
       <capability>
         <inputs>
-          <type allAnnotatorFeatures="true">org.u_compare.shared.document.Text</type>
+        	<type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
         </inputs>
         <outputs>
-          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
         </outputs>
         <languagesSupported/>
       </capability>

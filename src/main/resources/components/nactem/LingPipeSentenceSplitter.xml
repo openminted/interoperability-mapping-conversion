@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+	<primitive>true</primitive>
+	<annotatorImplementationName>uk.ac.nactem.uima.lingpipe.LingPipeSentenceSplitter
+	</annotatorImplementationName>
+	<analysisEngineMetaData>
+		<name>LingPipe Sentence Splitter</name>
+		<description>Sentence splitter based on LingPipe models.
+			Website:
+			http://alias-i.com/lingpipe/
+		</description>
+		<version>1.0</version>
+		<vendor>NaCTeM</vendor>
+		<configurationParameters>
+			<configurationParameter>
+				<name>useBiomedicalModel</name>
+				<description>true if the LingPipe MEDLINE sentence model should be
+					used</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+		</configurationParameters>
+		<configurationParameterSettings>
+			<nameValuePair>
+				<name>useBiomedicalModel</name>
+				<value>
+					<boolean>true</boolean>
+				</value>
+			</nameValuePair>
+		</configurationParameterSettings>
+		<typeSystemDescription>
+			<imports>
+				<import name="org.u_compare.U_compareTypeSystem" />
+			</imports>
+		</typeSystemDescription>
+		<typePriorities />
+		<fsIndexCollection />
+		<capabilities>
+			<capability>
+				<inputs>
+					<type allAnnotatorFeatures="true">org.u_compare.shared.document.Text
+					</type>
+				</inputs>
+				<outputs>
+					<type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence
+					</type>
+				</outputs>
+				<languagesSupported />
+			</capability>
+		</capabilities>
+		<operationalProperties>
+			<modifiesCas>true</modifiesCas>
+			<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+			<outputsNewCASes>false</outputsNewCASes>
+		</operationalProperties>
+	</analysisEngineMetaData>
+	<resourceManagerConfiguration />
+</analysisEngineDescription>

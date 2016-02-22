@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+	<primitive>true</primitive>
+	<annotatorImplementationName>uk.ac.nactem.uima.mhm.MedicalConditionTagger
+	</annotatorImplementationName>
+	<analysisEngineMetaData>
+		<name>Medical Condition Tagger</name>
+		<description>A tagger that recognises mentions of medical conditions. Implemented based on string matching against entries in the Index of Diseases (http://resource.nlm.nih.gov/63540040R) 
+		and the Nomenclature of Diseases (http://resource.nlm.nih.gov/31910070R).
+		</description>
+		<version>1.0</version>
+		<vendor>NaCTeM</vendor>
+		<configurationParameters>
+			<configurationParameter>
+				<name>useApproximateStringMatching</name>
+				<description>true if approximate string matching should be used</description>
+				<type>Boolean</type>
+				<multiValued>false</multiValued>
+				<mandatory>false</mandatory>
+			</configurationParameter>
+		</configurationParameters>
+		<configurationParameterSettings>
+			<nameValuePair>
+				<name>useApproximateStringMatching</name>
+				<value>
+					<boolean>false</boolean>
+				</value>
+			</nameValuePair>
+		</configurationParameterSettings>
+		<typeSystemDescription>
+      		<imports>
+        		<import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+      		</imports>
+    	</typeSystemDescription>
+		<fsIndexCollection />
+		<capabilities>
+			<capability>
+				<inputs>
+					<type allAnnotatorFeatures="true">jp.ac.u_tokyo.s.is.www_tsujii.tools.geniatagger.Chunk</type>
+				</inputs>
+				<outputs>
+					<type allAnnotatorFeatures="true">org.u_compare.shared.semantic.Disease</type>
+				</outputs>
+				<languagesSupported />
+			</capability>
+		</capabilities>
+		<operationalProperties>
+			<modifiesCas>true</modifiesCas>
+			<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+			<outputsNewCASes>false</outputsNewCASes>
+		</operationalProperties>
+		</analysisEngineMetaData>
+		<externalResourceDependencies>
+    		<externalResourceDependency>
+      			<key>dictionary</key>
+      			<description/>
+      			<optional>false</optional>
+    		</externalResourceDependency>
+    		<externalResourceDependency>
+      			<key>stopwords</key>
+      			<description/>
+      			<optional>false</optional>
+    		</externalResourceDependency>	
+    	</externalResourceDependencies>	
+    	<resourceManagerConfiguration>
+    		<externalResources>
+      			<externalResource>
+        			<name>dictionary</name>
+        			<description/>
+        			<fileResourceSpecifier>
+          				<fileUrl>file:old_dictionaries_variants_w_unmapped_canonical.tsv</fileUrl>
+        			</fileResourceSpecifier>
+      			</externalResource>
+      			<externalResource>
+        			<name>stopwords</name>
+        			<description/>
+        			<fileResourceSpecifier>
+          				<fileUrl>file:StopWords.txt</fileUrl>
+        			</fileResourceSpecifier>
+      			</externalResource>
+      		</externalResources>
+      		<externalResourceBindings>
+      			<externalResourceBinding>
+        			<key>dictionary</key>
+        			<resourceName>dictionary</resourceName>
+      			</externalResourceBinding>
+      			<externalResourceBinding>
+        			<key>stopwords</key>
+        			<resourceName>stopwords</resourceName>
+      			</externalResourceBinding>
+      		</externalResourceBindings>	
+		</resourceManagerConfiguration>
+</analysisEngineDescription>

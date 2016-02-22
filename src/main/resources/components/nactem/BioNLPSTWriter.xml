@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.BioNLPSTWriter</implementationName>
+  <processingResourceMetaData>
+    <name>BioNLP ST Data Writer</name>
+    <description>Writes BioNLP entity and event annotations to files.</description>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>OutputFolder</name>
+        <description>A folder where BioNLP ST files will be written to.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="uk.ac.nactem.uima.BioNLPSTTypeSystem"/>
+        <import name="org.apache.uima.examples.SourceDocumentInformation" />
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Entity</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.EquivalentEntities</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Relation</type>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.cas.bionlpst.Event</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</casConsumerDescription>

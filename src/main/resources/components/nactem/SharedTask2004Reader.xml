@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.SharedTask2004Reader</implementationName>
+  <processingResourceMetaData>
+    <name>Shared Task 2004 Reader</name>
+    <description>Reads training or evaluation data from the BioNLP/NLPBA 2004 Bio-Entity Recognition Task</description>
+    <version>0.0.1-SNAPSHOT</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>limit</name>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>readTrainingData</name>
+        <description>True if training data is to be read, otherwise evaluation data will be read</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>readTrainingData</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.NamedEntity</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>sharedTask2004TrainingData</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+    <externalResourceDependency>
+      <key>sharedTask2004EvaluationData</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>sharedTask2004TrainingData</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:Genia4ERtask2.iob2</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+      <externalResource>
+        <name>sharedTask2004EvaluationData</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:Genia4EReval2.iob2</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>sharedTask2004TrainingData</key>
+        <resourceName>sharedTask2004TrainingData</resourceName>
+      </externalResourceBinding>
+      <externalResourceBinding>
+        <key>sharedTask2004EvaluationData</key>
+        <resourceName>sharedTask2004EvaluationData</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</collectionReaderDescription>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uaic.UaicPosTagger_Uima</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>UaicPosTagger</name>
+    <description>Carries out sentence splitting, tokenisation, POS tagging and lemmatitisation on plain text.</description>
+    <version>1.0</version>
+    <vendor>Uaic</vendor>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.document.Text</type>
+        </inputs>
+        <outputs>
+          <type>org.u_compare.shared.syntactic.Sentence</type>
+          <type>org.u_compare.shared.syntactic.RichToken</type>
+          <feature>org.u_compare.shared.syntactic.RichToken:base</feature>
+          <feature>org.u_compare.shared.syntactic.RichToken:posString</feature>
+          <feature>org.u_compare.shared.syntactic.RichToken:end</feature>
+          <feature>org.u_compare.shared.syntactic.RichToken:begin</feature>
+          <feature>org.u_compare.shared.syntactic.Sentence:end</feature>
+          <feature>org.u_compare.shared.syntactic.Sentence:begin</feature>
+        </outputs>
+        <languagesSupported>
+          <language>ro</language>
+        </languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

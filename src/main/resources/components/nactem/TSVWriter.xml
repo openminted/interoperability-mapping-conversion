@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>uk.ac.nactem.uima.TSVWriter</implementationName>
+  <processingResourceMetaData>
+    <name>TSV Writer</name>
+    <description>Saves annotations of a selected type to a file in tab-separated-value format.</description>
+    <version>0.1</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>TargetType</name>
+        <description>A UIMA type whose instances will be saved. For example, uima.tcas.Annotation.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>OutputFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>FeaturePathSizeLimit</name>
+        <description>The maximum size of feature paths. Features of complex types will be traversed if this value is greater than 0.</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>OutputTypeShortNames</name>
+        <description>If true, short names of types will be used in the resulting file, e.g., "Annotation" instead of "uima.tcas.Annotation".</description>
+        <type>Boolean</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>FeaturePathSizeLimit</name>
+        <value>
+          <integer>0</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>OutputTypeShortNames</name>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.apache.uima.examples.SourceDocumentInformation</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</casConsumerDescription>

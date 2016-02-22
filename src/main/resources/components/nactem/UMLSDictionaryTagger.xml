@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>uk.ac.nactem.uima.umls.UMLSDictionaryTagger</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>UMLS Full Dictionary Feature Extractor</name>
+    <description>Extracts Dictionary features from a UMLS-sourced dictionary</description>
+    <version>0.0.1-SNAPSHOT</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="uk.ac.nactem.uima.EUPMCTypeSystem"/>
+        <import name="org.u_compare.U_compareTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities>
+      <priorityList>
+        <type>org.u_compare.shared.syntactic.Sentence</type>
+        <type>org.u_compare.shared.syntactic.Chunk</type>
+        <type>org.u_compare.shared.syntactic.RichToken</type>
+      </priorityList>
+    </typePriorities>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Chunk</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.RichToken</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">uk.ac.nactem.uima.eupmc.DictionaryFeatures</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>umlsdictionary</key>
+      <description/>
+      <optional>false</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration>
+    <externalResources>
+      <externalResource>
+        <name>umlsdict</name>
+        <description/>
+        <fileResourceSpecifier>
+          <fileUrl>file:umls.cns_options.cdbpp</fileUrl>
+        </fileResourceSpecifier>
+      </externalResource>
+    </externalResources>
+    <externalResourceBindings>
+      <externalResourceBinding>
+        <key>umlsdictionary</key>
+        <resourceName>umlsdict</resourceName>
+      </externalResourceBinding>
+    </externalResourceBindings>
+  </resourceManagerConfiguration>
+</analysisEngineDescription>

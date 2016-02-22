@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.analysis_engine.SoftTFIDFSecondString</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>Dictionary Pluggable Soft TF/IDF Matcher</name>
+    <description>Tests input tokens whether they belong to an entry in the specified dictionary using SecondString Soft TF/IDF. The dictionary should have suffix of .list for its file name, and its format should be (Format: key1 TAB alias11 TAB alias12 ... NEWLINE key2 TAB alias21 TAB alias22 ...)</description>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>DictionaryFile</name>
+        <description>File which contains the dictionary (Format: key1 TAB alias11 TAB alias12 ... NEWLINE key2 TAB alias21 TAB alias22 ...)</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>MinMatchingScore</name>
+        <type>Float</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>MaxTokenCombination</name>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>MaxTokenCombination</name>
+        <value>
+          <integer>4</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>MinMatchingScore</name>
+        <value>
+          <float>0.9</float>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.DictionaryNamedEntity</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

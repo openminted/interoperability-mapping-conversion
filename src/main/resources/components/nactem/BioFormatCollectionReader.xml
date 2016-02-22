@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>org.u_compare.collection_reader.BioCollectionReader</implementationName>
+  <processingResourceMetaData>
+    <name>BIO Format Collection Reader</name>
+    <description>Reads BIO format files from specified directory.</description>
+    <version>1.0</version>
+    <vendor>Tsujii Laboratory, the University of Tokyo</vendor>
+    <configurationParameters searchStrategy="language_fallback">
+      <configurationParameter>
+        <name>Directory</name>
+        <description>Directory where .bio|.iob|.BIO|.IOB files are stored.</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>TypeToBioSuffixMap</name>
+        <description>Fully qualified type name, comma, suffix string</description>
+        <type>String</type>
+        <multiValued>true</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>TypeToBioSuffixMap</name>
+        <value>
+          <array>
+            <string>org.u_compare.shared.semantic.bio.Protein,protein</string>
+            <string>org.u_compare.shared.semantic.bio.Protein,Protein</string>
+            <string>org.u_compare.shared.semantic.bio.Gene,gene</string>
+            <string>org.u_compare.shared.semantic.bio.Gene,Gene</string>
+            <string>org.u_compare.shared.semantic.bio.DNA,DNA</string>
+            <string>org.u_compare.shared.semantic.bio.RNA,RNA</string>
+            <string>org.u_compare.shared.semantic.bio.CellLine,CellLine</string>
+            <string>org.u_compare.shared.semantic.bio.CellType,CellType</string>
+          </array>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>Directory</name>
+        <value>
+          <string/>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.apache.uima.examples.SourceDocumentInformation</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.semantic.bio.Protein</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Token</type>
+          <type allAnnotatorFeatures="true">org.u_compare.shared.syntactic.Sentence</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>

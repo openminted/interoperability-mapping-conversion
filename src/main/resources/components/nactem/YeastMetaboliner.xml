@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>org.u_compare.analysis_engine.YeastMetabolinerWrapper</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>Yeast Metabliner</name>
+    <description>This service is to annotate yeast metabolites with a supervised NER system using CRF.
+It receives an input string and a user id and returns a list of recognised yeast metabolites with offset information and score from CRF.
+The dictionary used in this system is based on a consensus reconstruction of yeast metabolism (http://www.comp-sys-bio.org/yeastnet/).
+</description>
+    <version>1.0</version>
+    <vendor>NaCTeM</vendor>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="jp.ac.u_tokyo.s.is.www_tsujii.TsujiiLabTypesV2TypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">org.u_compare.analysis_engine.YeastMetabolinerWrapper</type>
+        </outputs>
+        <languagesSupported>en</languagesSupported>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
