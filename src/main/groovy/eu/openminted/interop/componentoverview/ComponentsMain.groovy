@@ -263,7 +263,17 @@ class ComponentsMain
 
         return [meta];
     }
-        
+
+    static def parseTAEDescription(collection, resource) {
+        def meta = new ComponentMetaData();
+        meta.framework = "$collection (UIMA)";
+        meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
+        meta.implementation = resource.'annotatorImplementationName'.text();
+        meta.description = shortDesc(resource.'analysisEngineMetaData'.'description'.text());
+
+        return [meta];
+    }
+            
     static def parseUimaCollectionReader(collection, resource) {
         def meta = new ComponentMetaData();
         meta.framework = "$collection (UIMA)";
@@ -292,6 +302,8 @@ class ComponentsMain
         switch (descriptor.name().localPart) {
             case 'analysisEngineDescription':
                 return parseUimaAnalysisEngine(aCollection, descriptor);
+            case 'taeDescription':
+                return parseTAEDescription(aCollection, descriptor);
             case 'collectionReaderDescription':
                 return parseUimaCollectionReader(aCollection, descriptor);
             case 'casConsumerDescription':
