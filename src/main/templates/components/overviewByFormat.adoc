@@ -14,7 +14,7 @@ ${data[format] ?: ''}
 <%
         formatGroup.sort { it.name }.each { component ->
 %>
-| ${component.name}
+|<<${component.name.replaceAll(" ","_")},${component.name}>>
 | ${component.description}
 | ${component.framework}
 <%        

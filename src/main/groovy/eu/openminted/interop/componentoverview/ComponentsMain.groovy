@@ -238,7 +238,16 @@ class ComponentsMain
         meta.name = descriptor.'@short-target';
         meta.implementation = descriptor.'@target';
         meta.description = descriptor.'synopsis'.text();
-        
+		def paraList=[]
+        for(def ele in descriptor.'module-doc'.'param-doc')
+		{
+			def p = new parameter();
+			p.name = ele.'@name'
+			p.mandatory = ele."@mandatory"
+			p.type = ele.'@type'
+			paraList.add(p)
+		}
+		meta.parameters = paraList;
         return [meta];
     }
     
@@ -254,6 +263,17 @@ class ComponentsMain
             meta.implementation = resource.'CLASS'.text();
             meta.description = resource.'COMMENT'.text();
             
+			def paraList=[]
+			resource.'**'.'PARAMETER'.each { param->
+				def paramLocal = new parameter();
+				paramLocal.name = param.'@NAME'
+				paramLocal.type = param.value().text();
+				paramLocal.defaultValue = param.'@DEFAULT';
+				paramLocal.runTime = param.'@RUNTIME';
+				paraList.add(paramLocal);
+			}
+			meta.parameters = paraList;
+			
             components << meta;
         }
         
@@ -264,60 +284,72 @@ class ComponentsMain
         return components;
     }
     
-    static def parseUimaAnalysisEngine(collection, resource) {
+    static def parseUimaAnalysisEngine(collection, resource, paraList) {
         def meta = new ComponentMetaData();
         meta.framework = "$collection (UIMA)";
         meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
         meta.implementation = resource.'annotatorImplementationName'.text();
         meta.description = shortDesc(resource.'analysisEngineMetaData'.'description'.text());
-
+		meta.parameters = paraList;
         return [meta];
     }
 
-    static def parseTAEDescription(collection, resource) {
+    static def parseTAEDescription(collection, resource,paraList) {
         def meta = new ComponentMetaData();
         meta.framework = "$collection (UIMA)";
         meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
         meta.implementation = resource.'annotatorImplementationName'.text();
         meta.description = shortDesc(resource.'analysisEngineMetaData'.'description'.text());
-
+		meta.parameters = paraList;
         return [meta];
     }
             
-    static def parseUimaCollectionReader(collection, resource) {
+    static def parseUimaCollectionReader(collection, resource,paraList) {
         def meta = new ComponentMetaData();
         meta.framework = "$collection (UIMA)";
         meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
         meta.implementation = resource.'implementationName'.text();
         meta.description = shortDesc(resource.'processingResourceMetaData'.'description'.text());
-
-        return [meta];
+		meta.parameters = paraList;
+		return [meta]
     }
         
-    static def parseUimaCasConsumer(collection, resource) {
+    static def parseUimaCasConsumer(collection, resource,paraList) {
         def meta = new ComponentMetaData();
         meta.framework = "$collection (UIMA)";
         meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
         meta.implementation = resource.'implementationName'.text();
         meta.description = shortDesc(resource.'processingResourceMetaData'.'description'.text());
-
+		meta.parameters = paraList;
         return [meta];
     }
         
     static def parseUima(String aCollection, File aDescriptor) {
         Node descriptor = new XmlParser().parse(aDescriptor);
-        
         assert descriptor.name() instanceof QName;
-        
+		
+		
+		def paraList=[]
+		descriptor.'**'.'configurationParameter'.each { param->
+			def p = new parameter();
+			p.name = param.get('name').text();
+			p.description = param.get('description').text();
+			p.type = param.get('type').text();
+			p.multiValued = param.get('multiValued').text();
+			p.mandatory = param.get('mandatory').text();
+			paraList.add(p);
+//			println p.name 
+		}
+		
         switch (descriptor.name().localPart) {
             case 'analysisEngineDescription':
-                return parseUimaAnalysisEngine(aCollection, descriptor);
+                return parseUimaAnalysisEngine(aCollection, descriptor,paraList);
             case 'taeDescription':
-                return parseTAEDescription(aCollection, descriptor);
+                return parseTAEDescription(aCollection, descriptor,paraList);
             case 'collectionReaderDescription':
-                return parseUimaCollectionReader(aCollection, descriptor);
+                return parseUimaCollectionReader(aCollection, descriptor,paraList);
             case 'casConsumerDescription':
-                return parseUimaCasConsumer(aCollection, descriptor);
+                return parseUimaCasConsumer(aCollection, descriptor,paraList);
             case 'analysisEngineDeploymentDescription':
                 println "Ignoring analysisEngineDeploymentDescription in ${aDescriptor}"
                 return [];
@@ -328,6 +360,8 @@ class ComponentsMain
                 throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aDescriptor}");
             
         }
+		
+		
     }
 
     static def shortName(name) {
@@ -364,8 +398,18 @@ class ComponentsMain
         List<String> categories;
         String product;
         String format; // Only relevant for readers and writers
+		List<parameter> parameters;
     }
     
+	static class parameter{
+		String name;
+		String description;
+		String type;
+		String mandatory;
+		String defaultValue;
+		String multiValued;
+		String runTime;
+	}
     static void main(String... args) {
         def components = [];
         
