@@ -1,0 +1,78 @@
+<%
+components
+    .grep { it.categories.isEmpty() || !(it.categories[0] in ['Reader', 'Writer'])}
+    .groupBy { it.categories.isEmpty() ? ' Uncategorized' : it.categories[0] }
+    .sort { it.key }
+    .each { category, categoryGroup ->
+%>
+=== ${category} (${categoryGroup.size()})
+${data[category] ?: ''}
+
+<%
+        categoryGroup.sort { it.name }.each { component ->
+%>
+[[${component.name.replaceAll(" ","_")}]]
+*Name*:${component.name} +
+*Category*:${category} +
+*Description*:${component.description} +
+*Framework*: ${component.framework}
+
+|====
+|*Parameter*|*Description*|*Type*|*Mandatory*|*Default Value*|*Multi-value*|*Runtime*
+<%
+	component.parameters.sort{it.name}.each{ parameter ->
+	if(parameter.name){
+		println "| ${parameter.name}";		
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.description){
+		println "| ${parameter.description}";		
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.type){
+		println "| ${parameter.type}";		
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.mandatory){
+		if((parameter.mandatory.toLowerCase().contains("required")||parameter.mandatory.toLowerCase().contains("default")||parameter.mandatory.toLowerCase().contains("true"))&&!parameter.mandatory.toLowerCase().contains("default: false")){
+			println "| True";	
+		}else{
+			println "|  False";
+			}
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.defaultValue){
+		println "| ${parameter.defaultValue}";		
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.multiValued){
+		println "| ${parameter.multiValued}";		
+	}else{
+		println "| --";
+	}
+	
+	if(parameter.runTime){
+		println "| ${parameter.runTime}";		
+	}else{
+		println "| --";
+	}
+   }
+%>
+|====
+
+<%    
+    }
+%>
+<%    
+    }
+%>
