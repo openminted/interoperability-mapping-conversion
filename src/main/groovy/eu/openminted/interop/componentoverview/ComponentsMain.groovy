@@ -409,15 +409,6 @@ class ComponentsMain
 		String defaultValue;
 		String multiValued;
 		String runTime;
-		parameter(){
-			this.name = null
-			this.description=null
-			this.type=null
-			this.mandatory=null
-			this.defaultValue=null
-			this.multiValued=null
-			this.runTime= null
-		}
 	}
     static void main(String... args) {
         def components = [];
