@@ -29,4 +29,33 @@ public class Util
         }
         return description ? "pass:[${description}]" : '__No description__';
     }
+	
+	static def findCategories(catalog, item) {
+		for (e in catalog) {
+			if (e.value instanceof Map) {
+				def result = findCategories(e.value, item);
+				if (result) {
+					result.add(0, e.key);
+					return result;
+				}
+			}
+			else if (e.value instanceof List) {
+				for (regex in e.value) {
+					if (item ==~ '(?i)'+regex) {
+						return [e.key];
+					}
+				}
+			}
+			else if (e.value instanceof String) {
+				if (item ==~ '(?i)'+e.value) {
+					return [e.key];
+				}
+			}
+			else {
+				throw new IllegalStateException("Unknown entry: ${e}");
+			}
+		}
+		
+		return [];
+	}
 }

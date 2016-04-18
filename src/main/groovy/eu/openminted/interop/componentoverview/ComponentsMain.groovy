@@ -4,6 +4,10 @@ import static groovy.io.FileType.FILES
 
 import java.text.BreakIterator;
 
+import eu.openminted.interop.componentoverview.importer.AlvisImporter
+import eu.openminted.interop.componentoverview.importer.CreoleImporter
+import eu.openminted.interop.componentoverview.importer.UimaImporter
+import eu.openminted.interop.componentoverview.model.Constants;
 import groovy.xml.QName;
 
 import org.apache.commons.io.FilenameUtils;
@@ -16,437 +20,53 @@ import org.yaml.snakeyaml.Yaml;
 
 class ComponentsMain
 {
-    static def products = [
-        'Mallet': [ /.*Mallet.*/],
-        'OpenNLP': [ /.*OpenNLP.*/ ],
-        'Cjf': [ /.*Cjf.*/ ],
-        'IULA': [ /.*IULA.*/ ],
-        'MLRS': [ /.*MLRS.*/ ],
-        'CRF++': [ /.*CRF[+]{2}.*/ ],
-        'SVMLight': [ /.*SVMLight.*/ ],
-        'STePP': [ /.*STePP.*/ ],
-        '(service) UAIC': [ /.*UAIC.*/ ],
-        'GATE Hepple': [ /.*Hepple.*/ ],
-//        'GATE Jape': [ /.*Jape.*/ ],
-//        'GATE ANNIE': [ /.*ANNIE.*/ ],
-//        'GATE RussIE': [ /.*RussIE.*/ ],
-//        'GATE TwitIE': [ /.*TwitIE.*/ ],
-        'Java BreakIterator': [ /.*BreakIterator.*/ ],
-        'BANNER': [ /.*Banner.*/ ],
-        'BioCreative': [ /.*BioCreative.*/ ],
-        'FreeLing': [ /.*FreeLing.*/ ],
-        'LingPipe': [ /.*LingPipe.*/ ],
-        'Stanford': [ /.*Stanford.*/ ],
-        'ClearNLP': [ /.*ClearNLP.*/ ],
-        'TreeTagger': [ /.*TreeTagger.*/ ],
-        'EnjuParser': [ /.*EnjuParser.*/, /.*Enju Parser.*/ ],
-        'GENIA': [ /.*GENIA.*/ ],
-        'HunPos': [ /.*HunPos.*/ ],
-        'Ogmios': [ /.*Ogmios.*/ ],
-        'Jazzy': [ /.*Jazzy.*/ ],
-        'Web1T': [ /.*Web1T.*/ ],
-        'LBJ': [ /.*LBJ.*/ ],
-        'KEA': [ /.*KEA.*/ ],
-        'TermRaider': [ /.*TermRaider.*/ ],
-        'MutationFinder': [ /.*MutationFinder.*/ ],
-        '(service) Lupedia': [ /.*Lupedia.*/ ],
-        'SPECIES': [ /.*Species.*/ ],
-        '(service) TextRazor': [ /.*TextRazor.*/ ],
-        'RfTagger': [ /.*RfTagger.*/ ],
-        '(service) AlchemyAPI': [ /.*AlchemyAPI.*/],
-        'Arktweet': [ /.*Arktweet.*/],
-        'BulStem': [ /.*BulStem.*/],
-        'CCG': [ /.*CCG.*/],
-        'Cogroo': [ /.*Cogroo.*/],
-//        'ILSP': [ /.*ILSP.*/],
-        'Langdetect': [ /.*Langdetect.*/],
-        'LanguageTool': [ /.*LanguageTool.*/],
-        'Lucene/Solr': [ /.*Lucene.*/, /.*Solr.*/ ],
-        'MaltParser': [ /.*MaltParser.*/],
-        'Mate Tools': [ /.*Mate.*/],
-        'MeCab': [ /.*MeCab.*/],
-        'Minipar': [ /.*Minipar.*/],
-        'Morpha': [ /.*Morpha.*/],
-        'MstParser': [ /.*MstParser.*/],
-        'NormaGene': [ /.*NormaGene.*/],
-        'OpenCalais': [ /.*OpenCalais.*/],
-        'Porter Stemmer': [ /.*PorterStemmer.*/],
-        'RASP': [ /.*RASP.*/],
-        'Sfst': [ /.*Sfst.*/],
-        'Snowball': [ /.*Snowball.*/],
-        'TextCat': [ /.*TextCat.*/],
-        '(service) Textalytics': [ /.*Textalytics.*/],
-        'JTok': [ /.*JTok.*/],
-        'WordNet': [ /.*WordNet.*/],
-        'Penn Bio-Tools': [ /.*Penn BioTagger.*/, /.*Penn BioTokenizer.*/ ],
-        'Yatea': [ /.*Yatea.*/],
-        'Zemanta': [ /.*Zemanta.*/],
-        'ABNER': [ /.*ABNER.*/],
-        'BioLG': [ /.*BioLG.*/],
-        'Apache Commons Codec': [ /.*Apache Commons Codec.*/],
-        '(service) CrowdFlower': [ /.*CrowdFlower.*/],
-    ];
-
-    static def formats = [
-        'AclAnthology': [ /.*AclAnthology.*/ ],
-        'BioNLP-ST 2013 a1/a2': [ /.*BioNLPST.*/ ],
-        'BNC': [ /.*BNC.*/ ],
-        'Brat': [ /.*Brat.*/ ],
-        'CoNLL 2000': [ /.*Conll2000.*/ ],
-        'CoNLL 2002': [ /.*Conll2002.*/ ],
-        'CoNLL 2006': [ /.*Conll2006.*/ ],
-        'CoNLL 2007': [ /.*Conll2007.*/ ],
-        'CoNLL 2009': [ /.*Conll2009.*/ ],
-        'CoNLL 2012': [ /.*Conll2012.*/ ],
-        'CoNLL 2000': [ /.*Conll2000.*/ ],
-        'CoNLL 2000': [ /.*Conll2000.*/ ],
-        'DiTop': [ /.*DiTop.*/ ],
-        'CadixeJSON': [ /.*CadixeJSON.*/ ],
-        'Fast Infoset': [ /.*Fast Infoset.*/ ],
-        'Cochrane': [ /.*cochrane.*/ ],
-        'DataSift JSON': [ /.*DataSift JSON.*/ ],
-        'Twitter JSON': [ /.*JSON Tweet.*/ ],
-        'GATE JSON': [ /.*GATE JSON.*/ ],
-        'PubMed': [ /.*pubMed.*/ ],
-        'GATE XML': [ /.*GATE XML.*/, /.*GateXML.*/ ],
-        'Genia JSON': [ /.*GeniaJSON.*/ ],
-        'BioNLP Shared Task ': [ /.*Genia(Reader|Writer).*/ ],
-        'HTML5 Microdata': [ /.*HTML5 Microdata.*/ ],
-        'UIMA JSON': [ /.*UIMA JSON.*/ ],
-        'KEA Corpus': [ /.*KEA Corpus.*/ ],
-        'LLL': [ /.*LLL.*/ ],
-        'MediaWiki markup': [ /.*MediaWiki markup.*/ ],
-        'Factored Tag Lem ': [ /.*Factored Tag Lem .*/ ],
-        'Alvis Enriched Document': [ /.*Alvis Enriched Document.*/ ],
-        'HTML': [ /.*Html.*/ ],
-        'I2B2': [ /.*I2B2.*/ ],
-        'GrAF': [ /.*GrAF.*/ ],
-        'PDF': [ /.*PDF.*/ ],
-        'Prague Markup Language': [ /.*Prague Markup Language.*/ ],
-        'XCES': [ /.*XCES.*/ ],
-        'ImsCwb': [ /.*ImsCwb.*/ ],
-        'JDBC': [ /.*Jdbc.*/ ],
-        'NEGRA Export': [ /.*Negra.*/ ],
-        'OBO': [ /.*OBO.*/ ],
-        'Penn Treebank Chunked': [ /.*PennTreebankChunked.*/ ],
-        'Penn Treebank Combined': [ /.*PennTreebankCombined.*/ ],
-        'RDF': [ /.*RDF.*/ ],
-        'TIGER-XML': [ /.*TigerXml.*/ ],
-        'TüPP-D/Z': [ /.*Tuepp.*/ ],
-        'Web1T': [ /.*Web1T.*/ ],
-        'PDF': [ /.*PDF.*/ ],
-        'RTF': [ /.*RTF.*/ ],
-        'RelAnnis': [ /.*RelAnnis.*/ ],
-        'Relp': [ /.*Relp.*/ ],
-        'Reuters-21578': [ /.*Reuters21578.*/ ],
-        'Solr': [ /.*Solr.*/ ],
-        'CLARIN TCF': [ /.*Tcf.*/ ],
-        'TEI-XML': [ /.*Tei.*/ ],
-        'UIMA Binary CAS': [ /.*BinaryCas.*/, /.*SerializedCas.*/ ],
-        'UIMA CAS Dump': [ /.*CasDump.*/ ],
-        'XMI': [ /.*XMI.*/ ],
-        'XML': [ /.*XML.*/ ],
-        'Text': [ /.*Text.*/, /.*StringReader.*/ ], // This needs to come late because "text" appears often in descriptions
-    ];
-
-    static def categories = [
-        'Flow': [ '.* Members? PR', 'Scriptable Controller', 'Segment Processing PR',
-            'Annotation Merging PR', 'Annotation Set Transfer',
-            'Document Reset PR' ],
-        'Language Identifier': [ 'TextCat .*', '.*Language Identification.*', 
-            '.*Language Identifier PR', '.*LanguageIdentifier', 'LanguageDetector.*' ],
-        'Parser': [ '.*Parser', '.*Parser2', '.*Minipar .*', 'StanfordDependencyConverter',
-            'Textalytics Lemmatization, PoS and Parsing' ],
-        'Spelling/Grammar': [ '.*Checker', '.*SpellingCorrector', 'CorrectionsContextualizer', 
-            'Textalytics Spell, Grammar and Style Proofreading' ],
-        'Machine Learning': [ 'Batch Learning PR', 'Machine Learning PR' ],
-        'Chunker': [ '.*Chunker' ],
-        'Stemmer': [ '.*Stemmer PR', '.*BulStem.*', '.*Stemmer' ],
-        'Lemmatizer': [ '.*Lemmatizer' ],
-        'Viewer/Editor': [ '.*Viewer', '.*Editor', '.*Shell.*', 'GAZE', 'OAT', 'RAT-C', 'RAT-I' ],
-        'Developers/Debugging': [ 'JCasHolder', 'Java Heap Dumper', 'Log4J Level: ALL',
-             'Stopwatch','TagsetDescriptionStripper', 'DependencyDumper', 
-             'DocumentMetaDataStripper', 'EDT Monitor', 'Unload Unused Plugins' ],
-        'Scripted analytics': [ 'RunProlog', 'Script', 'Groovy scripting PR', 'UIMA Analysis Engine',
-            'JAPE Transducer', 'JAPE-Plus Transducer' ],
-        'Coreference': [ '.*Coreferencer', '.*CoreferenceResolver' ],
-        'Sentiment': [ '.*SentimentAnalyzer', 'Textalytics Sentiment Analysis' ],
-        'Classifier': [ '.*Classifier', '.*Categorization.*', '.*Classification.*' ],
-        'Gazetteer': [ '.*Gazetteer', 'Sharable Gazettee', 'DictionaryAnnotator' ],
-        'Tagger': [ '.*Tagger', '.*Tagger: .*', '.*POS Tagger.*', 'PosMapper', 'RASP POS Converter',
-            'POS Mapper' ],
-        'MorphTagger': [ '.*Morphological analyser', 'SfstAnnotator', 'CogrooFeaturizer' ],
-        'Segmenter': [ '.*Tokenizer.*', '.* Splitter PR', '.*Splitter', '.* Tokeniser', 
-            '.* Segmenter PR', '.*Segmenter', 'CompoundAnnotator', 'TokenMerger', 'TokenTrimmer',
-            'TrailingCharacterRemover', 'ILSP Paragraph, Sentence and Token Segmentor' ],
-        'Normalizer': [ '.*Normaliser', '.*Normalizer', 'ApplyChangesAnnotator', 'Backmapper',
-            '.*Transformer', 'HyphenationRemover' ],
-        'Reader' : [ '.*Reader', '.*Reader2', '.*Document Format', 'XcesReaderDescriptor',
-            '.* Importer', 'GateXMLReaderDescriptor', 'MediaWiki Corpus Populater',
-            'Twitter Corpus Populator' ],
-        'Writer' : [ '.*Writer', '.*Writer2.*', '.*Exporter', '.*Export', '.*Consumer', '.*Indexer',
-            'ExpressionExtract', 'ExportCadixeJSON', 'ExportAlignmentPR', 'FillDB' ],
-        'Named Entity Recognizer': [ '.*NamedEntityRecognizer', '.*NER', '.* NER PR', 'ILSP NERC' ],
-        'Semantics': [ 'Semantic Enrichment PR', 'SemanticFieldAnnotator' ],
-        'SRL': [ '.*SemanticRoleLabeler' ],
-        'Pre-built Workflows': [ 'TwitIE.*', 'RussIE.*', '.* IE System', 'Measurements', 
-            'ilsp-nlp-depparser-aggregate' ],
-        'Validation': [ 'Schema Enforcer' ],
-        'Filtering': [ '.*Filter', 'Boilerpipe Content Detection', 'StopWordRemover' ],
-        'CrowdSourcing': [ 'Entity Annotation Job Builder', /Majority-vote consensus builder (annotation)/ ],
-        'Irrelevant': [ 'The Duplicator' ],
-        'Keywords/Terms': [ '.* Keyphrase Extractor', 'KeywordsSelector', 'YateaExtractor' ],
-        'Topics': [ 'MalletTopicModel.*', 'Textalytics Topics Extraction' ],
-        'Readability': [ 'ReadabilityAnnotator' ],
-        'Evaluation': [ 'IAA Computation PR', 'CompareElements' ]
-    ];
-    
-    static def findCategories(catalog, item) {
-        for (e in catalog) {
-            if (e.value instanceof Map) {
-                def result = findCategories(e.value, item);
-                if (result) {
-                    result.add(0, e.key);
-                    return result;
-                }
-            }
-            else if (e.value instanceof List) {
-                for (regex in e.value) {
-                    if (item ==~ '(?i)'+regex) {
-                        return [e.key];
-                    }
-                }
-            }
-            else if (e.value instanceof String) {
-                if (item ==~ '(?i)'+e.value) {
-                    return [e.key];
-                }
-            }
-            else {
-                throw new IllegalStateException("Unknown entry: ${e}");
-            }
-        }
-        
-        return [];
-    }
-    
-    static def parseAlvis(File aDescriptor) {
-        def descriptor = new XmlParser().parse(aDescriptor);
-        
-        def meta = new ComponentMetaData();
-        meta.framework = "AlvisNLP";
-        meta.name = descriptor.'@short-target';
-        meta.implementation = descriptor.'@target';
-        meta.description = descriptor.'synopsis'.text();
-		def paraList=[]
-        for(def ele in descriptor.'module-doc'.'param-doc')
-		{
-			def p = new parameter();
-			p.name = ele.'@name'
-			p.mandatory = ele."@mandatory"
-			p.type = ele.'@type'
-			paraList.add(p)
-		}
-		meta.parameters = paraList;
-        return [meta];
-    }
-    
-    static def parseCreole(File aDescriptor) {
-        def descriptor = new XmlParser().parse(aDescriptor);
-        
-        def components = [];
-        
-        descriptor.'**'.'RESOURCE'.each { resource ->
-            def meta = new ComponentMetaData();
-            meta.framework = "GATE";
-            meta.name = resource.'NAME'.text();
-            meta.implementation = resource.'CLASS'.text();
-            meta.description = resource.'COMMENT'.text();
+    static def products =  Constants.PRODUCTS;
+    static def formats = Constants.FORMATS;
+    static def categories = Constants.CATEGORIES;
             
-			def paraList=[]
-			resource.'**'.'PARAMETER'.each { param->
-				def paramLocal = new parameter();
-				paramLocal.name = param.'@NAME'
-				paramLocal.type = param.value().text();
-				paramLocal.defaultValue = param.'@DEFAULT';
-				paramLocal.runTime = param.'@RUNTIME';
-				paraList.add(paramLocal);
-			}
-			meta.parameters = paraList;
-			
-            components << meta;
-        }
-        
-        if (components.isEmpty()) {
-            println "No resources found in $aDescriptor";
-        }
-        
-        return components;
-    }
-    
-    static def parseUimaAnalysisEngine(collection, resource, paraList) {
-        def meta = new ComponentMetaData();
-        meta.framework = "$collection (UIMA)";
-        meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
-        meta.implementation = resource.'annotatorImplementationName'.text();
-        meta.description = shortDesc(resource.'analysisEngineMetaData'.'description'.text());
-		meta.parameters = paraList;
-        return [meta];
-    }
-
-    static def parseTAEDescription(collection, resource,paraList) {
-        def meta = new ComponentMetaData();
-        meta.framework = "$collection (UIMA)";
-        meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
-        meta.implementation = resource.'annotatorImplementationName'.text();
-        meta.description = shortDesc(resource.'analysisEngineMetaData'.'description'.text());
-		meta.parameters = paraList;
-        return [meta];
-    }
-            
-    static def parseUimaCollectionReader(collection, resource,paraList) {
-        def meta = new ComponentMetaData();
-        meta.framework = "$collection (UIMA)";
-        meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
-        meta.implementation = resource.'implementationName'.text();
-        meta.description = shortDesc(resource.'processingResourceMetaData'.'description'.text());
-		meta.parameters = paraList;
-		return [meta]
-    }
-        
-    static def parseUimaCasConsumer(collection, resource,paraList) {
-        def meta = new ComponentMetaData();
-        meta.framework = "$collection (UIMA)";
-        meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
-        meta.implementation = resource.'implementationName'.text();
-        meta.description = shortDesc(resource.'processingResourceMetaData'.'description'.text());
-		meta.parameters = paraList;
-        return [meta];
-    }
-        
-    static def parseUima(String aCollection, File aDescriptor) {
-        Node descriptor = new XmlParser().parse(aDescriptor);
-        assert descriptor.name() instanceof QName;
-		
-		
-		def paraList=[]
-		descriptor.'**'.'configurationParameter'.each { param->
-			def p = new parameter();
-			p.name = param.get('name').text();
-			p.description = param.get('description').text();
-			p.type = param.get('type').text();
-			p.multiValued = param.get('multiValued').text();
-			p.mandatory = param.get('mandatory').text();
-			paraList.add(p);
-//			println p.name 
-		}
-		
-        switch (descriptor.name().localPart) {
-            case 'analysisEngineDescription':
-                return parseUimaAnalysisEngine(aCollection, descriptor,paraList);
-            case 'taeDescription':
-                return parseTAEDescription(aCollection, descriptor,paraList);
-            case 'collectionReaderDescription':
-                return parseUimaCollectionReader(aCollection, descriptor,paraList);
-            case 'casConsumerDescription':
-                return parseUimaCasConsumer(aCollection, descriptor,paraList);
-            case 'analysisEngineDeploymentDescription':
-                println "Ignoring analysisEngineDeploymentDescription in ${aDescriptor}"
-                return [];
-            case 'typeSystemDescription':
-                println "Ignoring typeSystemDescription in ${aDescriptor}"
-                return [];
-            default:
-                throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aDescriptor}");
-            
-        }
-		
-		
-    }
-
-    static def shortName(name) {
-        if (name.contains('.')) {
-            return name.tokenize('.')[-1];
-        }
-        return name;
-    }
-        
-    static def shortDesc(description) {
-        if (description) {
-            BreakIterator tokenizer = BreakIterator.getSentenceInstance(Locale.US);
-            tokenizer.setText(description);
-            def start = tokenizer.first();
-            def end = tokenizer.next();
-            if (start > -1 && end > -1) {
-                description = description.substring(start, end);
-            }
-            description = description
-                // Remove HTML tags in tables
-                .replaceAll(/<.+?>/, '')
-                // Make sure the text doesn't cluse the passthrough block
-                .replaceAll(']', '{endsb}')
-                .trim();
-        }
-        return description ? "pass:[${description}]" : '__No description__';
-    }
-
-    static class ComponentMetaData {
-        String name;
-        String implementation;
-        String description;
-        String framework;
-        List<String> categories;
-        String product;
-        String format; // Only relevant for readers and writers
-		List<parameter> parameters;
-    }
-    
-	static class parameter{
-		String name;
-		String description;
-		String type;
-		String mandatory;
-		String defaultValue;
-		String multiValued;
-		String runTime;
-	}
     static void main(String... args) {
-        def components = [];
         
+		def components = [];
+        AlvisImporter alvisParser = new AlvisImporter();
+		CreoleImporter creoleParser = new CreoleImporter();
+		UimaImporter uimaParserDkPro = new UimaImporter("DKPro Core");
+		UimaImporter uimaParserIlsp = new UimaImporter("ILSP");
+		UimaImporter uimaParserNactem = new UimaImporter("NaCTeM");
+		
         new File("src/main/resources/components/alvis").eachFileRecurse(FILES) {
             if (it.name.endsWith('.xml')) {
-                components.addAll(parseAlvis(it));
+                components.addAll(alvisParser.process(it));
             }
         }
 
         new File("src/main/resources/components/gate").eachFileRecurse(FILES) {
             if (it.name.endsWith('.xml')) {
-                components.addAll(parseCreole(it));
+                components.addAll(creoleParser.process(it));
             }
         }
 
         new File("src/main/resources/components/dkprocore").eachFileRecurse(FILES) {
             if (it.name.endsWith('.xml')) {
-                components.addAll(parseUima("DKPro Core", it));
+                components.addAll(uimaParserDkPro.process(it));
             }
         }
 
         new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {
             if (it.name.endsWith('.xml')) {
-                components.addAll(parseUima("ILSP", it));
+                components.addAll(uimaParserIlsp.process(it));
             }
         }
 
         new File("src/main/resources/components/nactem").eachFileRecurse(FILES) {
             if (it.name.endsWith('.xml')) {
-                components.addAll(parseUima("NaCTeM", it));
+                components.addAll(uimaParserNactem.process(it));
             }
         }
 
-        components.each { it.categories = findCategories(categories, it.name) };
-        components.each { it.format = findCategories(formats, it.name + " " +it.description.replace('\n', ' '))[0] };
+        components.each { it.categories = Util.findCategories(categories, it.name) };
+        components.each { it.format = Util.findCategories(formats, it.name + " " +it.description.replace('\n', ' '))[0] };
         components.each {
-            it.product = findCategories(products, it.name + " " +it.description.replace('\n', ' '))[0] ?: "(original) $it.framework"
+            it.product = Util.findCategories(products, it.name + " " +it.description.replace('\n', ' '))[0] ?: "(original) $it.framework"
             };
         
 //        components

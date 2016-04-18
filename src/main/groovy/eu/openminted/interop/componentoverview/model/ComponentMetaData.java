@@ -11,4 +11,5 @@ public class ComponentMetaData
     List<String> categories;
     String product;
     String format; // Only relevant for readers and writers
+    List<ParameterMetaData> parameters;
 }
