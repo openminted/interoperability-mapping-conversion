@@ -4,7 +4,10 @@ import java.util.List;
 
 public class ComponentMetaData
 {
+    String id;
+    String source;
     String name;
+    String version;
     String implementation;
     String description;
     String framework;
@@ -12,4 +15,7 @@ public class ComponentMetaData
     String product;
     String format; // Only relevant for readers and writers
     List<ParameterMetaData> parameters;
+    List<InputOutputMetaData> inputs;
+    List<InputOutputMetaData> outputs;
+    String documentationUrl;
 }

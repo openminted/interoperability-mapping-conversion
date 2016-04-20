@@ -5,7 +5,7 @@
   <artifactId>mapping-conversion</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
-    <groovy.version>2.4.5</groovy.version>
+    <groovy.version>2.4.6</groovy.version>
     <asciidoctor.version>1.5.4</asciidoctor.version>
   </properties>
   <dependencies>

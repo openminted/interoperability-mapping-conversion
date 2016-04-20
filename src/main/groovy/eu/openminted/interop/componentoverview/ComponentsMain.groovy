@@ -4,13 +4,16 @@ import static groovy.io.FileType.FILES
 
 import java.text.BreakIterator;
 
+import eu.openminted.interop.componentoverview.exporter.MetaShareExporter
 import eu.openminted.interop.componentoverview.importer.AlvisImporter
 import eu.openminted.interop.componentoverview.importer.CreoleImporter
 import eu.openminted.interop.componentoverview.importer.UimaImporter
 import eu.openminted.interop.componentoverview.model.Constants;
-import groovy.xml.QName;
+import groovy.xml.QName
+import groovy.xml.XmlUtil;
 
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.FilenameUtils
+import org.apache.commons.lang3.StringUtils;
 import org.asciidoctor.AsciiDocDirectoryWalker
 import org.asciidoctor.Asciidoctor
 import org.asciidoctor.AttributesBuilder
@@ -63,6 +66,12 @@ class ComponentsMain
             }
         }
 
+        components.eachWithIndex { component, idx -> component.id = "$idx"};
+        components.each { component ->
+            def source = StringUtils.substringAfter(component.source, "src/main/resources/components/");
+            source = 'https://github.com/openminted/interoperability-mapping-conversion/blob/master/src/main/resources/components/'+source;
+            component.source = source;
+        }
         components.each { it.categories = Util.findCategories(categories, it.name) };
         components.each { it.format = Util.findCategories(formats, it.name + " " +it.description.replace('\n', ' '))[0] };
         components.each {
@@ -77,13 +86,25 @@ class ComponentsMain
 //                    printf("  %-20s %-30s %s %n", it.categories, it.name, it.description);
 //                }
 //            }; 
-    
+
+        new File("target/generated-docs/metashare").mkdirs();
+        components.each { component ->
+            def exporter = new MetaShareExporter();
+            new File("target/generated-docs/metashare/${component.id}.xml").withOutputStream { out -> 
+                XmlUtil.serialize(exporter.process(component), out);
+            }
+        };
+
         println "Applying templates..."
     
         File adocTargetFolder = new File("target/generated-adoc");
     
         def te = new groovy.text.SimpleTemplateEngine(this.class.classLoader);
         new File("src/main/templates/components").eachFile(FILES) { tf ->
+            if (!(tf.name.endsWith(".xml") || tf.name.endsWith(".adoc"))) {
+                return;
+            }
+            
             println "Processing template ${tf.name}...";
             
             File mixin = new File(FilenameUtils.removeExtension(tf.path)+'.yaml');
@@ -108,7 +129,7 @@ class ComponentsMain
                 throw e;
             }
         }
-
+        
         println "Rendering..."
 
         Asciidoctor asciidoctor = Asciidoctor.Factory.create();

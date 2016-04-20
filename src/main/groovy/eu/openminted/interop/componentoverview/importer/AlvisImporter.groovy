@@ -15,10 +15,16 @@ class AlvisImporter implements Importer<ComponentMetaData>
          def descriptor = new XmlParser().parse(aFile);
         
         def meta = new ComponentMetaData();
+        meta.source = aFile.path;
         meta.framework = "AlvisNLP";
         meta.name = descriptor.'@short-target';
+        meta.version = descriptor.'@date';
         meta.implementation = descriptor.'@target';
         meta.description = descriptor.'synopsis'.text();
+
+        meta.inputs = [];
+        meta.outputs = [];
+
 		def paraList=[]
         for(def ele in descriptor.'module-doc'.'param-doc')
 		{

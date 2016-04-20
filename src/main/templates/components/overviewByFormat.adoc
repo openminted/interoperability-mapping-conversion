@@ -1,4 +1,6 @@
 <%
+import eu.openminted.interop.componentoverview.Util;
+
 components
     .grep { it.categories[0] in ['Reader', 'Writer']}
     .groupBy { it.format ?: ' Uncategorized' }
@@ -14,8 +16,8 @@ ${data[format] ?: ''}
 <%
         formatGroup.sort { it.name }.each { component ->
 %>
-|<<${component.name.replaceAll(" ","_")},${component.name}>>
-| ${component.description}
+|<<${component.name.replaceAll(" ","_").replaceAll('[+]','-')},${component.name}>>
+| ${Util.shortDesc(component.description)}
 | ${component.framework}
 <%        
         }

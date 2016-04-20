@@ -29,7 +29,28 @@ public class Util
         }
         return description ? "pass:[${description}]" : '__No description__';
     }
-	
+
+    static def preparePassthrough(description)
+    {
+        if (description) {
+            if (
+                !description.contains('<p>') &&
+                !description.contains('<div>') &&
+                !description.contains('<ol>') &&
+                !description.contains('<ul>') &&
+                !description.contains('<table>')
+            ) {
+                description = "<p>${description}</p>";
+            }
+            if (!description.startsWith('<p>') && description.contains('<p>')) {
+                def i = description.indexOf('<p>');
+                description = "<p>${description[0..i-1]}</p>${description[i..-1]}";
+            }
+            description = "<div class='paragraph'>${description}</div>";
+        }
+        return description;
+    }
+
 	static def findCategories(catalog, item) {
 		for (e in catalog) {
 			if (e.value instanceof Map) {

@@ -1,6 +1,17 @@
 <%
+import eu.openminted.interop.componentoverview.Util;
+
+def links(component)
+{
+    def html = '++++\n<div style="float:right">\n';
+    html += "<a href=\"${component.source}\" target=\"_blank\" >Original descriptor</a><br/>\n";
+    html += "<a href=\"metashare/${component.id}.xml\" target=\"_blank\" >META-SHARE descriptor</a>\n";
+    html += '</div>\n++++\n';
+    return html;
+}
+
+
 components
-    .grep { it.categories.isEmpty() || !(it.categories[0] in ['Reader', 'Writer'])}
     .groupBy { it.categories.isEmpty() ? ' Uncategorized' : it.categories[0] }
     .sort { it.key }
     .each { category, categoryGroup ->
@@ -11,11 +22,19 @@ ${data[category] ?: ''}
 <%
         categoryGroup.sort { it.name }.each { component ->
 %>
-[[${component.name.replaceAll(" ","_")}]]
-*Name*:${component.name} +
-*Category*:${category} +
-*Description*:${component.description} +
-*Framework*: ${component.framework}
+
+[[${component.name.replaceAll(' ','_').replaceAll('[+]','-')}]]
+==== ${component.name.replaceAll('[+]','{plus}')}
+
+${links(component)}
+
+*Category*: ${category} +
+*Framework*: ${component.framework} +
+*Version*: ${component.version}
+
+++++
+${Util.preparePassthrough(component.description)}
+++++
 
 |====
 |*Parameter*|*Description*|*Type*|*Mandatory*|*Default Value*|*Multi-value*|*Runtime*

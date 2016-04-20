@@ -17,11 +17,17 @@ public class CreoleImporter implements Importer<ComponentMetaData>
         
         descriptor.'**'.'RESOURCE'.each { resource ->
             def meta = new ComponentMetaData();
+            meta.source = aFile.path;
             meta.framework = "GATE";
             meta.name = resource.'NAME'.text();
+            meta.version = "unknown";
             meta.implementation = resource.'CLASS'.text();
             meta.description = resource.'COMMENT'.text();
-            
+            meta.documentationUrl = resource.'HELPURL'.text();
+   
+            meta.inputs = [];
+            meta.outputs = [];
+    
 			def paraList=[]
 			resource.'**'.'PARAMETER'.each { param->
 				def paramLocal = new ParameterMetaData();
@@ -32,7 +38,7 @@ public class CreoleImporter implements Importer<ComponentMetaData>
 				paraList.add(paramLocal);
 			}
 			meta.parameters = paraList;
-			
+    
             components << meta;
         }
         

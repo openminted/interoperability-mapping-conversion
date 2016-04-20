@@ -12,5 +12,5 @@ include::{generated-dir}overviewByProduct.adoc[]
 == I/O components by format
 include::{generated-dir}overviewByFormat.adoc[]
 
-== Analytics by component parameters
-include::{generated-dir}overviewByParameters.adoc[]
+== Component details
+include::{generated-dir}componentDetails.adoc[]
