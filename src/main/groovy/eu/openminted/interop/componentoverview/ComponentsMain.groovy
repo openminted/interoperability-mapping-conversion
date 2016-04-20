@@ -99,7 +99,7 @@ class ComponentsMain
     
         File adocTargetFolder = new File("target/generated-adoc");
     
-        def te = new groovy.text.SimpleTemplateEngine(this.class.classLoader);
+        def te = new groovy.text.SimpleTemplateEngine(ComponentsMain.class.classLoader);
         new File("src/main/templates/components").eachFile(FILES) { tf ->
             if (!(tf.name.endsWith(".xml") || tf.name.endsWith(".adoc"))) {
                 return;
