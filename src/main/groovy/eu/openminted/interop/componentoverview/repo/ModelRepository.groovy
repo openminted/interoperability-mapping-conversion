@@ -33,13 +33,9 @@ import org.apache.maven.wagon.events.TransferListener
 
 public class ModelRepository {
 	def Indexer indexer;
-
 	def IndexingContext centralContext;
-	def IndexingContext ukpContext;
-	def IndexingContext ukpStagingContext;
-	def IndexingContext ukpPrivateContext;
 
-	ModelRepository() {
+		ModelRepository() {
 		DefaultContainerConfiguration config = new DefaultContainerConfiguration();
 		config.setClassPathScanning( PlexusConstants.SCANNING_INDEX );
 		DefaultPlexusContainer plexusContainer = new DefaultPlexusContainer(config);
@@ -70,7 +66,7 @@ public class ModelRepository {
 
 					public void transferProgress( TransferEvent transferEvent, byte[] buffer, int length )
 					{
-						println "anshul";
+					
 					}
 
 					public void transferCompleted( TransferEvent transferEvent )

@@ -10,9 +10,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 class FindComponentDescriptor {
 
 	static File DownloadDescriptorFiles(){
-		System.setProperty("grape.root", "target/test-output/grapes");
-		System.setProperty("ivy.cache.dir", new File("target/test-output/grapes/grapes").absolutePath);
-
 		ModelRepository repo = new ModelRepository();
 
 		HashMap<File,String> componentDirMap = new HashMap<File, String>();

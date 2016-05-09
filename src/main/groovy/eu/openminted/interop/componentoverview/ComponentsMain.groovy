@@ -29,6 +29,8 @@ class ComponentsMain {
 	static def categories = Constants.CATEGORIES;
 
 	static void main(String... args) {
+		System.setProperty("grape.root", "target/test-output/grapes");
+		System.setProperty("ivy.cache.dir", new File("target/test-output/grapes/grapes").absolutePath);
 
 		def components = [];
 		AlvisImporter alvisParser = new AlvisImporter();
