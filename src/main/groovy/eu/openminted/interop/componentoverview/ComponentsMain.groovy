@@ -50,7 +50,7 @@ class ComponentsMain {
 				components.addAll(creoleParser.process(it));
 			}
 		}
-		//		File f = FindComponentDescriptor.DownloadDescriptorFiles()
+
 		FindComponentDescriptor.DownloadDescriptorFiles().eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
 				List<ComponentMetaData> processedList;
@@ -61,7 +61,6 @@ class ComponentsMain {
 				}catch(Exception e){
 					println "Unable to process ${it.name}"
 				}
-
 			}
 		}
 		new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {

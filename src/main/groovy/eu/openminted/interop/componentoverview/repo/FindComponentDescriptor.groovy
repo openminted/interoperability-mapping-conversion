@@ -17,8 +17,10 @@ class FindComponentDescriptor {
 
 		String dkproGroupId= "de.tudarmstadt.ukp.dkpro.core";
 		File dkproDescriptorFolder = new File("target/downloaded-descriptors/dkpro-core");
+		
 		if(!dkproDescriptorFolder.absoluteFile.exists())
 			dkproDescriptorFolder.mkdirs();
+			
 		componentDirMap.put(dkproDescriptorFolder,dkproGroupId);
 
 		Set<ArtifactInfo> searchResult = repo.getArtifacts("de.tudarmstadt.ukp.dkpro.core",null,null,null,null).toList().sort { a,b ->
@@ -40,7 +42,7 @@ class FindComponentDescriptor {
 				}
 			}
 		}
-
+		
 		for(f in filteredResult.keySet()){
 			GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader);
 			try {
@@ -61,9 +63,10 @@ class FindComponentDescriptor {
 				URL url = fileinfo.getURL();
 				FileUtils.copyURLToFile(url, tempFile);
 			}
+			
 		}
-
-	return dkproDescriptorFolder;
+		
+		return dkproDescriptorFolder.getAbsoluteFile();
 
 	}
 }
