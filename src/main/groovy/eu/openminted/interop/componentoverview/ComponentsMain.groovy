@@ -32,21 +32,21 @@ class ComponentsMain {
 		System.setProperty("grape.root", "src/test/test-output/grapes");
 		System.setProperty("ivy.cache.dir", new File("src/test/test-output/grapes/grapes").absolutePath);
 		
-		//ivy debug
-		System.setProperty("ivy.message.logger.level", "4")
-		
-		//http debug
-		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
-		
-		System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
-		
-		System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
-		
-		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
-		
-		//groovy debug
-		System.setProperty("groovy.grape.report.downloads","true");
-		
+//		//ivy debug
+//		System.setProperty("ivy.message.logger.level", "4")
+//		
+//		//http debug
+//		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+//		
+//		System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+//		
+//		System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
+//		
+//		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
+//		
+//		//groovy debug
+//		System.setProperty("groovy.grape.report.downloads","true");
+//		
 		def components = [];
 		AlvisImporter alvisParser = new AlvisImporter();
 		CreoleImporter creoleParser = new CreoleImporter();
