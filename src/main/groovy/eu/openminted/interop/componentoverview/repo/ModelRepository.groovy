@@ -54,7 +54,7 @@ public class ModelRepository {
 
 		// Create context for central repository index
 		centralContext = indexer.createIndexingContext( "central-context", "central ",
-				new File( "target/central-cache" ), new File( "target/central-index" ),
+				new File( "target/central-cache" ), new File( "src/test/test-output/grapes/central-index" ),
 				"http://repo1.maven.org/maven2",
 				null, true, true, indexers );
 
