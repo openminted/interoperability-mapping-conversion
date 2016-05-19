@@ -12,8 +12,9 @@ import eu.openminted.interop.componentoverview.model.ComponentMetaData;
 import eu.openminted.interop.componentoverview.model.Constants;
 import eu.openminted.interop.componentoverview.repo.FindComponentDescriptor;
 import groovy.xml.QName
-import groovy.xml.XmlUtil;
+import groovy.xml.XmlUtil
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils
 import org.apache.commons.lang3.StringUtils;
 import org.asciidoctor.AsciiDocDirectoryWalker
@@ -66,6 +67,7 @@ class ComponentsMain {
 			}
 		}
 
+//		new File("target/generated-docs/descriptors/crawled-dkprocore").eachFileRecurse(FILES){
 		FindComponentDescriptor.DownloadDescriptorFiles().eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
 				List<ComponentMetaData> processedList;
@@ -90,10 +92,15 @@ class ComponentsMain {
 			}
 		}
 
+		new File("target/generated-docs/descriptors").mkdir();
+		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"));
+		
 		components.eachWithIndex { component, idx -> component.id = "$idx"};
 		components.each { component ->
 			def source = StringUtils.substringAfter(component.source, "src/main/resources/components/");
-			source = 'https://github.com/openminted/interoperability-mapping-conversion/blob/master/src/main/resources/components/'+source;
+			if(source.empty)
+				source = StringUtils.substringAfter(component.source, "target/generated-docs/descriptors/");
+			source = 'descriptors/'+source;
 			component.source = source;
 		}
 		components.each { it.categories = Util.findCategories(categories, it.name) };

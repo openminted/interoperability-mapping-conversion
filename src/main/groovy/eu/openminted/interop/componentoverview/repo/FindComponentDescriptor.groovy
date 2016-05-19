@@ -20,7 +20,7 @@ class FindComponentDescriptor {
 		
 
 		String dkproGroupId= "de.tudarmstadt.ukp.dkpro.core";
-		File dkproDescriptorFolder = new File("src/test/test-output/grapes/downloaded-descriptors/dkpro-core");
+		File dkproDescriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore");
 		
 		if(!dkproDescriptorFolder.absoluteFile.exists())
 			dkproDescriptorFolder.mkdirs();
@@ -32,7 +32,7 @@ class FindComponentDescriptor {
 		};
 
 		HashMap<String , String > filteredResult = new HashMap<String, String>();
-		//		def ab = searchResult.unique{a,b-> a.artifactId <=> b.artifactId};
+		//		def ab = searchResult.unique{a,b-> a.artifacrehnede yaar replacement ka lafda haitId <=> b.artifactId};
 		searchResult.each {ai->
 			if(!filteredResult.containsKey(ai.artifactId))
 			{
