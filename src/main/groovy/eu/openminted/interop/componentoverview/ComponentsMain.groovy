@@ -9,7 +9,8 @@ import eu.openminted.interop.componentoverview.importer.AlvisImporter
 import eu.openminted.interop.componentoverview.importer.CreoleImporter
 import eu.openminted.interop.componentoverview.importer.UimaImporter
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
-import eu.openminted.interop.componentoverview.model.Constants;
+import eu.openminted.interop.componentoverview.model.Constants
+import eu.openminted.interop.componentoverview.repo.FindAndStoreArtifactsPOM;
 import eu.openminted.interop.componentoverview.repo.FindComponentDescriptor;
 import groovy.xml.QName
 import groovy.xml.XmlUtil
@@ -118,6 +119,11 @@ class ComponentsMain {
 		//                }
 		//            };
 
+		//Store POM and descriptors of artifact in target/generated-docs/crawled-artifacts. 
+		//Currently we need to manually run FindAndStoreArtifactsPOM due to lock issue 
+	 	//This will be integrated when we are downloading descriptors 
+		//FindAndStoreArtifactsPOM.generateArtifactPOM("de.tudarmstadt.ukp.dkpro.core",null); 
+		
 		new File("target/generated-docs/metashare").mkdirs();
 		components.each { component ->
 			def exporter = new MetaShareExporter();

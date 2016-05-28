@@ -17,22 +17,21 @@ class FindComponentDescriptor {
 	static File DownloadDescriptorFiles(){
 		ModelRepository repo = new ModelRepository();
 		HashMap<File,String> componentDirMap = new HashMap<File, String>();
-		
+
 
 		String dkproGroupId= "de.tudarmstadt.ukp.dkpro.core";
 		File dkproDescriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore");
-		
+
 		if(!dkproDescriptorFolder.absoluteFile.exists())
 			dkproDescriptorFolder.mkdirs();
-			
-		componentDirMap.put(dkproDescriptorFolder,dkproGroupId);
 
-		Set<ArtifactInfo> searchResult = repo.getArtifacts("de.tudarmstadt.ukp.dkpro.core",null,null,null,null).toList().sort { a,b ->
+		componentDirMap.put(dkproDescriptorFolder,dkproGroupId);
+		// final String groupId, final String artifactId, final String version,	final String packaging, final String classifier 
+		Set<ArtifactInfo> searchResult = repo.getArtifacts("de.tudarmstadt.ukp.dkpro.core",null,"1.7.0",null,null).toList().sort { a,b ->
 			a.artifactVersion.compareTo(b.artifactVersion)
 		};
 
 		HashMap<String , String > filteredResult = new HashMap<String, String>();
-		//		def ab = searchResult.unique{a,b-> a.artifacrehnede yaar replacement ka lafda haitId <=> b.artifactId};
 		searchResult.each {ai->
 			if(!filteredResult.containsKey(ai.artifactId))
 			{
@@ -46,20 +45,20 @@ class FindComponentDescriptor {
 				}
 			}
 		}
-		
+
 		for(f in filteredResult.keySet()){
 			GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader);
 			try {
+				//To check only version specified is downloading uncomment the below line
+				//println "Grabbing ${f} -- version --${filteredResult.get(f)}"
 				Grape.grab(group:dkproGroupId, module:f, version:filteredResult.get(f),transitive:false, classLoader: loader);
 			}
 			catch (RuntimeException e) {
-//				e.printStackTrace();
+				//				e.printStackTrace();
 				println "Unable to grab ${f} -- version -- ${filteredResult.get(f)} }"
 
 			}
 			PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(loader);
-//			println "${f}  -- version -- ${filteredResult.get(f)}  " + resolver.getResources(
-//					"classpath*:de/**/*.xml");
 			UrlResource[] files = resolver.getResources("classpath*:de/**/*.xml");
 			files.each {fileinfo->
 				File tempFile = new File(dkproDescriptorFolder.getAbsolutePath()+ "/"+ fileinfo.filename);
@@ -67,11 +66,11 @@ class FindComponentDescriptor {
 				FileOutputStream fos = new FileOutputStream(tempFile);
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos);
 				fos.close();
-				
+
 			}
-			
+
 		}
-		
+
 		return dkproDescriptorFolder.getAbsoluteFile();
 
 	}
