@@ -12,12 +12,10 @@ import org.springframework.util.FileCopyUtils;
 
 class FindAndStoreArtifactsPOM {
 	
-		static void main(String... args){
-		ModelRepository repo = new ModelRepository();
+		static void generateArtifactPOM(ModelRepository repo,String grpID, String version){
+
 		HashMap<File,String> componentDirMap = new HashMap<File, String>();
-
-
-		String dkproGroupId= "de.tudarmstadt.ukp.dkpro.core";
+		String dkproGroupId= grpID;
 		File dkproDescriptorFolder = new File("target/generated-docs/crawled-artifacts");
 
 		if(!dkproDescriptorFolder.absoluteFile.exists())
@@ -25,7 +23,7 @@ class FindAndStoreArtifactsPOM {
 
 		componentDirMap.put(dkproDescriptorFolder,dkproGroupId);
 
-		Set<ArtifactInfo> searchResult = repo.getArtifacts("de.tudarmstadt.ukp.dkpro.core",null,null,null,null).toList().sort { a,b ->
+		Set<ArtifactInfo> searchResult = repo.getArtifacts(grpID,null,version,null,null).toList().sort { a,b ->
 			a.artifactVersion.compareTo(b.artifactVersion)
 		};
 

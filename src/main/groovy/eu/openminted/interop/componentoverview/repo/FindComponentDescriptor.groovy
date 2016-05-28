@@ -14,11 +14,9 @@ import org.springframework.util.FileCopyUtils;
 
 class FindComponentDescriptor {
 
-	static File DownloadDescriptorFiles(){
-		ModelRepository repo = new ModelRepository();
-		HashMap<File,String> componentDirMap = new HashMap<File, String>();
-
-
+	static File DownloadDescriptorFiles(ModelRepository repo){
+		 
+		HashMap<File,String> componentDirMap = new HashMap<File, String>();		
 		String dkproGroupId= "de.tudarmstadt.ukp.dkpro.core";
 		File dkproDescriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore");
 

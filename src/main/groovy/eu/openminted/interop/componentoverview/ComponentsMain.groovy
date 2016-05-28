@@ -11,7 +11,8 @@ import eu.openminted.interop.componentoverview.importer.UimaImporter
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
 import eu.openminted.interop.componentoverview.model.Constants
 import eu.openminted.interop.componentoverview.repo.FindAndStoreArtifactsPOM;
-import eu.openminted.interop.componentoverview.repo.FindComponentDescriptor;
+import eu.openminted.interop.componentoverview.repo.FindComponentDescriptor
+import eu.openminted.interop.componentoverview.repo.ModelRepository;
 import groovy.xml.QName
 import groovy.xml.XmlUtil
 
@@ -67,9 +68,8 @@ class ComponentsMain {
 				components.addAll(creoleParser.process(it));
 			}
 		}
-
-//		new File("target/generated-docs/descriptors/crawled-dkprocore").eachFileRecurse(FILES){
-		FindComponentDescriptor.DownloadDescriptorFiles().eachFileRecurse(FILES) {
+		ModelRepository repo = new ModelRepository();
+		FindComponentDescriptor.DownloadDescriptorFiles(repo).eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
 				List<ComponentMetaData> processedList;
 				try{
@@ -120,9 +120,7 @@ class ComponentsMain {
 		//            };
 
 		//Store POM and descriptors of artifact in target/generated-docs/crawled-artifacts. 
-		//Currently we need to manually run FindAndStoreArtifactsPOM due to lock issue 
-	 	//This will be integrated when we are downloading descriptors 
-		//FindAndStoreArtifactsPOM.generateArtifactPOM("de.tudarmstadt.ukp.dkpro.core",null); 
+		FindAndStoreArtifactsPOM.generateArtifactPOM(repo,"de.tudarmstadt.ukp.dkpro.core",null); 
 		
 		new File("target/generated-docs/metashare").mkdirs();
 		components.each { component ->
