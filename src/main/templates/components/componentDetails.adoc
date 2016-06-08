@@ -6,6 +6,10 @@ def links(component)
     def html = '++++\n<div style="float:right">\n';
     html += "<a href=\"${component.source}\" target=\"_blank\" >Original descriptor</a><br/>\n";
     html += "<a href=\"metashare/${component.id}.xml\" target=\"_blank\" >META-SHARE descriptor</a>\n";
+    if(component.POMUrl)
+    {
+    	html += "<br/><a href=\"${component.POMUrl.absolutePath}\" target=\"_blank\" >POM</a>\n";
+    }
     html += '</div>\n++++\n';
     return html;
 }
@@ -34,58 +38,63 @@ ${links(component)}
 
 ++++
 ${Util.preparePassthrough(component.description)}
-++++
-
+++++ 	
 |====
-|*Parameter*|*Description*|*Type*|*Mandatory*|*Default Value*|*Multi-value*|*Runtime*
 <%
-	component.parameters.sort{it.name}.each{ parameter ->
-	if(parameter.name){
-		println "| ${parameter.name}";		
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.description){
-		println "| ${parameter.description}";		
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.type){
-		println "| ${parameter.type}";		
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.mandatory){
-		if((parameter.mandatory.toLowerCase().contains("required")||parameter.mandatory.toLowerCase().contains("default")||parameter.mandatory.toLowerCase().contains("true"))&&!parameter.mandatory.toLowerCase().contains("default: false")){
-			println "| True";	
+if(component.parameters.size()>0){
+	println '|*Parameter*|*Description*|*Type*|*Mandatory*|*Default Value*|*Multi-value*|*Runtime*'
+}
+%>
+<%
+
+		component.parameters.sort{it.name}.each{ parameter ->
+		if(parameter.name){
+			println "| ${parameter.name}";		
 		}else{
-			println "|  False";
-			}
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.defaultValue){
-		println "| ${parameter.defaultValue}";		
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.multiValued){
-		println "| ${parameter.multiValued}";		
-	}else{
-		println "| --";
-	}
-	
-	if(parameter.runTime){
-		println "| ${parameter.runTime}";		
-	}else{
-		println "| --";
-	}
-   }
+			println "| --";
+		}
+		
+		if(parameter.description){
+			println "| ${parameter.description}";		
+		}else{
+			println "| --";
+		}
+		
+		if(parameter.type){
+			println "| ${parameter.type}";		
+		}else{
+			println "| --";
+		}
+		
+		if(parameter.mandatory){
+			if((parameter.mandatory.toLowerCase().contains("required")||parameter.mandatory.toLowerCase().contains("default")||parameter.mandatory.toLowerCase().contains("true"))&&!parameter.mandatory.toLowerCase().contains("default: false")){
+				println "| True";	
+			}else{
+				println "|  False";
+				}
+		}else{
+			println "| --";
+		}
+		
+		if(parameter.defaultValue){
+			println "| ${parameter.defaultValue}";		
+		}else{
+			println "| --";
+		}
+		
+		if(parameter.multiValued){
+			println "| ${parameter.multiValued}";		
+		}else{
+			println "| --";
+		}
+		
+		if(parameter.runTime){
+			println "| ${parameter.runTime}";		
+		}else{
+			println "| --";
+		}
+	   }
+   
 %>
 |====
 

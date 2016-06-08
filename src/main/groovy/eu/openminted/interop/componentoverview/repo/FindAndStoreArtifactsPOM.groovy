@@ -8,15 +8,17 @@ import org.apache.ivy.plugins.repository.ssh.Scp.FileInfo;
 import org.apache.maven.index.ArtifactInfo
 import org.springframework.core.io.UrlResource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
-import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileCopyUtils
+
+import eu.openminted.interop.componentoverview.model.ComponentMetaData;;
 
 class FindAndStoreArtifactsPOM {
 	
-		static void generateArtifactPOM(ModelRepository repo,String grpID, String version){
-
+		static File generateArtifactDescriptorAndPOM(ModelRepository repo,String grpID, String version){
+			
 		HashMap<File,String> componentDirMap = new HashMap<File, String>();
 		String dkproGroupId= grpID;
-		File dkproDescriptorFolder = new File("target/generated-docs/crawled-artifacts");
+		File dkproDescriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore");
 
 		if(!dkproDescriptorFolder.absoluteFile.exists())
 			dkproDescriptorFolder.mkdirs();
@@ -28,7 +30,6 @@ class FindAndStoreArtifactsPOM {
 		};
 
 		HashMap<String , String > filteredResult = new HashMap<String, String>();
-		//		def ab = searchResult.unique{a,b-> a.artifacrehnede yaar replacement ka lafda haitId <=> b.artifactId};
 		searchResult.each {ai->
 			if(!filteredResult.containsKey(ai.artifactId))
 			{
@@ -90,16 +91,23 @@ class FindAndStoreArtifactsPOM {
 					new File(dkproDescriptorFolder.getAbsolutePath()+ "/"+artifactName).mkdir();
 				}
 				File tempFile = new File(dkproDescriptorFolder.getAbsolutePath()+"/"+artifactName+ "/"+ fileinfo.filename);
-				println(fileinfo.filename)
 				tempFile.createNewFile();
 				FileOutputStream fos = new FileOutputStream(tempFile);
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos);
 				fos.close();
-			}
-			
-			
-
+			}						
 		}
-
+		return dkproDescriptorFolder.getAbsoluteFile();
+	}
+	static List<ComponentMetaData> addPOMInfo(List<ComponentMetaData> components){
+		File parentDir;
+		components.each {component->
+			 parentDir = new File(component.source).parentFile;
+			 if(new File(parentDir.absolutePath+"/"+"pom.xml").exists())
+			 {
+				 component.POMUrl = new File(parentDir.absolutePath +"/"+"pom.xml");
+			 }			 
+		}
+		return components;
 	}
 }

@@ -1,5 +1,6 @@
 package eu.openminted.interop.componentoverview.model;
 
+import java.io.File;
 import java.util.List;
 
 public class ComponentMetaData
@@ -18,4 +19,8 @@ public class ComponentMetaData
     List<InputOutputMetaData> inputs;
     List<InputOutputMetaData> outputs;
     String documentationUrl;
+    File POMUrl;
+    String license;
+    String devInfo;
+    List<String> mailingList;
 }

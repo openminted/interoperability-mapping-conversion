@@ -11,14 +11,14 @@ import eu.openminted.interop.componentoverview.importer.UimaImporter
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
 import eu.openminted.interop.componentoverview.model.Constants
 import eu.openminted.interop.componentoverview.repo.FindAndStoreArtifactsPOM;
-import eu.openminted.interop.componentoverview.repo.FindComponentDescriptor
 import eu.openminted.interop.componentoverview.repo.ModelRepository;
 import groovy.xml.QName
 import groovy.xml.XmlUtil
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils
+import org.apache.ivy.plugins.parser.m2.PomReader;
 import org.asciidoctor.AsciiDocDirectoryWalker
 import org.asciidoctor.Asciidoctor
 import org.asciidoctor.AttributesBuilder
@@ -34,22 +34,22 @@ class ComponentsMain {
 	static void main(String... args) {
 		System.setProperty("grape.root", "src/test/test-output/grapes");
 		System.setProperty("ivy.cache.dir", new File("src/test/test-output/grapes/grapes").absolutePath);
-		
-//		//ivy debug
-//		System.setProperty("ivy.message.logger.level", "4")
-//		
-//		//http debug
-//		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
-//		
-//		System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
-//		
-//		System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
-//		
-//		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
-//		
-//		//groovy debug
-//		System.setProperty("groovy.grape.report.downloads","true");
-//		
+
+		//		//ivy debug
+		//		System.setProperty("ivy.message.logger.level", "4")
+		//
+		//		//http debug
+		//		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+		//
+		//		System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+		//
+		//		System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
+		//
+		//		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
+		//
+		//		//groovy debug
+		//		System.setProperty("groovy.grape.report.downloads","true");
+		//
 		def components = [];
 		AlvisImporter alvisParser = new AlvisImporter();
 		CreoleImporter creoleParser = new CreoleImporter();
@@ -69,13 +69,15 @@ class ComponentsMain {
 			}
 		}
 		ModelRepository repo = new ModelRepository();
-		FindComponentDescriptor.DownloadDescriptorFiles(repo).eachFileRecurse(FILES) {
-			if (it.name.endsWith('.xml')) {
+		FindAndStoreArtifactsPOM.generateArtifactDescriptorAndPOM(repo,"de.tudarmstadt.ukp.dkpro.core","1.7.0").eachFileRecurse(FILES) {
+			if (it.name.endsWith('.xml') && it.name!="pom.xml") {
 				List<ComponentMetaData> processedList;
 				try{
 					processedList = uimaParserDkPro.process(it);
-					if(processedList!=null)
+					if(processedList!=null){
+						processedList = FindAndStoreArtifactsPOM.addPOMInfo(processedList);
 						components.addAll(processedList);
+					}
 				}catch(Exception e){
 					println "Unable to process ${it.name}"
 				}
@@ -95,7 +97,7 @@ class ComponentsMain {
 
 		new File("target/generated-docs/descriptors").mkdir();
 		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"));
-		
+
 		components.eachWithIndex { component, idx -> component.id = "$idx"};
 		components.each { component ->
 			def source = StringUtils.substringAfter(component.source, "src/main/resources/components/");
@@ -118,10 +120,7 @@ class ComponentsMain {
 		//                    printf("  %-20s %-30s %s %n", it.categories, it.name, it.description);
 		//                }
 		//            };
-
-		//Store POM and descriptors of artifact in target/generated-docs/crawled-artifacts. 
-		FindAndStoreArtifactsPOM.generateArtifactPOM(repo,"de.tudarmstadt.ukp.dkpro.core",null); 
-		
+			
 		new File("target/generated-docs/metashare").mkdirs();
 		components.each { component ->
 			def exporter = new MetaShareExporter();
