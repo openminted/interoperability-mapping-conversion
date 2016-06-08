@@ -9,6 +9,7 @@ import org.apache.maven.index.ArtifactInfo
 import org.springframework.core.io.UrlResource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.util.FileCopyUtils
+import org.apache.commons.lang3.StringUtils
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;;
 
@@ -69,8 +70,8 @@ class FindAndStoreArtifactsPOM {
 					artifactName = artifactNameArr[0];
 					//					println(artifactName)
 				}
-				new File(dkproDescriptorFolder.getAbsolutePath()+ "/"+artifactName).mkdir();
-				File tempFile = new File(dkproDescriptorFolder.getAbsolutePath()+"/"+artifactName+ "/"+ fileinfo.filename);
+				new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).mkdir();
+				File tempFile = new File(dkproDescriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename);
 				tempFile.createNewFile();
 				FileOutputStream fos = new FileOutputStream(tempFile);
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos);
@@ -86,26 +87,26 @@ class FindAndStoreArtifactsPOM {
 					artifactName = artifactNameArr[0];
 					//					println(artifactName)
 				}
-				if(!new File(dkproDescriptorFolder.getAbsolutePath()+ "/"+artifactName).exists())
+				if(!new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).exists())
 				{
-					new File(dkproDescriptorFolder.getAbsolutePath()+ "/"+artifactName).mkdir();
+					new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).mkdir();
 				}
-				File tempFile = new File(dkproDescriptorFolder.getAbsolutePath()+"/"+artifactName+ "/"+ fileinfo.filename);
+				File tempFile = new File(dkproDescriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename);
 				tempFile.createNewFile();
 				FileOutputStream fos = new FileOutputStream(tempFile);
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos);
 				fos.close();
 			}						
 		}
-		return dkproDescriptorFolder.getAbsoluteFile();
+		return dkproDescriptorFolder;
 	}
 	static List<ComponentMetaData> addPOMInfo(List<ComponentMetaData> components){
 		File parentDir;
 		components.each {component->
 			 parentDir = new File(component.source).parentFile;
-			 if(new File(parentDir.absolutePath+"/"+"pom.xml").exists())
+			 if(new File(parentDir.path+"/"+"pom.xml").exists())
 			 {
-				 component.POMUrl = new File(parentDir.absolutePath +"/"+"pom.xml");
+				 component.POMUrl = StringUtils.substringAfter(parentDir.path +"/"+"pom.xml","target/generated-docs/");				 
 			 }			 
 		}
 		return components;

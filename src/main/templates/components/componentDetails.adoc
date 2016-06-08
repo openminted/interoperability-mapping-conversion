@@ -8,7 +8,7 @@ def links(component)
     html += "<a href=\"metashare/${component.id}.xml\" target=\"_blank\" >META-SHARE descriptor</a>\n";
     if(component.POMUrl)
     {
-    	html += "<br/><a href=\"${component.POMUrl.absolutePath}\" target=\"_blank\" >POM</a>\n";
+    	html += "<br/><a href=\"${component.POMUrl}\" target=\"_blank\" >POM</a>\n";
     }
     html += '</div>\n++++\n';
     return html;

@@ -19,7 +19,7 @@ public class ComponentMetaData
     List<InputOutputMetaData> inputs;
     List<InputOutputMetaData> outputs;
     String documentationUrl;
-    File POMUrl;
+    String POMUrl;
     String license;
     String devInfo;
     List<String> mailingList;
