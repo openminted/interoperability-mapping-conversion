@@ -3,6 +3,8 @@ package eu.openminted.interop.componentoverview.model;
 import java.io.File;
 import java.util.List;
 
+import org.apache.maven.model.License;
+
 public class ComponentMetaData
 {
     String id;
@@ -20,7 +22,7 @@ public class ComponentMetaData
     List<InputOutputMetaData> outputs;
     String documentationUrl;
     String POMUrl;
-    String license;
+    List<License> license;
     String devInfo;
-    List<String> mailingList;
+    List<String> mailingLists;
 }

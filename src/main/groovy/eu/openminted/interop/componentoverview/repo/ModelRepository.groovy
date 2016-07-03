@@ -9,7 +9,7 @@ import org.apache.maven.index.Field
 import org.apache.maven.index.FlatSearchRequest
 import org.apache.maven.index.FlatSearchResponse
 import org.apache.maven.index.Indexer
-import org.apache.maven.index.IteratorResultSet;
+import org.apache.maven.index.IteratorResultSet
 import org.apache.maven.index.IteratorSearchRequest
 import org.apache.maven.index.IteratorSearchResponse
 import org.apache.maven.index.MAVEN
@@ -22,14 +22,12 @@ import org.apache.maven.index.updater.IndexUpdater
 import org.apache.maven.index.updater.ResourceFetcher
 import org.apache.maven.index.updater.WagonHelper
 import org.apache.maven.wagon.Wagon
+import org.apache.maven.wagon.events.TransferEvent
+import org.apache.maven.wagon.events.TransferListener
+import org.apache.maven.wagon.observers.AbstractTransferListener
 import org.codehaus.plexus.DefaultContainerConfiguration
 import org.codehaus.plexus.DefaultPlexusContainer
 import org.codehaus.plexus.PlexusConstants
-import org.sonatype.aether.util.version.GenericVersionScheme
-import org.apache.maven.wagon.observers.AbstractTransferListener
-import org.apache.maven.wagon.authentication.AuthenticationInfo;
-import org.apache.maven.wagon.events.TransferEvent;
-import org.apache.maven.wagon.events.TransferListener
 
 public class ModelRepository {
 	def Indexer indexer;
@@ -159,7 +157,7 @@ public class ModelRepository {
 
 		final FlatSearchResponse response = getIndexer().searchFlat( new FlatSearchRequest( query, centralContext ) )
 
-		Set<ArtifactInfo> results = response.getResults();
+		 
 
 		//		for ( ArtifactInfo result : results )
 		//		{
@@ -167,6 +165,6 @@ public class ModelRepository {
 		//		}
 
 
-		return results;
+		return response.getResults();
 	}
 }

@@ -18,7 +18,8 @@ import groovy.xml.XmlUtil
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils
 import org.apache.commons.lang3.StringUtils
-import org.apache.ivy.plugins.parser.m2.PomReader;
+import org.apache.ivy.plugins.parser.m2.PomReader
+import org.apache.maven.model.License;
 import org.asciidoctor.AsciiDocDirectoryWalker
 import org.asciidoctor.Asciidoctor
 import org.asciidoctor.AttributesBuilder
@@ -94,7 +95,15 @@ class ComponentsMain {
 				components.addAll(uimaParserNactem.process(it));
 			}
 		}
-
+		FindAndStoreArtifactsPOM.addPOMInfo(components).each{component->
+			if(component.POMUrl != null){								
+				component.version = FindAndStoreArtifactsPOM.getVersion("target/generated-docs/"+component.POMUrl);
+				component.license = FindAndStoreArtifactsPOM.getLicense("target/generated-docs/"+component.POMUrl);						
+				def mailingList = FindAndStoreArtifactsPOM.getMailLists("target/generated-docs/"+component.POMUrl);
+				
+			}
+		}
+		
 		new File("target/generated-docs/descriptors").mkdir();
 		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"));
 
