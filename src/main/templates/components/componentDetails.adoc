@@ -30,15 +30,19 @@ ${data[category] ?: ''}
 [[${component.name.replaceAll(' ','_').replaceAll('[+]','-')}]]
 ==== ${component.name.replaceAll('[+]','{plus}')}
 
+ifeval::["{backend}" == "html5"]
 ${links(component)}
+endif::[]
 
 *Category*: ${category} +
 *Framework*: ${component.framework} +
 *Version*: ${component.version}
 
+ifeval::["{backend}" == "html5"]
 ++++
 ${Util.preparePassthrough(component.description)}
 ++++ 	
+endif::[]
 |====
 <%
 if(component.parameters.size()>0){

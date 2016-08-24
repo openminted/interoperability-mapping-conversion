@@ -28,6 +28,8 @@ import org.asciidoctor.SafeMode
 import org.yaml.snakeyaml.Yaml;
 
 class ComponentsMain {
+    public static def MAVEN_PROJECT;
+    
 	static def products =  Constants.PRODUCTS;
 	static def formats = Constants.FORMATS;
 	static def categories = Constants.CATEGORIES;
@@ -187,17 +189,31 @@ class ComponentsMain {
 		attributes['docinfo1'] = true;
 		attributes['toclevels'] = 8;
 		attributes['sectanchors'] = true;
+        attributes['pdf-style'] = 'src/main/asciidoc/theme/custom-theme.yml';
+        if (MAVEN_PROJECT) {
+            attributes['project-version'] = MAVEN_PROJECT.version as String;
+            attributes['revnumber'] = MAVEN_PROJECT.version as String;
+        }
 
-		OptionsBuilder options = OptionsBuilder.options()
-				.backend('html5')
-				.safe(SafeMode.UNSAFE)
-				.mkDirs(true)
-				.attributes(attributes)
-				.docType("book")
-				.toDir(new File("target/generated-docs/"));
+        OptionsBuilder htmlOptions = OptionsBuilder.options()
+                .backend('html5')
+                .safe(SafeMode.UNSAFE)
+                .mkDirs(true)
+                .attributes(attributes)
+                .docType("book")
+                .toDir(new File("target/generated-docs/"));
 
-		asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), options);
+        OptionsBuilder pdfOptions = OptionsBuilder.options()
+                .backend('pdf')
+                .safe(SafeMode.UNSAFE)
+                .mkDirs(true)
+                .attributes(attributes)
+                .docType("book")
+                .toDir(new File("target/generated-docs/"));
 
+		asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), htmlOptions);
+        asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), pdfOptions);
+        
 		println "Done!"
 	}
 }

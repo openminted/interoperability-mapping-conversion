@@ -55,6 +55,11 @@
 			<artifactId>asciidoctorj</artifactId>
 			<version>${asciidoctor.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj-pdf</artifactId>
+            <version>1.5.0-alpha.11</version>
+        </dependency>
 
 		<!-- For Groovy/Grapes -->
 		<dependency>
@@ -118,7 +123,9 @@
 						</goals>
 						<configuration>
 							<source>
+                                eu.openminted.interop.componentoverview.ComponentsMain.MAVEN_PROJECT = project;
 								eu.openminted.interop.componentoverview.ComponentsMain.main();
+                                eu.openminted.interop.mappingconversion.TypeAlignmentMain.MAVEN_PROJECT = project;
 								eu.openminted.interop.mappingconversion.TypeAlignmentMain.main();
 							</source>
 							<classpathScope>runtime</classpathScope>
@@ -146,7 +153,11 @@
 						<artifactId>asciidoctorj</artifactId>
 						<version>${asciidoctor.version}</version>
 					</dependency>
-
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>1.5.0-alpha.11</version>
+                    </dependency>
 					<dependency>
 						<groupId>org.apache.maven.indexer</groupId>
 						<artifactId>indexer-core</artifactId>
