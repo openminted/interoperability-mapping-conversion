@@ -1,4 +1,4 @@
-package eu.openminted.interop.componentoverview.repo;
+package eu.openminted.interop.componentoverview.repo
 
 import org.apache.lucene.search.BooleanQuery
 import org.apache.lucene.search.IndexSearcher
@@ -30,36 +30,36 @@ import org.codehaus.plexus.DefaultPlexusContainer
 import org.codehaus.plexus.PlexusConstants
 
 public class ModelRepository {
-	def Indexer indexer;
-	def IndexingContext centralContext;
+	def Indexer indexer
+	def IndexingContext centralContext
 
 		ModelRepository() {
-		DefaultContainerConfiguration config = new DefaultContainerConfiguration();
-		config.setClassPathScanning( PlexusConstants.SCANNING_INDEX );
-		DefaultPlexusContainer plexusContainer = new DefaultPlexusContainer(config);
+		DefaultContainerConfiguration config = new DefaultContainerConfiguration()
+		config.setClassPathScanning( PlexusConstants.SCANNING_INDEX )
+		DefaultPlexusContainer plexusContainer = new DefaultPlexusContainer(config)
 
 		// lookup the indexer components from plexus
-		indexer = plexusContainer.lookup( Indexer.class );
-		IndexUpdater indexUpdater = plexusContainer.lookup( IndexUpdater.class );
+		indexer = plexusContainer.lookup( Indexer.class )
+		IndexUpdater indexUpdater = plexusContainer.lookup( IndexUpdater.class )
 		// lookup wagon used to remotely fetch index
-		Wagon httpWagon = plexusContainer.lookup( Wagon.class, "http" );
+		Wagon httpWagon = plexusContainer.lookup( Wagon.class, "http" )
 
 		// Creators we want to use (search for fields it defines)
-		List<IndexCreator> indexers = new ArrayList<IndexCreator>();
-		indexers.add( plexusContainer.lookup( IndexCreator.class, "min" ) );
-		indexers.add( plexusContainer.lookup( IndexCreator.class, "jarContent" ) );
-		indexers.add( plexusContainer.lookup( IndexCreator.class, "maven-plugin" ) );
+		List<IndexCreator> indexers = new ArrayList<IndexCreator>()
+		indexers.add( plexusContainer.lookup( IndexCreator.class, "min" ) )
+		indexers.add( plexusContainer.lookup( IndexCreator.class, "jarContent" ) )
+		indexers.add( plexusContainer.lookup( IndexCreator.class, "maven-plugin" ) )
 
 		// Create context for central repository index
 		centralContext = indexer.createIndexingContext( "central-context", "central ",
-				new File( "target/central-cache" ), new File( "src/test/test-output/grapes/central-index" ),
+				new File( "target/central-cache" ), new File( "cache/indexes/central-index" ),
 				"http://repo1.maven.org/maven2",
-				null, true, true, indexers );
+				null, true, true, indexers )
 
 		TransferListener listener = new AbstractTransferListener() {
 					public void transferStarted( TransferEvent transferEvent )
 					{
-						print "   Downloading ${transferEvent.resource.name} -> ${transferEvent.localFile}";
+						print "   Downloading ${transferEvent.resource.name} -> ${transferEvent.localFile}"
 					}
 
 					public void transferProgress( TransferEvent transferEvent, byte[] buffer, int length )
@@ -69,48 +69,48 @@ public class ModelRepository {
 
 					public void transferCompleted( TransferEvent transferEvent )
 					{
-						System.out.println( " - Done" );
+						System.out.println( " - Done" )
 					}
-				};
+				}
 		central: {
-			ResourceFetcher fetcher = new WagonHelper.WagonFetcher( httpWagon, listener, null, null );
-			IndexUpdateRequest updateRequest = new IndexUpdateRequest( centralContext, fetcher );
-			IndexUpdateResult updateResult = indexUpdater.fetchAndUpdateIndex( updateRequest );
+			ResourceFetcher fetcher = new WagonHelper.WagonFetcher( httpWagon, listener, null, null )
+			IndexUpdateRequest updateRequest = new IndexUpdateRequest( centralContext, fetcher )
+			IndexUpdateResult updateResult = indexUpdater.fetchAndUpdateIndex( updateRequest )
 		}
 	}
 
 	IteratorSearchResponse getJarVersions(String groupId, String artifactId)
 	{
-		IndexSearcher searcher = centralContext.acquireIndexSearcher();
+		IndexSearcher searcher = centralContext.acquireIndexSearcher()
 
 		// construct the query for known GA
 		final Query groupIdQ =
-				indexer.constructQuery(MAVEN.GROUP_ID, new SourcedSearchExpression(groupId));
+				indexer.constructQuery(MAVEN.GROUP_ID, new SourcedSearchExpression(groupId))
 		final Query artifactIdQ =
-				indexer.constructQuery(MAVEN.ARTIFACT_ID, new SourcedSearchExpression(artifactId));
-		final BooleanQuery query = new BooleanQuery();
-		query.add( groupIdQ, Occur.MUST );
-		query.add( artifactIdQ, Occur.MUST );
+				indexer.constructQuery(MAVEN.ARTIFACT_ID, new SourcedSearchExpression(artifactId))
+		final BooleanQuery query = new BooleanQuery()
+		query.add( groupIdQ, Occur.MUST )
+		query.add( artifactIdQ, Occur.MUST )
 
 		// we want "jar" artifacts only
 		query.add(indexer.constructQuery(MAVEN.PACKAGING, new SourcedSearchExpression("jar")),
-				Occur.MUST);
+				Occur.MUST)
 		// we want main artifacts only (no classifier)
 		// Note: this below is unfinished API, needs fixing
 		query.add( indexer.constructQuery( MAVEN.CLASSIFIER,
-				new SourcedSearchExpression(Field.NOT_PRESENT)), Occur.MUST_NOT);
+				new SourcedSearchExpression(Field.NOT_PRESENT)), Occur.MUST_NOT)
 
 		final IteratorSearchRequest request =
-				new IteratorSearchRequest( query, Collections.singletonList( centralContext ) );
-		IteratorSearchResponse response = indexer.searchIterator( request );
+				new IteratorSearchRequest( query, Collections.singletonList( centralContext ) )
+		IteratorSearchResponse response = indexer.searchIterator( request )
 
-		IteratorResultSet results = response.getResults();
+		IteratorResultSet results = response.getResults()
 
 		for ( ArtifactInfo result : results )
 		{
-			println ("Found artifact "+ result.artifactId +" with version: " + result.version);
+			println ("Found artifact "+ result.artifactId +" with version: " + result.version)
 		}
-		return response;
+		return response
 
 	}
 
@@ -118,41 +118,41 @@ public class ModelRepository {
 			final String packaging, final String classifier )
 			throws IOException
 	{
-		final BooleanQuery query = new BooleanQuery();
+		final BooleanQuery query = new BooleanQuery()
 
 		if ( groupId != null )
 		{
-			query.add( getIndexer().constructQuery( MAVEN.GROUP_ID, new SourcedSearchExpression( groupId ) ), Occur.MUST );
+			query.add( getIndexer().constructQuery( MAVEN.GROUP_ID, new SourcedSearchExpression( groupId ) ), Occur.MUST )
 		}
 
 		if ( artifactId != null )
 		{
 			query.add( getIndexer().constructQuery( MAVEN.ARTIFACT_ID, new SourcedSearchExpression( artifactId ) ),
-					Occur.MUST );
+					Occur.MUST )
 		}
 
 		if ( version != null )
 		{
-			query.add( getIndexer().constructQuery( MAVEN.VERSION, new SourcedSearchExpression( version ) ), Occur.MUST );
+			query.add( getIndexer().constructQuery( MAVEN.VERSION, new SourcedSearchExpression( version ) ), Occur.MUST )
 		}
 
 		if ( packaging != null )
 		{
-			query.add( getIndexer().constructQuery( MAVEN.PACKAGING, new SourcedSearchExpression( packaging ) ), MUST );
+			query.add( getIndexer().constructQuery( MAVEN.PACKAGING, new SourcedSearchExpression( packaging ) ), MUST )
 		}
 		else
 		{
 			// Fallback to jar
-			query.add( getIndexer().constructQuery( MAVEN.PACKAGING, new SourcedSearchExpression( "jar" ) ), Occur.MUST );
+			query.add( getIndexer().constructQuery( MAVEN.PACKAGING, new SourcedSearchExpression( "jar" ) ), Occur.MUST )
 		}
 
 		if ( classifier != null )
 		{
 			query.add( getIndexer().constructQuery( MAVEN.CLASSIFIER, new SourcedSearchExpression( classifier ) ),
-					Occur.MUST );
+					Occur.MUST )
 		}else{
 			query.add( indexer.constructQuery( MAVEN.CLASSIFIER,
-					new SourcedSearchExpression( Field.NOT_PRESENT ) ), Occur.MUST_NOT );
+					new SourcedSearchExpression( Field.NOT_PRESENT ) ), Occur.MUST_NOT )
 		}
 
 		final FlatSearchResponse response = getIndexer().searchFlat( new FlatSearchRequest( query, centralContext ) )
@@ -165,6 +165,6 @@ public class ModelRepository {
 		//		}
 
 
-		return response.getResults();
+		return response.getResults()
 	}
 }
