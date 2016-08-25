@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>eu.openminted.interop</groupId>
   <artifactId>mapping-conversion</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
     <groovy.version>2.4.7</groovy.version>
