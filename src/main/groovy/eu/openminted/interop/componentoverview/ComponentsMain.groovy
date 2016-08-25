@@ -57,7 +57,7 @@ class ComponentsMain {
 		AlvisImporter alvisParser = new AlvisImporter()
 		CreoleImporter creoleParser = new CreoleImporter()
 		UimaImporter uimaParserDkPro = new UimaImporter("DKPro Core")
-        UimaImporter uimaParserCTakes = new UimaImporter("cTAKES")
+        //UimaImporter uimaParserCTakes = new UimaImporter("cTAKES")
 		UimaImporter uimaParserIlsp = new UimaImporter("ILSP")
 		UimaImporter uimaParserNactem = new UimaImporter("NaCTeM")
 
@@ -88,11 +88,11 @@ class ComponentsMain {
 			}
 		}
         
-        new File("src/main/resources/components/ctakes").eachFileRecurse(FILES) {
-            if (it.name.endsWith('.xml')) {
-                components.addAll(uimaParserCTakes.process(it))
-            }
-        }
+//        new File("src/main/resources/components/ctakes").eachFileRecurse(FILES) {
+//            if (it.name.endsWith('.xml')) {
+//                components.addAll(uimaParserCTakes.process(it))
+//            }
+//        }
         
 		new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
