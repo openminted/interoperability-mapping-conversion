@@ -3,6 +3,7 @@ package eu.openminted.interop.componentoverview.importer;
 import static eu.openminted.interop.componentoverview.Util.*;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
@@ -18,8 +19,8 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 	}
 
 	@Override
-	public List<ComponentMetaData> process(File aFile) {
-		Node descriptor = new XmlParser().parse(aFile);
+	public List<ComponentMetaData> process(URL aURL) {
+		Node descriptor = new XmlParser().parse(aURL.toURI().toString());
 
 		try{
 			assert descriptor.name() instanceof QName;
@@ -42,16 +43,16 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 				meta = parseUimaCasConsumer(collection, descriptor);
 				break;
 			case 'analysisEngineDeploymentDescription':
-				println "Ignoring analysisEngineDeploymentDescription in ${aFile}"
+				println "Ignoring analysisEngineDeploymentDescription in ${aURL}"
 				return [];
 			case 'typeSystemDescription':
-				println "Ignoring typeSystemDescription in ${aFile}"
+				println "Ignoring typeSystemDescription in ${aURL}"
 				return [];
 			default:
-				throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aFile}");
+				throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aURL}");
 		}
 
-		meta.source = aFile.path;
+		meta.source = aURL.path;
 
 		meta.parameters = [];
 		descriptor.'**'.'configurationParameter'.each { param->

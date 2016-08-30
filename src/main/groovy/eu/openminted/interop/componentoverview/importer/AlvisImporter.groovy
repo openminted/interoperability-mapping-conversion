@@ -1,6 +1,7 @@
 package eu.openminted.interop.componentoverview.importer
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
@@ -10,12 +11,12 @@ class AlvisImporter implements Importer<ComponentMetaData>
 {
 
     @Override
-    public List<ComponentMetaData> process(File aFile)
+    public List<ComponentMetaData> process(URL aURL)
     {
-         def descriptor = new XmlParser().parse(aFile);
+         def descriptor = new XmlParser().parse(aURL.toURI().toString());
         
         def meta = new ComponentMetaData();
-        meta.source = aFile.path;
+        meta.source = aURL.path;
         meta.framework = "AlvisNLP";
         meta.name = descriptor.'@short-target';
         meta.version = descriptor.'@date';

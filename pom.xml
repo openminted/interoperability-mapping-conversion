@@ -11,6 +11,9 @@
     <asciidoctor.pdf.version>1.5.0-alpha.11</asciidoctor.pdf.version>
     <eclipse-sisu.version>0.2.1</eclipse-sisu.version>
     <sisu-guice.version>3.2.2</sisu-guice.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>

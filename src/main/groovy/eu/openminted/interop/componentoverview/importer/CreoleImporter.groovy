@@ -1,6 +1,7 @@
 package eu.openminted.interop.componentoverview.importer;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
@@ -9,15 +10,15 @@ import eu.openminted.interop.componentoverview.model.ParameterMetaData
 public class CreoleImporter implements Importer<ComponentMetaData>
 {
     @Override
-    public List<ComponentMetaData> process(File aFile)
+    public List<ComponentMetaData> process(URL aURL)
     {
-        def descriptor = new XmlParser().parse(aFile);
+        def descriptor = new XmlParser().parse(aURL.toURI().toString());
         
         def components = [];
         
         descriptor.'**'.'RESOURCE'.each { resource ->
             def meta = new ComponentMetaData();
-            meta.source = aFile.path;
+            meta.source = aURL.path;
             meta.framework = "GATE";
             meta.name = resource.'NAME'.text();
             meta.version = "unknown";
@@ -43,7 +44,7 @@ public class CreoleImporter implements Importer<ComponentMetaData>
         }
         
         if (components.isEmpty()) {
-            println "No resources found in $aFile";
+            println "No resources found in $aURL";
         }
         
         return components;
