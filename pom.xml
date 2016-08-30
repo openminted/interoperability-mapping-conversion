@@ -7,7 +7,7 @@
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
     <groovy.version>2.4.7</groovy.version>
-    <asciidoctor.version>1.5.4.1</asciidoctor.version>
+    <asciidoctor.version>1.6.0-alpha.3</asciidoctor.version>
     <asciidoctor.pdf.version>1.5.0-alpha.11</asciidoctor.pdf.version>
     <eclipse-sisu.version>0.2.1</eclipse-sisu.version>
     <sisu-guice.version>3.2.2</sisu-guice.version>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.asciidoctor</groupId>
       <artifactId>asciidoctorj-pdf</artifactId>
-      <version>1.5.0-alpha.11</version>
+      <version>${asciidoctor.pdf.version}</version>
     </dependency>
 
     <!-- For Groovy/Grapes -->
