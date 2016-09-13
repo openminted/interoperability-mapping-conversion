@@ -148,6 +148,14 @@ class ComponentsMain {
 			}
 		}
 
+		new File("target/generated-docs/openminted").mkdirs()
+		components.each { component ->
+			def exporter = new OpenMinTeDExporter()
+			new File("target/generated-docs/openminted/${component.id}.xml").withOutputStream { out ->
+				XmlUtil.serialize(exporter.process(component), out)
+			}
+		}
+
 		println "Applying templates..."
 
 		File adocTargetFolder = new File("target/generated-adoc")

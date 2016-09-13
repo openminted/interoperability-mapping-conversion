@@ -5,6 +5,7 @@ def links(component)
 {
     def html = '++++\n<div style="float:right">\n';
     html += "<a href=\"${component.source}\" target=\"_blank\" >Original descriptor</a><br/>\n";
+    html += "<a href=\"openminted/${component.id}.xml\" target=\"_blank\" >OpenMinTeD descriptor (BETA)</a><br/>\n";
     html += "<a href=\"metashare/${component.id}.xml\" target=\"_blank\" >META-SHARE descriptor</a>\n";
     if(component.POMUrl)
     {
