@@ -32,6 +32,10 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 					versionInfo {
 						version { mkp.yield aMetaData.version }
 					}
+
+					componentCreationInfo {
+						framework { mkp.yield aMetaData.framework }
+					}
 				
 					distributionInfos {
 						componentDistributionInfo {
