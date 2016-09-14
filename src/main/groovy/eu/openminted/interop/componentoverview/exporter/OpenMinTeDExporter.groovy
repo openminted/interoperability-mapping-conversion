@@ -25,8 +25,9 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 							description(lang:'en') { mkp.yield aMetaData.description }
 						}
 					}
-					contactInfo {
 
+					versionInfo {
+						version { mkp.yield aMetaData.version }
 					}
 				
 					distributionInfos {
