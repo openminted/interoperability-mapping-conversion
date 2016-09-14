@@ -5,6 +5,7 @@ import static groovy.io.FileType.FILES
 import java.text.BreakIterator
 
 import eu.openminted.interop.componentoverview.exporter.MetaShareExporter
+import eu.openminted.interop.componentoverview.exporter.OpenMinTeDExporter
 import eu.openminted.interop.componentoverview.importer.AlvisImporter
 import eu.openminted.interop.componentoverview.importer.CreoleImporter
 import eu.openminted.interop.componentoverview.importer.UimaImporter
