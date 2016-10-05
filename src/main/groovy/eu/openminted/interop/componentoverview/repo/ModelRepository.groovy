@@ -32,6 +32,7 @@ import org.codehaus.plexus.PlexusConstants
 public class ModelRepository {
 	def Indexer indexer
 	def IndexingContext centralContext
+    def IndexingContext ukpContext
 
 		ModelRepository() {
 		DefaultContainerConfiguration config = new DefaultContainerConfiguration()
@@ -54,7 +55,11 @@ public class ModelRepository {
 		centralContext = indexer.createIndexingContext( "central-context", "central ",
 				new File( "target/central-cache" ), new File( "cache/indexes/central-index" ),
 				"http://repo1.maven.org/maven2",
-				null, true, true, indexers )
+				null, true, true, indexers );
+        ukpContext = indexer.createIndexingContext( "ukp-context", "ukp",
+            new File( "target/ukp-cache" ), new File( "cache/indexes/ukp-index" ),
+            " http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/",
+            null, true, true, indexers );
 
 		TransferListener listener = new AbstractTransferListener() {
 					public void transferStarted( TransferEvent transferEvent )
@@ -77,6 +82,11 @@ public class ModelRepository {
 			IndexUpdateRequest updateRequest = new IndexUpdateRequest( centralContext, fetcher )
 			IndexUpdateResult updateResult = indexUpdater.fetchAndUpdateIndex( updateRequest )
 		}
+        ukp: {
+            ResourceFetcher fetcher = new WagonHelper.WagonFetcher( httpWagon, listener, null, null )
+            IndexUpdateRequest updateRequest = new IndexUpdateRequest( ukpContext, fetcher )
+            IndexUpdateResult updateResult = indexUpdater.fetchAndUpdateIndex( updateRequest )
+        }
 	}
 
 	IteratorSearchResponse getJarVersions(String groupId, String artifactId)
@@ -157,7 +167,9 @@ public class ModelRepository {
 
 		final FlatSearchResponse response = getIndexer().searchFlat( new FlatSearchRequest( query, centralContext ) )
 
-		 
+		 if(response.getResults().empty){
+             response = getIndexer().searchFlat( new FlatSearchRequest( query, ukpContext ) )
+         }
 
 		//		for ( ArtifactInfo result : results )
 		//		{

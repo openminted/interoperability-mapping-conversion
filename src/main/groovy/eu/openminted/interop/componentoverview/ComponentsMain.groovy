@@ -4,6 +4,7 @@ import static groovy.io.FileType.FILES
 
 import java.text.BreakIterator
 
+import eu.openminted.interop.componentoverview.exporter.Exporter;
 import eu.openminted.interop.componentoverview.exporter.MetaShareExporter
 import eu.openminted.interop.componentoverview.exporter.OpenMinTeDExporter
 import eu.openminted.interop.componentoverview.importer.AlvisImporter
@@ -29,16 +30,18 @@ import org.asciidoctor.SafeMode
 import org.yaml.snakeyaml.Yaml
 
 class ComponentsMain {
-    public static def MAVEN_PROJECT
-    
+	public static def MAVEN_PROJECT
+
 	static def products =  Constants.PRODUCTS
 	static def formats = Constants.FORMATS
 	static def categories = Constants.CATEGORIES
+	static String grpId = "de.tudarmstadt.ukp.dkpro.core"
+	static String version = "1.9.0-SNAPSHOT"
 
 	static void main(String... args) {
-		System.setProperty("grape.root", "cache/grapes")
-		System.setProperty("ivy.cache.dir", new File("cache/grapes/grapes").absolutePath)
-
+		System.setProperty("grape.root", "target/test-output/grapes");
+		System.setProperty("ivy.cache.dir", new File("target/test-output/grapes/grapes").absolutePath);
+		System.setProperty("groovy.grape.report.downloads", "true");
 		//		//ivy debug
 		//		System.setProperty("ivy.message.logger.level", "4")
 		//
@@ -58,7 +61,7 @@ class ComponentsMain {
 		AlvisImporter alvisParser = new AlvisImporter()
 		CreoleImporter creoleParser = new CreoleImporter()
 		UimaImporter uimaParserDkPro = new UimaImporter("DKPro Core")
-        //UimaImporter uimaParserCTakes = new UimaImporter("cTAKES")
+		//UimaImporter uimaParserCTakes = new UimaImporter("cTAKES")
 		UimaImporter uimaParserIlsp = new UimaImporter("ILSP")
 		UimaImporter uimaParserNactem = new UimaImporter("NaCTeM")
 
@@ -74,7 +77,7 @@ class ComponentsMain {
 			}
 		}
 		ModelRepository repo = new ModelRepository()
-		FindAndStoreArtifactsPOM.generateArtifactDescriptorAndPOM(repo,"de.tudarmstadt.ukp.dkpro.core","1.8.0").eachFileRecurse(FILES) {
+		FindAndStoreArtifactsPOM.generateArtifactDescriptorAndPOM(repo,grpId,version).eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml') && it.name!="pom.xml") {
 				List<ComponentMetaData> processedList
 				try{
@@ -88,13 +91,13 @@ class ComponentsMain {
 				}
 			}
 		}
-        
-//        new File("src/main/resources/components/ctakes").eachFileRecurse(FILES) {
-//            if (it.name.endsWith('.xml')) {
-//                components.addAll(uimaParserCTakes.process(it))
-//            }
-//        }
-        
+
+		//        new File("src/main/resources/components/ctakes").eachFileRecurse(FILES) {
+		//            if (it.name.endsWith('.xml')) {
+		//                components.addAll(uimaParserCTakes.process(it))
+		//            }
+		//        }
+
 		new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
 				components.addAll(uimaParserIlsp.process(it))
@@ -107,14 +110,22 @@ class ComponentsMain {
 			}
 		}
 		FindAndStoreArtifactsPOM.addPOMInfo(components).each{component->
-			if(component.POMUrl != null){								
-				component.version = FindAndStoreArtifactsPOM.getVersion("target/generated-docs/"+component.POMUrl)
-				component.license = FindAndStoreArtifactsPOM.getLicense("target/generated-docs/"+component.POMUrl)						
-				def mailingList = FindAndStoreArtifactsPOM.getMailLists("target/generated-docs/"+component.POMUrl)
-				
+			if(component instanceof ComponentMetaData){
+				if(component.POMUrl != null){
+					String pomUrl = "target/generated-docs/"+component.POMUrl;
+					component.version = FindAndStoreArtifactsPOM.getVersion(pomUrl)
+					component.licenses = FindAndStoreArtifactsPOM.getLicense(pomUrl)
+					component.mailingLists = FindAndStoreArtifactsPOM.getMailLists(pomUrl)
+					component.developers = FindAndStoreArtifactsPOM.getDevelopsers(pomUrl)
+					component.issueManagement = FindAndStoreArtifactsPOM.getIssueManagement(pomUrl)
+					component.projURL = FindAndStoreArtifactsPOM.getUrl(pomUrl);
+					component.scm = FindAndStoreArtifactsPOM.getScm(pomUrl);
+					component.org = FindAndStoreArtifactsPOM.getOrg(pomUrl);
+
+				}
 			}
 		}
-		
+
 		new File("target/generated-docs/descriptors").mkdir()
 		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"))
 
@@ -140,7 +151,7 @@ class ComponentsMain {
 		//                    printf("  %-20s %-30s %s %n", it.categories, it.name, it.description);
 		//                }
 		//            };
-			
+
 		new File("target/generated-docs/metashare").mkdirs()
 		components.each { component ->
 			def exporter = new MetaShareExporter()
@@ -152,9 +163,11 @@ class ComponentsMain {
 		new File("target/generated-docs/openminted").mkdirs()
 		components.each { component ->
 			def exporter = new OpenMinTeDExporter()
-			new File("target/generated-docs/openminted/${component.id}.xml").withOutputStream { out ->
-				XmlUtil.serialize(exporter.process(component), out)
+			File f = new File("target/generated-docs/openminted/${component.id}.xml").withOutputStream { out ->
+//				XmlUtil.serialize(exporter.process(component), out)
+				XmlUtil.serialize(exporter.process(component), out)			
 			}
+			
 		}
 
 		println "Applying templates..."
@@ -206,32 +219,32 @@ class ComponentsMain {
 		attributes['docinfo1'] = true
 		attributes['toclevels'] = 8
 		attributes['sectanchors'] = true
-        attributes['pdf-style'] = 'src/main/asciidoc/theme/custom-theme.yml'
-        if (MAVEN_PROJECT) {
-            attributes['project-version'] = MAVEN_PROJECT.version as String
-            attributes['revnumber'] = MAVEN_PROJECT.version as String
-        }
+		attributes['pdf-style'] = 'src/main/asciidoc/theme/custom-theme.yml'
+		if (MAVEN_PROJECT) {
+			attributes['project-version'] = MAVEN_PROJECT.version as String
+			attributes['revnumber'] = MAVEN_PROJECT.version as String
+		}
 
-        OptionsBuilder htmlOptions = OptionsBuilder.options()
-                .backend('html5')
-                .safe(SafeMode.UNSAFE)
-                .mkDirs(true)
-                .attributes(attributes)
-                .docType("book")
-                .toDir(new File("target/generated-docs/"))
+		OptionsBuilder htmlOptions = OptionsBuilder.options()
+				.backend('html5')
+				.safe(SafeMode.UNSAFE)
+				.mkDirs(true)
+				.attributes(attributes)
+				.docType("book")
+				.toDir(new File("target/generated-docs/"))
 
-        OptionsBuilder pdfOptions = OptionsBuilder.options()
-                .backend('pdf')
-                .safe(SafeMode.UNSAFE)
-                .mkDirs(true)
-                .attributes(attributes)
-                .docType("book")
-                .toDir(new File("target/generated-docs/"))
+		OptionsBuilder pdfOptions = OptionsBuilder.options()
+				.backend('pdf')
+				.safe(SafeMode.UNSAFE)
+				.mkDirs(true)
+				.attributes(attributes)
+				.docType("book")
+				.toDir(new File("target/generated-docs/"))
 
 		asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), htmlOptions)
-        // Cannot render PDF because of HTML embedded in component descriptors
-        // asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), pdfOptions);
-        
+		// Cannot render PDF because of HTML embedded in component descriptors
+		// asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("src/main/asciidoc"), pdfOptions);
+
 		println "Done!"
 	}
 }

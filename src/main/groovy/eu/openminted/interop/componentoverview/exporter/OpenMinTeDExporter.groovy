@@ -6,9 +6,9 @@ import eu.openminted.interop.componentoverview.model.ComponentMetaData
 import groovy.xml.StreamingMarkupBuilder
 import groovy.xml.XmlUtil
 
-class OpenMinTeDExporter implements Exporter<Writable> {
+class OpenMinTeDExporter implements Exporter<Node> {
 	@Override
-	public Writable process(ComponentMetaData aMetaData) {
+	public Node process(ComponentMetaData aMetaData) {
 		def markupBuilder = new StreamingMarkupBuilder();
 
 		def xml = markupBuilder.bind { builder ->
@@ -18,7 +18,7 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 			componentMetadataRecord ('xsi:schemaLocation':'http://www.meta-share.org/OMTD-SHARE_XMLSchema OMTD-SHARE-Component.xsd') {
 				componentInfo {
 					identificationInfo {
-						resourceNames { 
+						resourceNames {
 							resourceName(lang:'en') { mkp.yield aMetaData.name }
 						}
 						descriptions {
@@ -28,7 +28,31 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 							identifier { mkp.yield aMetaData.id }
 						}
 					}
-
+					contactInfo{
+						landingPage { mkp.yield aMetaData.projURL }
+						contactGroups{
+							aMetaData.developers.each{dev->
+								contactGroup{
+									relatedOrganization{
+										organizationNames{
+											organizationName{ mkp.yield dev.organization
+											} }
+									}
+								}
+							}
+						}
+						mailingLists{
+							aMetaData.mailingLists.each{ml->
+								mailingListInfo{
+									mailingListName{mkp.yield ml.name}
+									subscribe{mkp.yield ml.subscribe}
+									unsubscribe{mkp.yield ml.unsubscribe}
+									post{mkp.yield ml.post}
+									archive{mkp.yield ml.archive}
+								}
+							}
+						}
+					}
 					versionInfo {
 						version { mkp.yield aMetaData.version }
 					}
@@ -39,19 +63,28 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 
 					componentDocumentationInfo {
 						onLineHelpURL { mkp.yield aMetaData.documentationUrl }
+						if(aMetaData.issueManagement){
+							issueTracker { mkp.yield aMetaData.issueManagement.url }
+						}
 					}
-				
 					distributionInfos {
 						componentDistributionInfo {
+							componentDistributionMedium{mkp.yield "sourceCode"}
+							if(aMetaData.scm){
+								downloadURLs{
+									downloadURL{mkp.yield aMetaData.scm.connection}
+									downloadURL{mkp.yield aMetaData.scm.developerConnection}
+								}
+								accessURLs{
+									accessURL{mkp.yield aMetaData.scm.url}
+								}
+							}
 							rightsInfo {
 								licenseInfos {
-									aMetaData.license.each{ lic->
+									aMetaData.licenses.each{ lic->
 										licenceInfo {
-											license{
-												name {mkp.yield lic.name}
-												url {mkp.yield lic.url}
-												distribution {mkp.yield lic.distribution}
-											}
+											license { mkp.yield lic.name}
+											nonStandardLicenceTermsURL {mkp.yield lic.url}
 										}
 									}
 								}
@@ -59,10 +92,32 @@ class OpenMinTeDExporter implements Exporter<Writable> {
 						}
 					}
 				}
-
+				organizationInfo{
+					if(aMetaData.org){
+						organizationNames{
+							organizationName{mkp.yield aMetaData.org.name}
+						}
+						communicationInfo{
+							homepages{
+								homepage { mkp.yield aMetaData.org.url}
+							}
+						}
+					}
+				}
 			}
+		}		
+		Node root = new XmlParser().parseText( xml.toString() )
+		cleanNode(root)					
+		return root;
+	}
+	boolean cleanNode( Node node ) {
+		node.attributes().with { a ->
+			a.findAll { !it.value }.each { a.remove( it.key ) }
 		}
-
-		return xml;
+		node.children().with { kids ->
+			kids.findAll { it instanceof Node ? !cleanNode( it ) : false }
+			.each { kids.remove( it ) }
+		}
+		node.attributes() || node.children() || node.text()
 	}
 }

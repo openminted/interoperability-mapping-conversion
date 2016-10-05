@@ -23,7 +23,7 @@ class MetaShareExporter implements Exporter<Writable> {
 				}
 				distributionInfo {
 					licenses{
-						aMetaData.license.each{ lic->
+						aMetaData.licenses.each{ lic->
 							license{
 								name {mkp.yield lic.name}
 								url {mkp.yield lic.url}
