@@ -111,8 +111,8 @@ class ComponentsMain {
 		}
 		FindAndStoreArtifactsPOM.addPOMInfo(components).each{component->
 			if(component instanceof ComponentMetaData){
-				if(component.POMUrl != null){
-					String pomUrl = "target/generated-docs/"+component.POMUrl;
+				if(!component.POMUrl.equals(null) && !component.POMUrl.empty){
+					String pomUrl = "target/generated-docs/" + component.POMUrl;
 					component.version = FindAndStoreArtifactsPOM.getVersion(pomUrl)
 					component.licenses = FindAndStoreArtifactsPOM.getLicense(pomUrl)
 					component.mailingLists = FindAndStoreArtifactsPOM.getMailLists(pomUrl)
@@ -126,7 +126,8 @@ class ComponentsMain {
 			}
 		}
 
-		new File("target/generated-docs/descriptors").mkdir()
+		if(!(new File("target/generated-docs/descriptors").exists()))
+			new File("target/generated-docs/descriptors").mkdir()
 		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"))
 
 		components.eachWithIndex { component, idx -> component.id = "$idx"}
@@ -142,15 +143,6 @@ class ComponentsMain {
 		components.each {
 			it.product = Util.findCategories(products, it.name + " " +it.description.replace('\n', ' '))[0] ?: "(original) $it.framework"
 		}
-
-		//        components
-		//            .groupBy { it.categories as String }
-		//            .each { cats, comps ->
-		//                println cats;
-		//                comps.each {
-		//                    printf("  %-20s %-30s %s %n", it.categories, it.name, it.description);
-		//                }
-		//            };
 
 		new File("target/generated-docs/metashare").mkdirs()
 		components.each { component ->
@@ -173,7 +165,6 @@ class ComponentsMain {
 		println "Applying templates..."
 
 		File adocTargetFolder = new File("target/generated-adoc")
-
 		def te = new groovy.text.SimpleTemplateEngine(ComponentsMain.class.classLoader)
 		new File("src/main/templates/components").eachFile(FILES) { tf ->
 			if (!(tf.name.endsWith(".xml") || tf.name.endsWith(".adoc"))) {

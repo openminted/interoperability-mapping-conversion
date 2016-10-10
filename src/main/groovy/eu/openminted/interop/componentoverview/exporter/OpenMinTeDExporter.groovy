@@ -16,7 +16,13 @@ class OpenMinTeDExporter implements Exporter<Node> {
 			namespaces << ['': 'http://www.meta-share.org/OMTD-SHARE_XMLSchema']
 			namespaces << ['xsi': 'http://www.w3.org/2001/XMLSchema-instance']
 			componentMetadataRecord ('xsi:schemaLocation':'http://www.meta-share.org/OMTD-SHARE_XMLSchema OMTD-SHARE-Component.xsd') {
+				metadataHeaderInfo{
+					metadataRecordIdentifier{}
+					metadataCreationDate{}
+					metadataLastDateUpdated{}
+				}
 				componentInfo {
+					resourceType{}
 					identificationInfo {
 						resourceNames {
 							resourceName(lang:'en') { mkp.yield aMetaData.name }
@@ -25,7 +31,7 @@ class OpenMinTeDExporter implements Exporter<Node> {
 							description(lang:'en') { mkp.yield aMetaData.description }
 						}
 						identifiers {
-							identifier { mkp.yield aMetaData.id }
+							identifier(resourceIdentifierSchemeName:'doi') { mkp.yield aMetaData.id }
 						}
 					}
 					contactInfo{
@@ -33,6 +39,9 @@ class OpenMinTeDExporter implements Exporter<Node> {
 						contactGroups{
 							aMetaData.developers.each{dev->
 								contactGroup{
+									groupNames{
+										groupName{}
+									}
 									relatedOrganization{
 										organizationNames{
 											organizationName{ mkp.yield dev.organization
@@ -56,17 +65,9 @@ class OpenMinTeDExporter implements Exporter<Node> {
 					versionInfo {
 						version { mkp.yield aMetaData.version }
 					}
-
-					componentCreationInfo {
-						framework { mkp.yield aMetaData.framework }
-					}
-
-					componentDocumentationInfo {
-						onLineHelpURL { mkp.yield aMetaData.documentationUrl }
-						if(aMetaData.issueManagement){
-							issueTracker { mkp.yield aMetaData.issueManagement.url }
-						}
-					}
+					componentTypes{
+						componentType{}
+					}					
 					distributionInfos {
 						componentDistributionInfo {
 							componentDistributionMedium{mkp.yield "sourceCode"}
@@ -80,10 +81,10 @@ class OpenMinTeDExporter implements Exporter<Node> {
 								}
 							}
 							rightsInfo {
-								licenseInfos {
+								licenceInfos {
 									aMetaData.licenses.each{ lic->
 										licenceInfo {
-											license { mkp.yield lic.name}
+											licence { mkp.yield lic.name}
 											nonStandardLicenceTermsURL {mkp.yield lic.url}
 										}
 									}
@@ -91,16 +92,14 @@ class OpenMinTeDExporter implements Exporter<Node> {
 							}
 						}
 					}
-				}
-				organizationInfo{
-					if(aMetaData.org){
-						organizationNames{
-							organizationName{mkp.yield aMetaData.org.name}
-						}
-						communicationInfo{
-							homepages{
-								homepage { mkp.yield aMetaData.org.url}
-							}
+					componentCreationInfo {
+						framework { mkp.yield aMetaData.framework }
+					}
+
+					componentDocumentationInfo {
+						onLineHelpURL { mkp.yield aMetaData.documentationUrl }
+						if(aMetaData.issueManagement){
+							issueTracker { mkp.yield aMetaData.issueManagement.url }
 						}
 					}
 				}

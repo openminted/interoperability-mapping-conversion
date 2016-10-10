@@ -125,12 +125,14 @@ class FindAndStoreArtifactsPOM {
 	}
 
 	static List<ComponentMetaData> addPOMInfo(List<ComponentMetaData> components){
-		File parentDir
+		
 		components.each {component->
-			parentDir = new File(component.source).parentFile
-			if(new File(parentDir.path+"/"+"pom.xml").exists())
+			
+			File parentDir = new File("target/generated-docs/" + StringUtils.substringAfter(component.source,"target/generated-docs/"));				
+			File pom = new File(parentDir.parent +"/"+"pom.xml");			
+			if(pom.exists())
 			{
-				component.POMUrl = StringUtils.substringAfter(parentDir.path +"/"+"pom.xml","target/generated-docs/")
+				component.POMUrl =  StringUtils.substringAfter(pom.path,"target/generated-docs/")				
 			}
 		}
 		return components
