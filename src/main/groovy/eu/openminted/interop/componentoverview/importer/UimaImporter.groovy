@@ -4,10 +4,13 @@ import static eu.openminted.interop.componentoverview.Util.*;
 
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat
 import java.util.List;
+import org.apache.maven.index.ArtifactInfo
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData;
 import eu.openminted.interop.componentoverview.model.InputOutputMetaData
+import eu.openminted.interop.componentoverview.model.MetaDataRecord
 import eu.openminted.interop.componentoverview.model.ParameterMetaData
 import groovy.xml.QName;
 
@@ -19,7 +22,7 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 	}
 
 	@Override
-	public List<ComponentMetaData> process(URL aURL) {
+	public List<ComponentMetaData> process(URL aURL,ArtifactInfo ai) {
 		Node descriptor = new XmlParser().parse(aURL.toURI().toString());
 
 		try{
@@ -84,7 +87,16 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 			}
 			meta.outputs << iometa;
 		}
-
+		
+		if(ai){
+			meta.meta = new MetaDataRecord();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			meta.meta.creationDate = format.format(new Date(ai.lastModified));
+			meta.meta.updatedDate  = format.format(new Date(ai.lastModified));
+			meta.meta.aId = ai.artifactId.toString();			
+			meta.meta.gId = ai.groupId;
+		}
+		meta.componentType = findComponentType(meta.name);
 		return [meta];
 	}
 

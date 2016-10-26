@@ -2,6 +2,8 @@ package eu.openminted.interop.componentoverview;
 
 import java.text.BreakIterator
 
+import eu.openminted.interop.componentoverview.model.Constants;
+
 public class Util
 {
     static def shortName(name) {
@@ -78,5 +80,19 @@ public class Util
 		}
 		
 		return [];
+	}
+	static def findComponentType(String name){
+		String type = "other"
+		Constants.COMPONENT_TYPE.each {
+			def key = it.key;
+			def val = it.value;
+			def valList = val.split(",");
+			valList.each {v->
+				if(name.toLowerCase().contains(v)){
+					type = key;
+				}
+			}						
+		}
+		return type;
 	}
 }

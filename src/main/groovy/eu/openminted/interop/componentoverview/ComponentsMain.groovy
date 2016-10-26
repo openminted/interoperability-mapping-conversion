@@ -3,6 +3,7 @@ package eu.openminted.interop.componentoverview
 import static groovy.io.FileType.FILES
 
 import java.text.BreakIterator
+import java.text.SimpleDateFormat
 
 import eu.openminted.interop.componentoverview.exporter.Exporter;
 import eu.openminted.interop.componentoverview.exporter.MetaShareExporter
@@ -12,7 +13,8 @@ import eu.openminted.interop.componentoverview.importer.CreoleImporter
 import eu.openminted.interop.componentoverview.importer.UimaImporter
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
 import eu.openminted.interop.componentoverview.model.Constants
-import eu.openminted.interop.componentoverview.repo.FindAndStoreArtifactsPOM
+import eu.openminted.interop.componentoverview.model.MetaDataRecord
+import eu.openminted.interop.componentoverview.repo.DescriptorCrawler
 import eu.openminted.interop.componentoverview.repo.ModelRepository
 import groovy.xml.QName
 import groovy.xml.XmlUtil
@@ -21,6 +23,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.ivy.plugins.parser.m2.PomReader
+import org.apache.maven.index.ArtifactInfo
 import org.apache.maven.model.License
 import org.asciidoctor.AsciiDocDirectoryWalker
 import org.asciidoctor.Asciidoctor
@@ -64,26 +67,33 @@ class ComponentsMain {
 		//UimaImporter uimaParserCTakes = new UimaImporter("cTAKES")
 		UimaImporter uimaParserIlsp = new UimaImporter("ILSP")
 		UimaImporter uimaParserNactem = new UimaImporter("NaCTeM")
+		//MavenEnhancer mavenEnhancer = new MavenEnhancer();
+
+		//Class to crawl descriptors for a group id and version from maven
+		DescriptorCrawler dc = new DescriptorCrawler();
 
 		new File("src/main/resources/components/alvis").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(alvisParser.process(it))
+				components.addAll(alvisParser.process(it,null))
 			}
 		}
 
 		new File("src/main/resources/components/gate").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(creoleParser.process(it))
+				components.addAll(creoleParser.process(it,null))
 			}
 		}
-		ModelRepository repo = new ModelRepository()
-		FindAndStoreArtifactsPOM.generateArtifactDescriptorAndPOM(repo,grpId,version).eachFileRecurse(FILES) {
-			if (it.name.endsWith('.xml') && it.name!="pom.xml") {
+
+
+		dc.crawlDescriptors(grpId,version).entrySet().each{
+			File file = it.key;
+			ArtifactInfo  ai = it.value;
+			if (file.name.endsWith('.xml') && file.name!="pom.xml") {
 				List<ComponentMetaData> processedList
 				try{
-					processedList = uimaParserDkPro.process(it)
+					processedList = uimaParserDkPro.process(file,ai)
 					if(processedList!=null){
-						processedList = FindAndStoreArtifactsPOM.addPOMInfo(processedList)
+						processedList = dc.addPOMInfo(processedList)
 						components.addAll(processedList)
 					}
 				}catch(Exception e){
@@ -100,27 +110,42 @@ class ComponentsMain {
 
 		new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(uimaParserIlsp.process(it))
+				components.addAll(uimaParserIlsp.process(it,null))
 			}
 		}
 
 		new File("src/main/resources/components/nactem").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(uimaParserNactem.process(it))
+				components.addAll(uimaParserNactem.process(it,null))
 			}
 		}
-		FindAndStoreArtifactsPOM.addPOMInfo(components).each{component->
+		dc.addPOMInfo(components).each{component->
 			if(component instanceof ComponentMetaData){
 				if(!component.POMUrl.equals(null) && !component.POMUrl.empty){
 					String pomUrl = "target/generated-docs/" + component.POMUrl;
-					component.version = FindAndStoreArtifactsPOM.getVersion(pomUrl)
-					component.licenses = FindAndStoreArtifactsPOM.getLicense(pomUrl)
-					component.mailingLists = FindAndStoreArtifactsPOM.getMailLists(pomUrl)
-					component.developers = FindAndStoreArtifactsPOM.getDevelopsers(pomUrl)
-					component.issueManagement = FindAndStoreArtifactsPOM.getIssueManagement(pomUrl)
-					component.projURL = FindAndStoreArtifactsPOM.getUrl(pomUrl);
-					component.scm = FindAndStoreArtifactsPOM.getScm(pomUrl);
-					component.org = FindAndStoreArtifactsPOM.getOrg(pomUrl);
+					component.version = dc.getVersion(pomUrl)
+					component.licenses = dc.getLicense(pomUrl)
+					component.mailingLists = dc.getMailLists(pomUrl)
+					component.developers = dc.getDevelopsers(pomUrl)
+					component.issueManagement = dc.getIssueManagement(pomUrl)
+					component.projURL = dc.getUrl(pomUrl);
+					component.scm = dc.getScm(pomUrl);
+					component.org = dc.getOrg(pomUrl);
+
+					if(component.meta){
+						if(component.meta.aId.contains("dkpro")){
+							String mvnInit = "http://repo1.maven.org/maven2/de/tudarmstadt/ukp/dkpro/core/";
+							String gitInit = "https://github.com/dkpro/dkpro-core/tree/master/";
+
+							if(!component.version.contains("SNAPSHOT")){
+								component.mvnAccessURL = mvnInit;
+								component.mvnDownloadURL = mvnInit + component.meta.aId + "/" + component.version + "/" + component.meta.aId + "-" + component.version+".jar";
+							}
+
+							component.githubAccessURL = gitInit;
+							component.githubDownloadURL = "https://github.com/dkpro/dkpro-core/archive/master.zip";
+						}
+					}
 
 				}
 			}
@@ -151,15 +176,31 @@ class ComponentsMain {
 				XmlUtil.serialize(exporter.process(component), out)
 			}
 		}
+		// force component to have some default field of openminted schema
+
+		components.each{component->
+			component instanceof ComponentMetaData;
+			if(!component.meta){
+				MetaDataRecord meta = new MetaDataRecord();
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				meta.creationDate = format.format(new Date());
+				meta.updatedDate  = format.format(new Date());
+				component.meta = meta;
+			}
+			if(!component.componentType){
+				component.componentType = Util.findComponentType(component.name);
+			}
+		}
+
 
 		new File("target/generated-docs/openminted").mkdirs()
 		components.each { component ->
 			def exporter = new OpenMinTeDExporter()
 			File f = new File("target/generated-docs/openminted/${component.id}.xml").withOutputStream { out ->
-//				XmlUtil.serialize(exporter.process(component), out)
-				XmlUtil.serialize(exporter.process(component), out)			
+				//				XmlUtil.serialize(exporter.process(component), out)
+				XmlUtil.serialize(exporter.process(component), out)
 			}
-			
+
 		}
 
 		println "Applying templates..."

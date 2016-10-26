@@ -37,4 +37,10 @@ public class ComponentMetaData
     Organization org;
     Scm scm;
     String projURL;
+    MetaDataRecord meta;
+    String componentType;
+    String mvnAccessURL;
+    String mvnDownloadURL;
+    String githubAccessURL;
+    String githubDownloadURL;
 }

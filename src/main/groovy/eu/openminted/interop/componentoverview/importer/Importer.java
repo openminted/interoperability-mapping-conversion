@@ -5,11 +5,13 @@ import java.net.URL;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import org.apache.maven.index.ArtifactInfo;
+
 public interface Importer<T extends Object>
 {
-    default List<T> process(File aFile) {
+    default List<T> process(File aFile,ArtifactInfo ai) {
 	try {
-		return process(aFile.toURI().toURL());
+		return process(aFile.toURI().toURL(),ai);
 	}
 	catch (MalformedURLException e) {
 		//this should be impossible
@@ -17,5 +19,5 @@ public interface Importer<T extends Object>
 	}
     }
 
-    List<T> process(URL aURL);
+    List<T> process(URL aURL,ArtifactInfo ai);
 }

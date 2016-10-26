@@ -3,6 +3,8 @@ package eu.openminted.interop.componentoverview.repo
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
 import groovy.grape.Grape
 
+import static groovy.io.FileType.FILES
+
 import org.apache.commons.lang3.StringUtils
 import org.apache.maven.index.ArtifactInfo
 import org.apache.maven.model.Developer
@@ -10,48 +12,55 @@ import org.apache.maven.model.IssueManagement;
 import org.apache.maven.model.License
 import org.apache.maven.model.MailingList
 import org.apache.maven.model.Organization;
-import org.apache.maven.model.Scm;
+import org.apache.maven.model.Scm
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.util.FileCopyUtils
 
-class FindAndStoreArtifactsPOM {
+class DescriptorCrawler {
 
 	static Map pomSourceMap = [:]
-	static File generateArtifactDescriptorAndPOM(ModelRepository repo,String grpID, String version){
-
+	
+	//Crawls descriptors with groupID and Version 
+	 HashMap<File, ArtifactInfo> crawlDescriptors(String grpID, String version){
+		 
 		HashMap<File,String> componentDirMap = new HashMap<File, String>()
-		String dkproGroupId= grpID
-		File dkproDescriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore")
-		if(!dkproDescriptorFolder.absoluteFile.exists())
-			dkproDescriptorFolder.mkdirs()
+		ModelRepository repo = new ModelRepository();
 
-		componentDirMap.put(dkproDescriptorFolder,dkproGroupId)
+		File descriptorFolder = new File("target/generated-docs/descriptors/crawled-dkprocore")
+		if(!descriptorFolder.absoluteFile.exists())
+			descriptorFolder.mkdirs()
 
+		componentDirMap.put(descriptorFolder,grpID)
+		//Sorting on basis of version
 		Set<ArtifactInfo> searchResult = repo.getArtifacts(grpID,null,version,null,null).toList().sort { a,b ->
 			a.artifactVersion.compareTo(b.artifactVersion)
 		}
 
-		HashMap<String , String > filteredResult = new HashMap<String, String>()
+		HashMap<String , ArtifactInfo > filteredResult = new HashMap<String, ArtifactInfo>()
+		HashMap<File, ArtifactInfo> descAIMap = new HashMap<File, ArtifactInfo>();
+		
 		searchResult.each { ai->
 			if(!filteredResult.containsKey(ai.artifactId)) {
-				filteredResult.put(ai.artifactId,ai.version)
+				filteredResult.put(ai.artifactId,ai)
 			} else{
-				String ver = filteredResult.get(ai.artifactId)
-				if(ver.toString().replace('.','').toInteger() < ai.version.toString().replace('.','').toInteger()) {
-					filteredResult.put(ai.artifactId,ai.version)
+				String ver = filteredResult.get(ai.artifactId).version.toString();
+				if(ver.replace('.','').toInteger() < ai.version.toString().replace('.','').toInteger()) {
+					filteredResult.put(ai.artifactId, ai)
 				}
 			}
 		}
-
+		
+		//Grabbing for each Artifacts
 		for(f in filteredResult.keySet()){
-			GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader)
+			GroovyClassLoader loader = new GroovyClassLoader(null);
 			System.setProperty("grape.root", "target/test-output/grapes");
 			System.setProperty("ivy.cache.dir", new File("target/test-output/grapes/grapes").absolutePath);
 			System.setProperty("groovy.grape.report.downloads", "true");
 			try {
 				Grape.addResolver([name:'ukp',root:'http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots',m2Compatible: 'true'])
-				Grape.grab(group:dkproGroupId, module:f, version:filteredResult.get(f),transitive:false, classLoader: loader)
+				Grape.grab(group:grpID, module:f, version:filteredResult.get(f).version,transitive:false, classLoader: loader)
 			}
 			catch (RuntimeException e) {
 				//				e.printStackTrace();
@@ -60,10 +69,12 @@ class FindAndStoreArtifactsPOM {
 			}
 			PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(loader)
 			//			println "${f}  -- version -- ${filteredResult.get(f)}  " + resolver.getResources("classpath*:de/**/*.xml");
-			UrlResource[] files = resolver.getResources("classpath*:META-INF/**/pom.xml")
-			UrlResource[] filesDescriptor = resolver.getResources("classpath*:de/**/*.xml")
+			Resource[] files = resolver.getResources("classpath*:META-INF/**/pom.xml")
+			Resource[] filesDescriptor = resolver.getResources("classpath*:de/**/*.xml")
 
-			files.each {fileinfo->
+			//POM files
+			files.each {fileinfo->			
+//				getURL or clean it properly no internal methods 
 				String fileName = fileinfo.cleanedUrl.toString()
 				String[] pathArr= fileName.split("/jars/")
 				String artifactName
@@ -73,13 +84,15 @@ class FindAndStoreArtifactsPOM {
 					artifactName = artifactNameArr[0]
 					//					println(artifactName)
 				}
-				new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).mkdir()
-				File tempFile = new File(dkproDescriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename)
+				new File(descriptorFolder.getPath()+ "/"+artifactName).mkdir()
+				File tempFile = new File(descriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename)
 				tempFile.createNewFile()
 				FileOutputStream fos = new FileOutputStream(tempFile)
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos)
 				fos.close()
+				descAIMap.put(tempFile,filteredResult.get(f));
 			}
+			//Descriptor files 
 			filesDescriptor.each {fileinfo->
 				String fileName = fileinfo.cleanedUrl.toString()
 				String[] pathArr= fileName.split("/jars/")
@@ -90,21 +103,23 @@ class FindAndStoreArtifactsPOM {
 					artifactName = artifactNameArr[0]
 					//					println(artifactName)
 				}
-				if(!new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).exists())
+				if(!new File(descriptorFolder.getPath()+ "/"+artifactName).exists())
 				{
-					new File(dkproDescriptorFolder.getPath()+ "/"+artifactName).mkdir()
+					new File(descriptorFolder.getPath()+ "/"+artifactName).mkdir()
 				}
-				File tempFile = new File(dkproDescriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename)
+				File tempFile = new File(descriptorFolder.getPath()+"/"+artifactName+ "/"+ fileinfo.filename)
 				tempFile.createNewFile()
 				FileOutputStream fos = new FileOutputStream(tempFile)
 				FileCopyUtils.copy(fileinfo.getInputStream(),fos)
 				fos.close()
+				descAIMap.put(tempFile,filteredResult.get(f));
 			}
-		}
-		return dkproDescriptorFolder
-	}	
-
-	static def getParentPom(def grpId,def artifactId, def version){
+		}	
+		return descAIMap;
+	}
+	
+	// get parent pom if child pom is not able to provide sufficient info
+	def getParentPom(def grpId,def artifactId, def version){
 		def pomSource =pomSourceMap.get(artifactId+version);
 		if(pomSource){
 			return pomSource
@@ -124,7 +139,8 @@ class FindAndStoreArtifactsPOM {
 		}
 	}
 
-	static List<ComponentMetaData> addPOMInfo(List<ComponentMetaData> components){
+	//Add pom location info in target to component object
+	List<ComponentMetaData> addPOMInfo(List<ComponentMetaData> components){
 		
 		components.each {component->
 			
@@ -138,7 +154,7 @@ class FindAndStoreArtifactsPOM {
 		return components
 	}
 	
-	static def getVersion(String pomURL){
+	def getVersion(String pomURL){
 		String pomSource = null;
 		if(pomURL.empty || pomURL == null){
 			return null;
@@ -157,7 +173,7 @@ class FindAndStoreArtifactsPOM {
 		}
 	}
 
-	static List<License> getLicense(String pomURL){
+	List<License> getLicense(String pomURL){
 		String pomSource = null;
 		if(pomURL.empty || pomURL == null){
 			return null;
@@ -184,7 +200,7 @@ class FindAndStoreArtifactsPOM {
 		return licenses
 	}
 
-	static List<MailingList> getMailLists(String pomURL){
+	List<MailingList> getMailLists(String pomURL){
 		String pomSource = null;
 		if(pomURL.empty || pomURL == null){
 			return null;
@@ -212,7 +228,7 @@ class FindAndStoreArtifactsPOM {
 		return mls
 	}
 
-	static List<Developer> getDevelopsers(String pomURL){
+	List<Developer> getDevelopsers(String pomURL){
 		String pomSource = null;
 		if(pomURL.empty || pomURL == null){
 			return null;
@@ -238,7 +254,7 @@ class FindAndStoreArtifactsPOM {
 		return devs
 	}
 
-	static IssueManagement getIssueManagement(String pomURL){
+	IssueManagement getIssueManagement(String pomURL){
 		if(pomURL.empty || pomURL == null){
 			return null;
 		}
@@ -257,7 +273,7 @@ class FindAndStoreArtifactsPOM {
 		}
 		return ism;
 	}
-	static Scm getScm(String pomURL){
+	 Scm getScm(String pomURL){
 		if(pomURL.empty || pomURL == null){
 			return null;
 		}
@@ -276,14 +292,13 @@ class FindAndStoreArtifactsPOM {
 		}
 		return scm;
 	}
-	static Organization getOrg(String pomURL){
+	Organization getOrg(String pomURL){
 		if(pomURL.empty || pomURL == null){
 			return null;
 		}
 		def File f = new File(pomURL)
 		def descriptor = new XmlSlurper().parse(f)
-		Organization org;
-		def aa = descriptor.'organization'.'name'.text();
+		Organization org;		
 		if(descriptor.'organization'.'name'.text() || descriptor.'organization'.'url'.text()){
 			org = new Organization()
 			org.setName(descriptor.'organization'.'name'.text());
@@ -295,7 +310,7 @@ class FindAndStoreArtifactsPOM {
 		}
 		return org;
 	}
-	static String getUrl(String pomURL){
+	String getUrl(String pomURL){
 		if(pomURL.empty || pomURL == null){
 			return null;
 		}
@@ -309,7 +324,7 @@ class FindAndStoreArtifactsPOM {
 		return url;
 	}
 
-	static void grabArtifact(def grpId,def artifactId, def version){
+	void grabArtifact(def grpId,def artifactId, def version){
 		GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader);
 		System.setProperty("grape.root", "target/test-output/grapes");
 		System.setProperty("ivy.cache.dir", new File("target/test-output/grapes/grapes").absolutePath);
@@ -326,30 +341,12 @@ class FindAndStoreArtifactsPOM {
 			printf("Unable to grab with POM for artifact: %s\n",artifactId)
 		}
 	}
-	static String grabPOMFileFromDir(String path, def artifactId, def version){
+	String grabPOMFileFromDir(String path, def artifactId, def version){
 		File f = new File(path +"/" + artifactId +"-" + version + ".pom")
 		if(f.exists())
 		{
 			return f.getAbsolutePath()
 		}else
 			return null
-	}
-	static File grabPOMFileFromJAR(String pathOfArtifactJar,def artifactId,def version){
-		File f = new File(pathOfArtifactJar +"/" + artifactId +"-" + version + ".jar")
-		if(f.exists())
-		{
-			GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader)
-			PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(loader)
-			//			println "${f}  -- version -- ${filteredResult.get(f)}  " + resolver.getResources("classpath*:de/**/*.xml");
-			UrlResource[] files = resolver.getResources("classpath*:"+pathOfArtifactJar+"/**/pom.xml")
-			files.each { pom->
-				if(pom.getURL().toString().contains(version))
-				{
-					return null
-				}
-
-			}
-		}else
-			return null
-	}
+	}	
 }

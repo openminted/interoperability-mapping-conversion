@@ -3,6 +3,7 @@ package eu.openminted.interop.componentoverview.importer
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import org.apache.maven.index.ArtifactInfo
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
 import eu.openminted.interop.componentoverview.model.ParameterMetaData
@@ -11,7 +12,7 @@ class AlvisImporter implements Importer<ComponentMetaData>
 {
 
     @Override
-    public List<ComponentMetaData> process(URL aURL)
+    public List<ComponentMetaData> process(URL aURL, ArtifactInfo ai)
     {
          def descriptor = new XmlParser().parse(aURL.toURI().toString());
         
