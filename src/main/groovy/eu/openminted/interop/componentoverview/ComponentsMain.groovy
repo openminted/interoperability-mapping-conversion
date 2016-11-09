@@ -74,25 +74,34 @@ class ComponentsMain {
 
 		new File("src/main/resources/components/alvis").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(alvisParser.process(it,null))
+				List<ComponentMetaData> metaList= new ArrayList();
+				ComponentMetaData meta = new ComponentMetaData();
+				metaList.add(meta);
+				components.addAll(alvisParser.process(it,metaList))
 			}
 		}
 
 		new File("src/main/resources/components/gate").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(creoleParser.process(it,null))
+				List<ComponentMetaData> metaList= new ArrayList();
+				def descriptor = new XmlParser().parse(it.toURI().toString());						 
+				descriptor.'**'.'RESOURCE'.each { resource ->
+					ComponentMetaData meta = new ComponentMetaData();
+					metaList.add(meta);
+				}
+				components.addAll(creoleParser.process(it,metaList))
 			}
 		}
 
 
 		dc.crawlDescriptors(grpId,version).entrySet().each{
 			File file = it.key;
-			ArtifactInfo  ai = it.value;
+			ComponentMetaData  meta = it.value;
 			if (file.name.endsWith('.xml') && file.name!="pom.xml") {
 				List<ComponentMetaData> processedList
 				try{
-					processedList = uimaParserDkPro.process(file,ai)
-					if(processedList!=null){
+					processedList = uimaParserDkPro.process(file,[meta])
+					if(processedList!=null){											
 						processedList = dc.addPOMInfo(processedList)
 						components.addAll(processedList)
 					}
@@ -101,7 +110,6 @@ class ComponentsMain {
 				}
 			}
 		}
-
 		//        new File("src/main/resources/components/ctakes").eachFileRecurse(FILES) {
 		//            if (it.name.endsWith('.xml')) {
 		//                components.addAll(uimaParserCTakes.process(it))
@@ -110,13 +118,23 @@ class ComponentsMain {
 
 		new File("src/main/resources/components/ilsp").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(uimaParserIlsp.process(it,null))
+				List<ComponentMetaData> metaList= new ArrayList();
+				ComponentMetaData meta = new ComponentMetaData();
+				metaList.add(meta);
+				metaList = uimaParserIlsp.process(it,metaList);
+				if(metaList!=null)
+					components.addAll(metaList);
 			}
 		}
 
 		new File("src/main/resources/components/nactem").eachFileRecurse(FILES) {
 			if (it.name.endsWith('.xml')) {
-				components.addAll(uimaParserNactem.process(it,null))
+				List<ComponentMetaData> metaList= new ArrayList();
+				ComponentMetaData meta = new ComponentMetaData();
+				metaList.add(meta);
+				metaList = uimaParserNactem.process(it,metaList)
+				if(metaList!=null)
+					components.addAll(metaList);
 			}
 		}
 		dc.addPOMInfo(components).each{component->
@@ -151,10 +169,11 @@ class ComponentsMain {
 			}
 		}
 
+		
 		if(!(new File("target/generated-docs/descriptors").exists()))
 			new File("target/generated-docs/descriptors").mkdir()
 		FileUtils.copyDirectory(new File("src/main/resources/components"),new File("target/generated-docs/descriptors"))
-
+			
 		components.eachWithIndex { component, idx -> component.id = "$idx"}
 		components.each { component ->
 			def source = StringUtils.substringAfter(component.source, "src/main/resources/components/")

@@ -8,35 +8,34 @@ import org.apache.maven.index.ArtifactInfo
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
 import eu.openminted.interop.componentoverview.model.ParameterMetaData
 
-class AlvisImporter implements Importer<ComponentMetaData>
-{
+class AlvisImporter implements Importer<ComponentMetaData> {
 
-    @Override
-    public List<ComponentMetaData> process(URL aURL, ArtifactInfo ai)
-    {
-         def descriptor = new XmlParser().parse(aURL.toURI().toString());
-        
-        def meta = new ComponentMetaData();
-        meta.source = aURL.path;
-        meta.framework = "AlvisNLP";
-        meta.name = descriptor.'@short-target';
-        meta.version = descriptor.'@date';
-        meta.implementation = descriptor.'@target';
-        meta.description = descriptor.'synopsis'.text();
+	@Override
+	public List<ComponentMetaData> process(URL aURL,List<ComponentMetaData> metaList) {
+		def descriptor = new XmlParser().parse(aURL.toURI().toString());
 
-        meta.inputs = [];
-        meta.outputs = [];
+		metaList.each {it->
+			def meta = it;
+			meta.source = aURL.path;
+			meta.framework = "AlvisNLP";
+			meta.name = descriptor.'@short-target';
+			meta.version = descriptor.'@date';
+			meta.implementation = descriptor.'@target';
+			meta.description = descriptor.'synopsis'.text();
 
-		def paraList=[]
-        for(def ele in descriptor.'module-doc'.'param-doc')
-		{
-			def p = new ParameterMetaData();
-			p.name = ele.'@name'
-			p.mandatory = ele."@mandatory"
-			p.type = ele.'@type'
-			paraList.add(p)
+			meta.inputs = [];
+			meta.outputs = [];
+
+			def paraList=[]
+			for(def ele in descriptor.'module-doc'.'param-doc') {
+				def p = new ParameterMetaData();
+				p.name = ele.'@name'
+				p.mandatory = ele."@mandatory"
+				p.type = ele.'@type'
+				paraList.add(p)
+			}
+			meta.parameters = paraList;
 		}
-		meta.parameters = paraList;
-        return [meta];
-    }
+		return metaList;
+	}
 }

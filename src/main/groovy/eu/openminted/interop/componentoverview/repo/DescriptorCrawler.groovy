@@ -1,9 +1,12 @@
 package eu.openminted.interop.componentoverview.repo
 
 import eu.openminted.interop.componentoverview.model.ComponentMetaData
+import eu.openminted.interop.componentoverview.model.MetaDataRecord;
 import groovy.grape.Grape
 
 import static groovy.io.FileType.FILES
+
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.lang3.StringUtils
 import org.apache.maven.index.ArtifactInfo
@@ -23,7 +26,7 @@ class DescriptorCrawler {
 	static Map pomSourceMap = [:]
 	
 	//Crawls descriptors with groupID and Version 
-	 HashMap<File, ArtifactInfo> crawlDescriptors(String grpID, String version){
+	 HashMap<File, ComponentMetaData> crawlDescriptors(String grpID, String version){
 		 
 		HashMap<File,String> componentDirMap = new HashMap<File, String>()
 		ModelRepository repo = new ModelRepository();
@@ -115,7 +118,24 @@ class DescriptorCrawler {
 				descAIMap.put(tempFile,filteredResult.get(f));
 			}
 		}	
-		return descAIMap;
+		
+		HashMap<File,ComponentMetaData> componentMap= new HashMap<File, ComponentMetaData>();
+		descAIMap.each{it->
+			File f = it.key;
+			ArtifactInfo ai = it.value;
+			if(f.name.endsWith('.xml') && f.name!="pom.xml"){
+				ComponentMetaData meta = new ComponentMetaData();
+				meta.meta = new MetaDataRecord();
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				meta.meta.creationDate = format.format(new Date(ai.lastModified));
+				meta.meta.updatedDate  = format.format(new Date(ai.lastModified));
+				meta.meta.aId = ai.artifactId.toString();
+				meta.meta.gId = ai.groupId;
+				componentMap.put(f,meta);
+			}
+			
+		}
+		return componentMap;
 	}
 	
 	// get parent pom if child pom is not able to provide sufficient info

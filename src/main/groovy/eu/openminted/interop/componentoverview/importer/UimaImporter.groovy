@@ -22,7 +22,7 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 	}
 
 	@Override
-	public List<ComponentMetaData> process(URL aURL,ArtifactInfo ai) {
+	public List<ComponentMetaData> process(URL aURL, List<ComponentMetaData> metaList) {
 		Node descriptor = new XmlParser().parse(aURL.toURI().toString());
 
 		try{
@@ -31,77 +31,75 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 			println "descriptor not an instance of QName";
 			return null;
 		}
-		ComponentMetaData meta;
-		switch (descriptor.name().localPart) {
-			case 'analysisEngineDescription':
-				meta = parseUimaAnalysisEngine(collection, descriptor);
-				break;
-			case 'taeDescription':
-				meta = parseTAEDescription(collection, descriptor);
-				break;
-			case 'collectionReaderDescription':
-				meta = parseUimaCollectionReader(collection, descriptor);
-				break;
-			case 'casConsumerDescription':
-				meta = parseUimaCasConsumer(collection, descriptor);
-				break;
-			case 'analysisEngineDeploymentDescription':
-				println "Ignoring analysisEngineDeploymentDescription in ${aURL}"
-				return [];
-			case 'typeSystemDescription':
-				println "Ignoring typeSystemDescription in ${aURL}"
-				return [];
-			default:
-				throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aURL}");
-		}
 
-		meta.source = aURL.path;
-
-		meta.parameters = [];
-		descriptor.'**'.'configurationParameter'.each { param->
-			def p = new ParameterMetaData();
-			p.name = param.get('name').text();
-			p.description = param.get('description').text();
-			p.type = param.get('type').text();
-			p.multiValued = param.get('multiValued').text();
-			p.mandatory = param.get('mandatory').text();
-			meta.parameters.add(p);
-		}
-
-		meta.inputs=[];
-		descriptor.'**'.'capabilities'.'capability'.each { capability->
-			def iometa = new InputOutputMetaData();
-			iometa.types = [];
-			capability.'inputs'.'type'.each {
-				iometa.types << it.text();
+		metaList.each { it->
+			ComponentMetaData meta = it;
+			switch (descriptor.name().localPart) {
+				case 'analysisEngineDescription':
+					meta = parseUimaAnalysisEngine(collection, descriptor,meta);
+					break;
+				case 'taeDescription':
+					meta = parseTAEDescription(collection, descriptor,meta);
+					break;
+				case 'collectionReaderDescription':
+					meta = parseUimaCollectionReader(collection, descriptor,meta);
+					break;
+				case 'casConsumerDescription':
+					meta = parseUimaCasConsumer(collection, descriptor,meta);
+					break;
+				case 'analysisEngineDeploymentDescription':
+					println "Ignoring analysisEngineDeploymentDescription in ${aURL}"
+					metaList= null
+					return [];
+				case 'typeSystemDescription':
+					println "Ignoring typeSystemDescription in ${aURL}"
+					metaList= null
+					return [];
+				default:
+					throw new IllegalStateException("Unknown descriptor type ${descriptor.name().localPart} in ${aURL}");
 			}
-			meta.inputs << iometa;
-		}
-
-		meta.outputs=[];
-		descriptor.'**'.'capabilities'.'capability'.each { capability->
-			def iometa = new InputOutputMetaData();
-			iometa.types = [];
-			capability.'outputs'.'type'.each {
-				iometa.types << it.text();
+			
+			meta.source = aURL.path;
+//			println meta.name
+			meta.parameters = [];
+			descriptor.'**'.'configurationParameter'.each { param->
+				def p = new ParameterMetaData();
+				p.name = param.get('name').text();
+				p.description = param.get('description').text();
+				p.type = param.get('type').text();
+				p.multiValued = param.get('multiValued').text();
+				p.mandatory = param.get('mandatory').text();
+				meta.parameters.add(p);
 			}
-			meta.outputs << iometa;
+
+			meta.inputs=[];
+			descriptor.'**'.'capabilities'.'capability'.each { capability->
+				def iometa = new InputOutputMetaData();
+				iometa.types = [];
+				capability.'inputs'.'type'.each {
+					iometa.types << it.text();
+				}
+				meta.inputs << iometa;
+			}
+
+			meta.outputs=[];
+			descriptor.'**'.'capabilities'.'capability'.each { capability->
+				def iometa = new InputOutputMetaData();
+				iometa.types = [];
+				capability.'outputs'.'type'.each {
+					iometa.types << it.text();
+				}
+				meta.outputs << iometa;
+			}
+
+			meta.componentType = findComponentType(meta.name);
 		}
-		
-		if(ai){
-			meta.meta = new MetaDataRecord();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			meta.meta.creationDate = format.format(new Date(ai.lastModified));
-			meta.meta.updatedDate  = format.format(new Date(ai.lastModified));
-			meta.meta.aId = ai.artifactId.toString();			
-			meta.meta.gId = ai.groupId;
-		}
-		meta.componentType = findComponentType(meta.name);
-		return [meta];
+		return metaList;
 	}
 
-	public ComponentMetaData parseUimaAnalysisEngine(collection, resource) {
-		def meta = new ComponentMetaData();
+	public ComponentMetaData parseUimaAnalysisEngine(collection, resource,meta) {
+		//		def meta = new ComponentMetaData();
+		meta instanceof ComponentMetaData;
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
 		meta.version = resource.'analysisEngineMetaData'.'version'.text();
@@ -110,8 +108,9 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseTAEDescription(collection, resource) {
-		def meta = new ComponentMetaData();
+	public ComponentMetaData parseTAEDescription(collection, resource,meta) {
+		//		def meta = new ComponentMetaData();
+		meta instanceof ComponentMetaData;
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
 		meta.version = resource.'analysisEngineMetaData'.'version'.text();
@@ -120,8 +119,9 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseUimaCollectionReader(collection, resource) {
-		def meta = new ComponentMetaData();
+	public ComponentMetaData parseUimaCollectionReader(collection, resource,meta) {
+		//		def meta = new ComponentMetaData();
+		meta instanceof ComponentMetaData;
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
 		meta.version = resource.'processingResourceMetaData'.'version'.text();
@@ -130,8 +130,9 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseUimaCasConsumer(collection, resource) {
-		def meta = new ComponentMetaData();
+	public ComponentMetaData parseUimaCasConsumer(collection, resource,meta) {
+		//		def meta = new ComponentMetaData();
+		meta instanceof ComponentMetaData;
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
 		meta.version = resource.'processingResourceMetaData'.'version'.text();

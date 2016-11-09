@@ -340,24 +340,24 @@ class Constants {
 			'CompareElements' ]
 	];
 	static def ANNOTATION_LEVEL = [
-		'CoreferenceChain':'discourseAnnotation-dialogueActs',
-		'CoreferenceLink':'discourseAnnotation-dialogueActs',
-		'Lemma':'morphosyntacticAnnotation-bPosTagging',
-		'MorphologicalFeature':'morphosyntacticAnnotation-posTagging',
-		'POS':'segmentation',
-		'NamedEntity':'semanticAnnotation-polarity',
-		'SemArg':'semanticAnnotation-speechActs',
-		'SemPred':'semanticAnnotation-speechActs',
-		'PhoneticTranscription':'speechAnnotation-prosodicAnnotation',
-		'Stem':'structuralAnnotation',
-		'Div':'structuralAnnotation-sentences',
-		'Paragraph':'structuralAnnotation-sentences',
-		'Heading':'structuralAnnotation-sentences',
-		'Sentence':'structuralAnnotation-clauses',
-		'Token':'syntacticAnnotation-subcategorizationFrames',
-		'Dependency':'syntacticAnnotation-constituencyTrees',
-		'Constituent':'syntacticAnnotation-chunks',
-		'Chunk':'syntacticosemanticAnnotation-links'];
+		'CoreferenceChain':'discourseAnnotation-coreference',
+		'CoreferenceLink':'discourseAnnotation-coreference',
+		'Lemma':'lemmatization',
+		'MorphologicalFeature':'morphosyntacticAnnotation-bPosTagging',
+		'POS':'morphosyntacticAnnotation-posTagging',
+		'NamedEntity':'semanticAnnotation-namedEntities',
+		'SemArg':'semanticAnnotation-semanticRoles',
+		'SemPred':'semanticAnnotation-semanticRoles',
+		'PhoneticTranscription':'speechAnnotation-phoneticTranscription',
+		'Stem':'stemming',
+		'Div':'structuralAnnotation-documentDivisions',
+		'Paragraph':'structuralAnnotation-documentDivisions',
+		'Heading':'structuralAnnotation-documentDivisions',
+		'Sentence':'structuralAnnotation-sentences',
+		'Token':'structuralAnnotation-words',
+		'Dependency':'syntacticAnnotation-dependencyTrees',
+		'Constituent':'syntacticAnnotation-constituencyTrees',
+		'Chunk':'syntacticAnnotation-chunks'];
 	
 	static def COMPONENT_TYPE = [
 		'accessComponent':'accesscomponent',

@@ -11,14 +11,13 @@ import eu.openminted.interop.componentoverview.model.ParameterMetaData
 public class CreoleImporter implements Importer<ComponentMetaData>
 {
     @Override
-    public List<ComponentMetaData> process(URL aURL, ArtifactInfo ai)
+    public List<ComponentMetaData> process(URL aURL, List<ComponentMetaData> metaList)
     {
         def descriptor = new XmlParser().parse(aURL.toURI().toString());
+               
         
-        def components = [];
-        
-        descriptor.'**'.'RESOURCE'.each { resource ->
-            def meta = new ComponentMetaData();
+        descriptor.'**'.'RESOURCE'.eachWithIndex { resource,index ->
+            def meta = metaList.get(index);
             meta.source = aURL.path;
             meta.framework = "GATE";
             meta.name = resource.'NAME'.text();
@@ -39,15 +38,13 @@ public class CreoleImporter implements Importer<ComponentMetaData>
 				paramLocal.runTime = param.'@RUNTIME';
 				paraList.add(paramLocal);
 			}
-			meta.parameters = paraList;
-    
-            components << meta;
+			meta.parameters = paraList;              
         }
         
-        if (components.isEmpty()) {
+        if (metaList.isEmpty()) {
             println "No resources found in $aURL";
         }
         
-        return components;
+        return metaList;
     }
 }

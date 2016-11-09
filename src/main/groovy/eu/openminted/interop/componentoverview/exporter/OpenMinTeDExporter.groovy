@@ -17,7 +17,7 @@ class OpenMinTeDExporter implements Exporter<Node> {
 			mkp.xmlDeclaration()
 			namespaces << ['': 'http://www.meta-share.org/OMTD-SHARE_XMLSchema']
 			namespaces << ['xsi': 'http://www.w3.org/2001/XMLSchema-instance']
-			componentMetadataRecord ('xsi:schemaLocation':'http://www.meta-share.org/OMTD-SHARE_XMLSchema OMTD-SHARE-Component.xsd') {
+			componentMetadataRecord ('xsi:schemaLocation':'http://www.meta-share.org/OMTD-SHARE_XMLSchema http://openminted.github.io/openminted-site/releases/omtd-share/1.0.0/xsd/OMTD-SHARE-Component.xsd') {
 				metadataHeaderInfo{
 					metadataRecordIdentifier(metadataIdentifierSchemeName:'urn'){
 						if(aMetaData.meta){

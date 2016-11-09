@@ -1,17 +1,15 @@
 package eu.openminted.interop.componentoverview.importer;
 
 import java.io.File;
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
-
-import org.apache.maven.index.ArtifactInfo;
 
 public interface Importer<T extends Object>
 {
-    default List<T> process(File aFile,ArtifactInfo ai) {
+    default List<T> process(File aFile, List<T> metaList) {
 	try {
-		return process(aFile.toURI().toURL(),ai);
+		return process(aFile.toURI().toURL(),metaList);
 	}
 	catch (MalformedURLException e) {
 		//this should be impossible
@@ -19,5 +17,5 @@ public interface Importer<T extends Object>
 	}
     }
 
-    List<T> process(URL aURL,ArtifactInfo ai);
+    List<T> process(URL aURL,List<T> metaList);
 }
