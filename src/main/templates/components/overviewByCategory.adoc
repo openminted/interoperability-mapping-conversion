@@ -1,6 +1,10 @@
 <%
 import eu.openminted.interop.componentoverview.Util;
+%>
 
+Total number of components across all categories: ${components.size()}
+
+<%
 components
     .grep { it.categories.isEmpty() || !(it.categories[0] in ['Reader', 'Writer'])}
     .groupBy { it.categories.isEmpty() ? ' Uncategorized' : it.categories[0] }
