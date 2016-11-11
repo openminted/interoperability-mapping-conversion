@@ -66,24 +66,23 @@ public class ComponentMetaData
 
         id = existing.id;
         source = existing.source;
-	name = existing.name;
-	version = existing.version;
-	implementation = existing.implementation;
-	
+        name = existing.name;
+        version = existing.version;
+        implementation = existing.implementation;
         description = existing.description;
         framework = existing.framework;
-	categories = new ArrayList<String>(existing.categories);
+        if (existing.parameters != null) categories = new ArrayList<String>(existing.categories);
         product = existing.product;
         format = existing.format;
-        parameters = new ArrayList<ParameterMetaData>(existing.parameters);
-        inputs = new ArrayList<InputOutputMetaData>(inputs);
-        outputs = new ArrayList<InputOutputMetaData>(outputs);
+        if (existing.parameters != null) parameters = new ArrayList<ParameterMetaData>(existing.parameters);
+        if (existing.inputs != null) inputs = new ArrayList<InputOutputMetaData>(inputs);
+        if (existing.outputs != null) outputs = new ArrayList<InputOutputMetaData>(outputs);
         documentationUrl = existing.documentationUrl;
         POMUrl = existing.POMUrl;
-        developers = new ArrayList<Developer>(existing.developers);
-        contributors = new ArrayList<Contributor>(existing.contributors);
-        licenses = new ArrayList<License>(existing.licenses);    
-        mailingLists = new ArrayList<MailingList>(existing.mailingLists);
+        if (existing.developers != null) developers = new ArrayList<Developer>(existing.developers);
+        if (existing.contributors != null) contributors = new ArrayList<Contributor>(existing.contributors);
+        if (existing.licenses != null) licenses = new ArrayList<License>(existing.licenses);    
+        if (existing.mailingLists != null) mailingLists = new ArrayList<MailingList>(existing.mailingLists);
         issueManagement = existing.issueManagement;
         ciManagement = existing.ciManagement;
         org = existing.org;
