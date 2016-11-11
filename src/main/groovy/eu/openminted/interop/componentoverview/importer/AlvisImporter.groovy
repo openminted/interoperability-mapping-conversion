@@ -11,31 +11,31 @@ import eu.openminted.interop.componentoverview.model.ParameterMetaData
 class AlvisImporter implements Importer<ComponentMetaData> {
 
 	@Override
-	public List<ComponentMetaData> process(URL aURL,List<ComponentMetaData> metaList) {
+	public List<ComponentMetaData> process(URL aURL,ComponentMetaData metadata) {
 		def descriptor = new XmlParser().parse(aURL.toURI().toString());
 
-		metaList.each {it->
-			def meta = it;
-			meta.source = aURL.path;
-			meta.framework = "AlvisNLP";
-			meta.name = descriptor.'@short-target';
-			meta.version = descriptor.'@date';
-			meta.implementation = descriptor.'@target';
-			meta.description = descriptor.'synopsis'.text();
 
-			meta.inputs = [];
-			meta.outputs = [];
+		def meta = new ComponentMetaData();
+		meta.source = aURL.path;
+		meta.framework = "AlvisNLP";
+		meta.name = descriptor.'@short-target';
+		meta.version = descriptor.'@date';
+		meta.implementation = descriptor.'@target';
+		meta.description = descriptor.'synopsis'.text();
 
-			def paraList=[]
-			for(def ele in descriptor.'module-doc'.'param-doc') {
-				def p = new ParameterMetaData();
-				p.name = ele.'@name'
-				p.mandatory = ele."@mandatory"
-				p.type = ele.'@type'
-				paraList.add(p)
-			}
-			meta.parameters = paraList;
+		meta.inputs = [];
+		meta.outputs = [];
+
+		def paraList=[]
+		for(def ele in descriptor.'module-doc'.'param-doc') {
+			def p = new ParameterMetaData();
+			p.name = ele.'@name'
+			p.mandatory = ele."@mandatory"
+			p.type = ele.'@type'
+			paraList.add(p)
 		}
-		return metaList;
+		meta.parameters = paraList;
+
+		return [meta];
 	}
 }

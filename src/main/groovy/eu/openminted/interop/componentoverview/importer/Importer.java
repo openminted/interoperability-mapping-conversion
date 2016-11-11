@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface Importer<T extends Object>
 {
-    default List<T> process(File aFile, List<T> metaList) {
+    default List<T> process(File aFile, T meta) {
 	try {
-		return process(aFile.toURI().toURL(),metaList);
+		return process(aFile.toURI().toURL(),meta);
 	}
 	catch (MalformedURLException e) {
 		//this should be impossible
@@ -17,5 +17,5 @@ public interface Importer<T extends Object>
 	}
     }
 
-    List<T> process(URL aURL,List<T> metaList);
+    List<T> process(URL aURL,T meta);
 }
