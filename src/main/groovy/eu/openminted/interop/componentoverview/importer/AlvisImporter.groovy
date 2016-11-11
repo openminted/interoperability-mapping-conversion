@@ -15,7 +15,7 @@ class AlvisImporter implements Importer<ComponentMetaData> {
 		def descriptor = new XmlParser().parse(aURL.toURI().toString());
 
 
-		def meta = new ComponentMetaData();
+		def meta = new ComponentMetaData(metadata);
 		meta.source = aURL.path;
 		meta.framework = "AlvisNLP";
 		meta.name = descriptor.'@short-target';

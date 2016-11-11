@@ -17,7 +17,7 @@ public class CreoleImporter implements Importer<ComponentMetaData>
                
         def components=[]
         descriptor.'**'.'RESOURCE'.each { resource ->
-            def meta = new ComponentMetaData();
+            def meta = new ComponentMetaData(metadata);
             meta.source = aURL.path;
             meta.framework = "GATE";
             meta.name = resource.'NAME'.text();

@@ -35,16 +35,16 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		ComponentMetaData meta;
 		switch (descriptor.name().localPart) {
 			case 'analysisEngineDescription':
-				meta = parseUimaAnalysisEngine(collection, descriptor);
+				meta = parseUimaAnalysisEngine(metadata, collection, descriptor);
 				break;
 			case 'taeDescription':
-				meta = parseTAEDescription(collection, descriptor);
+				meta = parseTAEDescription(metadata, collection, descriptor);
 				break;
 			case 'collectionReaderDescription':
-				meta = parseUimaCollectionReader(collection, descriptor);
+				meta = parseUimaCollectionReader(metadata, collection, descriptor);
 				break;
 			case 'casConsumerDescription':
-				meta = parseUimaCasConsumer(collection, descriptor);
+				meta = parseUimaCasConsumer(metadata, collection, descriptor);
 				break;
 			case 'analysisEngineDeploymentDescription':
 				println "Ignoring analysisEngineDeploymentDescription in ${aURL}"
@@ -103,8 +103,8 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return [meta];
 	}
 
-	public ComponentMetaData parseUimaAnalysisEngine(collection, resource) {
-		def meta = new ComponentMetaData();	
+	public ComponentMetaData parseUimaAnalysisEngine(existing, collection, resource) {
+		def meta = new ComponentMetaData(existing);	
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
 		meta.version = resource.'analysisEngineMetaData'.'version'.text();
@@ -113,8 +113,8 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseTAEDescription(collection, resource) {
-		def meta = new ComponentMetaData();	
+	public ComponentMetaData parseTAEDescription(existing, collection, resource) {
+		def meta = new ComponentMetaData(existing);	
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'analysisEngineMetaData'.'name'.text());
 		meta.version = resource.'analysisEngineMetaData'.'version'.text();
@@ -123,8 +123,8 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseUimaCollectionReader(collection, resource) {
-		def meta = new ComponentMetaData();		
+	public ComponentMetaData parseUimaCollectionReader(existing, collection, resource) {
+		def meta = new ComponentMetaData(existing);		
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
 		meta.version = resource.'processingResourceMetaData'.'version'.text();
@@ -133,8 +133,8 @@ public class UimaImporter implements Importer<ComponentMetaData> {
 		return meta;
 	}
 
-	public ComponentMetaData parseUimaCasConsumer(collection, resource) {
-		def meta = new ComponentMetaData();	
+	public ComponentMetaData parseUimaCasConsumer(existing, collection, resource) {
+		def meta = new ComponentMetaData(existing);	
 		meta.framework = "$collection (UIMA)";
 		meta.name = shortName(resource.'processingResourceMetaData'.'name'.text());
 		meta.version = resource.'processingResourceMetaData'.'version'.text();

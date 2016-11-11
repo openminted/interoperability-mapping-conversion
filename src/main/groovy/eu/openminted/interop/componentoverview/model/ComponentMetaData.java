@@ -1,6 +1,7 @@
 package eu.openminted.interop.componentoverview.model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.maven.model.CiManagement;
 import org.apache.maven.model.Contributor;
@@ -27,7 +28,25 @@ public class ComponentMetaData
     List<InputOutputMetaData> inputs;
     List<InputOutputMetaData> outputs;
     String documentationUrl;
-    String POMUrl;    
+    String projURL;
+    MetaDataRecord meta;
+    String componentType;
+    
+    //these seem dubious to me. We should have generic scm details
+    //and a download URL, but I don't think we should tie the description
+    //to Maven and GitHub. Also if you are storing a URL then store a URL
+    //(or possibly a URI) don't use a string that needs conversion to use
+    String mvnAccessURL;
+    String mvnDownloadURL;
+    String githubAccessURL;
+    String githubDownloadURL;
+
+
+    // why are we saving this as there is no requirement to have a POM
+    String POMUrl;
+    
+    //these worry me as I don't think we should be insisting on maven
+    //specific classes inside the OpenMinTeD description
     List<Developer> developers;
     List<Contributor> contributors;
     List<License> licenses;    
@@ -36,11 +55,45 @@ public class ComponentMetaData
     CiManagement ciManagement;
     Organization org;
     Scm scm;
-    String projURL;
-    MetaDataRecord meta;
-    String componentType;
-    String mvnAccessURL;
-    String mvnDownloadURL;
-    String githubAccessURL;
-    String githubDownloadURL;
+
+    public ComponentMetaData() {
+        //empty constructor to allow for creation of empty instances
+    }
+
+    public ComponentMetaData(ComponentMetaData existing) {
+
+        if (existing == null) return;
+
+        id = existing.id;
+        source = existing.source;
+	name = existing.name;
+	version = existing.version;
+	implementation = existing.implementation;
+	
+        description = existing.description;
+        framework = existing.framework;
+	categories = new ArrayList<String>(existing.categories);
+        product = existing.product;
+        format = existing.format;
+        parameters = new ArrayList<ParameterMetaData>(existing.parameters);
+        inputs = new ArrayList<InputOutputMetaData>(inputs);
+        outputs = new ArrayList<InputOutputMetaData>(outputs);
+        documentationUrl = existing.documentationUrl;
+        POMUrl = existing.POMUrl;
+        developers = new ArrayList<Developer>(existing.developers);
+        contributors = new ArrayList<Contributor>(existing.contributors);
+        licenses = new ArrayList<License>(existing.licenses);    
+        mailingLists = new ArrayList<MailingList>(existing.mailingLists);
+        issueManagement = existing.issueManagement;
+        ciManagement = existing.ciManagement;
+        org = existing.org;
+        scm = existing.scm;
+        projURL = existing.projURL;
+        meta = existing.meta;
+        componentType = existing.componentType;
+        mvnAccessURL = existing.mvnAccessURL;
+        mvnDownloadURL = existing.mvnDownloadURL;
+        githubAccessURL = existing.githubAccessURL;
+        githubDownloadURL = existing.githubDownloadURL;
+    }
 }
